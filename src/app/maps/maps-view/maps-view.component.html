@@ -1,3 +1,4 @@
-<div *ngIf="apiLoaded | async">
+<input #mapSearchField class="my-map-search-field" type="text">
+<!-- <div *ngIf="apiLoaded | async"> -->
     <google-map google-map height="90vh" width="100%" [center]="center" [options]="options"></google-map>
-</div>
+<!-- </div> -->
