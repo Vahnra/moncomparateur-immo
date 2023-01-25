@@ -4,18 +4,17 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { GoogleMap } from '@angular/google-maps';
 import { MapsService } from '../maps.service';
-import { Dpe } from 'src/app/models/dpe';
+import { Dvf } from 'src/app/models/dvf';
 
 @Component({
-  selector: 'app-maps-view',
-  templateUrl: './maps-view.component.html',
-  styleUrls: ['./maps-view.component.css']
+  selector: 'app-dvf-maps',
+  templateUrl: './dvf-maps.component.html',
+  styleUrls: ['./dvf-maps.component.css']
 })
-export class MapsViewComponent implements OnInit {
+export class DvfMapsComponent implements OnInit {
   @ViewChild(GoogleMap) map: GoogleMap
   @ViewChild('mapSearchField') searchField: ElementRef;
-  
-  apiLoaded: Observable<boolean>;
+
   center: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
     center: {lat: 48.866667, lng:  2.333333},
@@ -26,15 +25,7 @@ export class MapsViewComponent implements OnInit {
         "elementType": "geometry",
         "stylers": [
           {
-            "color": "#f5f5f5"
-          }
-        ]
-      },
-      {
-        "elementType": "labels.icon",
-        "stylers": [
-          {
-            "visibility": "off"
+            "color": "#1d2c4d"
           }
         ]
       },
@@ -42,7 +33,7 @@ export class MapsViewComponent implements OnInit {
         "elementType": "labels.text.fill",
         "stylers": [
           {
-            "color": "#616161"
+            "color": "#8ec3b9"
           }
         ]
       },
@@ -50,7 +41,25 @@ export class MapsViewComponent implements OnInit {
         "elementType": "labels.text.stroke",
         "stylers": [
           {
-            "color": "#f5f5f5"
+            "color": "#1a3646"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.country",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#4b6878"
           }
         ]
       },
@@ -59,7 +68,42 @@ export class MapsViewComponent implements OnInit {
         "elementType": "labels.text.fill",
         "stylers": [
           {
-            "color": "#bdbdbd"
+            "color": "#64779e"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.province",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#4b6878"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape.man_made",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#334e87"
+          }
+        ]
+      },
+      {
+        "featureType": "landscape.natural",
+        "elementType": "geometry",
+        "stylers": [
+          {
+            "color": "#023e58"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "stylers": [
+          {
+            "visibility": "off"
           }
         ]
       },
@@ -68,7 +112,7 @@ export class MapsViewComponent implements OnInit {
         "elementType": "geometry",
         "stylers": [
           {
-            "color": "#eeeeee"
+            "color": "#283d6a"
           }
         ]
       },
@@ -77,16 +121,25 @@ export class MapsViewComponent implements OnInit {
         "elementType": "labels.text.fill",
         "stylers": [
           {
-            "color": "#757575"
+            "color": "#6f9ba5"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#1d2c4d"
           }
         ]
       },
       {
         "featureType": "poi.park",
-        "elementType": "geometry",
+        "elementType": "geometry.fill",
         "stylers": [
           {
-            "color": "#e5e5e5"
+            "color": "#023e58"
           }
         ]
       },
@@ -95,7 +148,7 @@ export class MapsViewComponent implements OnInit {
         "elementType": "labels.text.fill",
         "stylers": [
           {
-            "color": "#9e9e9e"
+            "color": "#3C7680"
           }
         ]
       },
@@ -104,16 +157,34 @@ export class MapsViewComponent implements OnInit {
         "elementType": "geometry",
         "stylers": [
           {
-            "color": "#ffffff"
+            "color": "#304a7d"
           }
         ]
       },
       {
-        "featureType": "road.arterial",
+        "featureType": "road",
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
         "elementType": "labels.text.fill",
         "stylers": [
           {
-            "color": "#757575"
+            "color": "#98a5be"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#1d2c4d"
           }
         ]
       },
@@ -122,7 +193,16 @@ export class MapsViewComponent implements OnInit {
         "elementType": "geometry",
         "stylers": [
           {
-            "color": "#dadada"
+            "color": "#2c6675"
+          }
+        ]
+      },
+      {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+          {
+            "color": "#255763"
           }
         ]
       },
@@ -131,25 +211,51 @@ export class MapsViewComponent implements OnInit {
         "elementType": "labels.text.fill",
         "stylers": [
           {
-            "color": "#616161"
+            "color": "#b0d5ce"
           }
         ]
       },
       {
-        "featureType": "road.local",
+        "featureType": "road.highway",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#023e58"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
         "elementType": "labels.text.fill",
         "stylers": [
           {
-            "color": "#9e9e9e"
+            "color": "#98a5be"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+          {
+            "color": "#1d2c4d"
           }
         ]
       },
       {
         "featureType": "transit.line",
-        "elementType": "geometry",
+        "elementType": "geometry.fill",
         "stylers": [
           {
-            "color": "#e5e5e5"
+            "color": "#283d6a"
           }
         ]
       },
@@ -158,7 +264,7 @@ export class MapsViewComponent implements OnInit {
         "elementType": "geometry",
         "stylers": [
           {
-            "color": "#eeeeee"
+            "color": "#3a4762"
           }
         ]
       },
@@ -167,7 +273,7 @@ export class MapsViewComponent implements OnInit {
         "elementType": "geometry",
         "stylers": [
           {
-            "color": "#c9c9c9"
+            "color": "#0e1626"
           }
         ]
       },
@@ -176,19 +282,17 @@ export class MapsViewComponent implements OnInit {
         "elementType": "labels.text.fill",
         "stylers": [
           {
-            "color": "#9e9e9e"
+            "color": "#4e6d70"
           }
         ]
       }
     ]
   };
   bbox: string;
-  bounds: object;
-  dpes$: Observable<Dpe[]> = new Observable();
   markers: any = [];
-  test: Dpe;
+  test: Dvf;
 
-  addMarker(latitude: string, longitude: string, consommation: string) {
+  addMarker(latitude: string, longitude: string, valeur_fonciere: string) {
     this.markers.push({
       position: {
         lat: latitude,
@@ -196,9 +300,9 @@ export class MapsViewComponent implements OnInit {
       },
       label: {
         color: 'white',
-        text: consommation,
+        text: valeur_fonciere,
       },
-      title: consommation,
+      title: valeur_fonciere,
       options: { 
       
        },
@@ -250,24 +354,19 @@ export class MapsViewComponent implements OnInit {
         }
       });
       this.map.fitBounds(bounds);
-      // console.log(JSON.parse(JSON.stringify(this.map.getBounds())));
-      let bound = JSON.parse(JSON.stringify(this.map.getBounds()))     
-      this.bbox = bound.west + ',' + bound.south + ',' + bound.east + ',' + bound.north
-      // console.log(this.bbox);
-      this.mapsService.refreshDpe(this.bbox).subscribe(dpe => {
-        this.test = JSON.parse(JSON.stringify(dpe));
-        // console.log(this.test.results);
-        this.test.results.forEach((item) => {
-          // console.log(item)
-          this.addMarker(item['latitude'], item['longitude'], item['classe_consommation_energie'])
+      console.log(this.map.getCenter()?.lat());
+      this.mapsService.refreshDvf(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe(dvf => {    
+        this.test = JSON.parse(JSON.stringify(dvf))
+        // console.log(test.features);
+        this.test.features.forEach((item) => {
+          // console.log(item['properties'])
+          this.addMarker(item['geometry']['coordinates'][1], item['geometry']['coordinates'][0], item['properties']['code_voie'])
 
         })
-      });
+        
+      })
+      
     })
   }
-
-  
-
-  
 
 }
