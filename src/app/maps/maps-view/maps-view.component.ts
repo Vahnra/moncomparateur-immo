@@ -15,6 +15,13 @@ export class MapsViewComponent implements OnInit {
   
   apiLoaded: Observable<boolean>;
   center: google.maps.LatLngLiteral;
+  options: google.maps.MapOptions = {
+    center: {lat: 48.866667, lng:  2.333333},
+    zoom: 10,
+    disableDefaultUI: true
+  };
+  bbox: string;
+  bounds: object;
   
 
   constructor(httpClient: HttpClient) {
@@ -31,8 +38,14 @@ export class MapsViewComponent implements OnInit {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       };
-      console.log(this.center);
-      console.log(JSON.stringify(this.map.getBounds()))
+      // console.log(this.center);
+      // console.log(JSON.stringify(this.map.getBounds()))
+
+      // console.log(JSON.parse(JSON.stringify(this.map.getBounds())))
+
+      this.bbox = JSON.parse(JSON.stringify(this.map.getBounds())).west + ',' + JSON.parse(JSON.stringify(this.map.getBounds())).south + ',' + JSON.parse(JSON.stringify(this.map.getBounds())).east + ',' + JSON.parse(JSON.stringify(this.map.getBounds())).north
+      console.log(this.bbox);
+      
     });
   }
 
@@ -40,9 +53,6 @@ export class MapsViewComponent implements OnInit {
     const searchBox = new google.maps.places.SearchBox(
       this.searchField.nativeElement,
     );
-    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-      this.searchField.nativeElement,
-    )
     searchBox.addListener('places_changed', () => {
       const places = searchBox.getPlaces();
       if (places?.length === 0) {
@@ -60,15 +70,13 @@ export class MapsViewComponent implements OnInit {
         }
       });
       this.map.fitBounds(bounds);
-      console.log(JSON.stringify(this.map.getBounds()))
+      this.bbox = JSON.parse(JSON.stringify(this.map.getBounds())).west + ',' + JSON.parse(JSON.stringify(this.map.getBounds())).south + ',' + JSON.parse(JSON.stringify(this.map.getBounds())).east + ',' + JSON.parse(JSON.stringify(this.map.getBounds())).north
+      console.log(this.bbox);
     })
   }
 
   
 
-  options: google.maps.MapOptions = {
-    center: {lat: 48.866667, lng:  2.333333},
-    zoom: 10,
-  };  
+  
 
 }
