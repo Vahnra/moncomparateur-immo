@@ -15,11 +15,13 @@ export class DvfMapsComponent implements OnInit {
   @ViewChild(GoogleMap) map: GoogleMap
   @ViewChild('mapSearchField') searchField: ElementRef;
 
+  apiLoaded: Observable<boolean>;
   center: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
     center: {lat: 48.866667, lng:  2.333333},
     zoom: 12,
     disableDefaultUI: true,
+    minZoom: 10,
     styles: [
       {
         "elementType": "geometry",
@@ -310,30 +312,34 @@ export class DvfMapsComponent implements OnInit {
   }
 
   constructor(httpClient: HttpClient, private mapsService: MapsService) {
-    // this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDAdytsYr9eTg45_wJMa4gtlbdlO0-8dto&libraries=places', 'callback')
-    //     .pipe(
-    //       map(() => true),
-    //       catchError(() => of(false)),
-    //     );
+    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDAdytsYr9eTg45_wJMa4gtlbdlO0-8dto&libraries=places', 'callback')
+        .pipe(
+          map(() => true),
+          catchError(() => of(false)),
+        );
   }
 
   ngOnInit() {
+    
+  }
+
+  ngAfterViewInit(): void {
+  
+    setTimeout(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       this.center = {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       };
-      let bound = JSON.parse(JSON.stringify(this.map.getBounds())) 
+      // let bound = JSON.parse(JSON.stringify(this.map.getBounds())) 
       // console.log(this.bbox);
-      this.bbox = bound.west + ',' + bound.south + ',' + bound.east + ',' + bound.north
-      this.mapsService.refreshDpe(this.bbox).subscribe(dpe => {
+      // this.bbox = bound.west + ',' + bound.south + ',' + bound.east + ',' + bound.north
+      this.mapsService.refreshDvf(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe(dpe => {
         // console.log(dpe);
       });
       
     });
-  }
 
-  ngAfterViewInit(): void {
     const searchBox = new google.maps.places.SearchBox(
       this.searchField.nativeElement,
     );
@@ -367,6 +373,7 @@ export class DvfMapsComponent implements OnInit {
       })
       
     })
+  }, 1000)
   }
 
 }
