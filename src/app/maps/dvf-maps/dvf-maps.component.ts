@@ -31,6 +31,7 @@ export class DvfMapsComponent implements OnInit {
   test: Dvf;
   commune: string;
   codeCommune: string;
+  markerClustererImagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
 
   addMarker(latitude: string, longitude: string, valeur_fonciere: string) {
     this.markers.push({

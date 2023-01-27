@@ -39,6 +39,13 @@ export class MapsViewComponent implements OnInit {
     longitude: string, 
     markerIcon: string,
     consommation: string, 
+    dpeNumber: string,
+    dpeDate: string,
+    adress: string,
+    moreAdress: string,
+    typeOfLodging: string,
+    buildingDate: string,
+    areaSize: string
     ) {
     this.markers.push({
       position: {
@@ -47,15 +54,23 @@ export class MapsViewComponent implements OnInit {
       },
       icon: markerIcon,
       label: {
-        color: 'white',
+        color: 'black',
         text: consommation,
       },
+      dpeNumber: dpeNumber,
+      dpeDate: dpeDate,
+      adress: adress,
+      moreAdress: moreAdress,
+      typeOfLodging: typeOfLodging,
+      buildingDate: buildingDate,
+      areaSize: areaSize,
       title: consommation,
       options: { 
       
        },
     });
   }
+  markerClustererImagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
 
   constructor(public httpClient: HttpClient, private mapsService: MapsService) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDAdytsYr9eTg45_wJMa4gtlbdlO0-8dto&libraries=places', 'callback')
@@ -180,34 +195,35 @@ export class MapsViewComponent implements OnInit {
           if (item['Date_établissement_DPE'] > '2022-09-01') {
             let names: string = item['_geopoint'];
             let nameArr = names.split(',');
-            console.log(item['Etiquette_DPE'] == 'D');
             
             if (item['Etiquette_DPE'] == 'A') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE']);
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
             } 
 
             if (item['Etiquette_DPE'] == 'B') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/green_MarkerB.png', item['Etiquette_DPE']);
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/green_MarkerB.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
             } 
 
             if (item['Etiquette_DPE'] == 'C') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/paleblue_MarkerC.png', item['Etiquette_DPE']);
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/paleblue_MarkerC.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
             } 
 
             if (item['Etiquette_DPE'] == 'D') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE']);
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
             } 
 
             if (item['Etiquette_DPE'] == 'E') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/yellow_MarkerD.png', item['Etiquette_DPE']);
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/yellow_MarkerD.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
             } 
 
             if (item['Etiquette_DPE'] == 'F') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/orange_MarkerF.png', item['Etiquette_DPE']);
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/orange_MarkerF.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
             } 
             
           }
         }) 
+     
+        
         this.mapsService.requestReverseGeocoding(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe((reverseGeocoding: ReverseGeocoding) => {
           // console.log(reverseGeocoding);
         });
@@ -216,15 +232,27 @@ export class MapsViewComponent implements OnInit {
     }
   }
 
-  adress: string;
-  surface: string;
-  title: string;
+  adress: string = '';
+  dpeNumber: string = '';
+  dpeDate: string = '';
+  typeOfLodging: string = '';
+  buildingDate: string = '';
+  areaSize: string = '';
+  consommation: string = '';
+  moreAdress: string = '';
 
-  openInfo(marker: MapMarker, title: string, adress: string, surface: string) {
+  openInfo(marker: MapMarker, dpeNumber: string, dpeDate: string, adress: string, typeOfLodging: string, areaSize: string, consommation: string) {
+    
+    this.dpeDate = dpeDate;
+    this.dpeNumber = dpeNumber;
+    this.adress = adress;
+    this.typeOfLodging = typeOfLodging;
+    // this.buildingDate = buildingDate;
+    this.areaSize = areaSize;
+    this.consommation = consommation;
+    // this.moreAdress = moreAdress;
     this.infoWindow.open(marker);
-    this.markers.adress = adress;
-    this.markers.title = title;
-    this.surface = surface;
+    
   }
 
   
