@@ -32,40 +32,25 @@ export class MapsViewComponent implements OnInit {
   reverseGeocoding: ReverseGeocoding|undefined;
   markers: any = [];
   test: Dpe;
+  zoomLevel: any;
 
   addMarker(
     latitude: string, 
     longitude: string, 
+    markerIcon: string,
     consommation: string, 
-    // dpe_date: string,
-    // classe_energie: string,
-    // classe_ges: string,
-    // code_commune: string,
-    // consommation_energie: string,
-    // estimation_ges: string,
-    // adress: string,
-    // superficie: string,
-    // type_batiment: string
     ) {
     this.markers.push({
       position: {
         lat: parseFloat(latitude),
         lng: parseFloat(longitude),
       },
+      icon: markerIcon,
       label: {
         color: 'white',
         text: consommation,
       },
       title: consommation,
-      // dpe_date: dpe_date,
-      // classe_consommation_energie: classe_energie,
-      // classe_estimation_ges: classe_ges,
-      // commune_code: code_commune,
-      // consommation: consommation_energie,
-      // ges_estimation: estimation_ges,
-      // geo_adress: adress,
-      // surface: superficie,
-      // type: type_batiment,
       options: { 
       
        },
@@ -145,7 +130,31 @@ export class MapsViewComponent implements OnInit {
               console.log('yes');
               let names: string = item['_geopoint'];
               let nameArr = names.split(',');
-              this.addMarker(nameArr[0], nameArr[1], item['Etiquette_DPE']);
+              console.log(item['Etiquette_DPE']);
+              
+              // if (item['Etiquette_DPE'] == 'A') {
+              //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE']);
+              // } 
+  
+              // if (item['Etiquette_DPE'] == 'B') {
+              //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/green_MarkerB.png', item['Etiquette_DPE']);
+              // } 
+  
+              // if (item['Etiquette_DPE'] == 'C') {
+              //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/paleblue_MarkerC.png', item['Etiquette_DPE']);
+              // } 
+  
+              // if (item['Etiquette_DPE'] == 'D') {
+              //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE']);
+              // } 
+  
+              // if (item['Etiquette_DPE'] == 'E') {
+              //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/yellow_MarkerD.png', item['Etiquette_DPE']);
+              // } 
+  
+              // if (item['Etiquette_DPE'] == 'F') {
+              //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/orange_MarkerF.png', item['Etiquette_DPE']);
+              // } 
               // this.mapsService.requestReverseGeocoding(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe((reverseGeocoding: ReverseGeocoding) => {
               //   console.log(reverseGeocoding);
               // });
@@ -161,7 +170,8 @@ export class MapsViewComponent implements OnInit {
   subject: Subject<any> = new Subject();
   
   refreshDpe() {
-
+    if (this.zoomLevel > 14) {
+       
       this.mapsService.refreshDpe(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).pipe(debounceTime(500)).subscribe(dpe => {
         this.test = JSON.parse(JSON.stringify(dpe));
         // console.log(dpe);
@@ -170,13 +180,40 @@ export class MapsViewComponent implements OnInit {
           if (item['Date_établissement_DPE'] > '2022-09-01') {
             let names: string = item['_geopoint'];
             let nameArr = names.split(',');
-            this.addMarker(nameArr[0], nameArr[1], item['Etiquette_DPE']);
+            console.log(item['Etiquette_DPE'] == 'D');
+            
+            if (item['Etiquette_DPE'] == 'A') {
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE']);
+            } 
+
+            if (item['Etiquette_DPE'] == 'B') {
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/green_MarkerB.png', item['Etiquette_DPE']);
+            } 
+
+            if (item['Etiquette_DPE'] == 'C') {
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/paleblue_MarkerC.png', item['Etiquette_DPE']);
+            } 
+
+            if (item['Etiquette_DPE'] == 'D') {
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE']);
+            } 
+
+            if (item['Etiquette_DPE'] == 'E') {
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/yellow_MarkerD.png', item['Etiquette_DPE']);
+            } 
+
+            if (item['Etiquette_DPE'] == 'F') {
+              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/orange_MarkerF.png', item['Etiquette_DPE']);
+            } 
+            
           }
         }) 
         this.mapsService.requestReverseGeocoding(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe((reverseGeocoding: ReverseGeocoding) => {
           // console.log(reverseGeocoding);
         });
       });
+
+    }
   }
 
   adress: string;
@@ -190,12 +227,9 @@ export class MapsViewComponent implements OnInit {
     this.surface = surface;
   }
 
-  zoomLevel: any;
+  
   test2() {
     this.zoomLevel = this.map.getZoom();
-    if (this.zoomLevel > 17) {
-      console.log('tes');
-      this.map.setTilt(45)
-    }
+  
   }
 }
