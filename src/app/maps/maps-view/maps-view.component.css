@@ -1,4 +1,21 @@
-.my-map-search-field {
-    width: 100%;
-    height: 100%
+#map {
+    height: 90vh;
+    width: 100vw;
 }
+
+mgl-map  {
+    height: 90vh;
+    width: 100vw;
+}
+
+.marker {
+   
+    background-color: black;
+    width: 25px;
+    height: px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  
+  
