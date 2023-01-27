@@ -2,7 +2,7 @@
     <input #mapSearchField class="my-map-search-field" type="text" placeholder="Rechercher" style="margin-bottom: 0; height: 5vh;"/>    
 </div>
 <div *ngIf="apiLoaded | async" style="height: 90vh;">
-    <google-map google-map height="100%" width="100%" [center]="center" [options]="options" (idle)="refreshDpe()">
+    <google-map google-map height="100%" width="100%" [center]="center" [options]="options" (zoomChanged)="test2()" (idle)="refreshDpe()">
         <map-marker
         #markerElem="mapMarker"
         *ngFor="let marker of markers"
