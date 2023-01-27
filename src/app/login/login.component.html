@@ -1,0 +1,40 @@
+<div>
+    <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate id="sign-in">
+        <input 
+          type="text" 
+          class="form-control" 
+          name="username" 
+          [(ngModel)]="form.username" 
+          required 
+          #username="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && username.errors }" 
+          placeholder="Nom" 
+          class="field"
+        >
+        <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
+          Mettez votre nom!
+        </div>
+        <input 
+          type="password"
+          class="form-control"
+          name="password"
+          [(ngModel)]="form.password"
+          required
+          minlength="4"
+          #password="ngModel"
+          [ngClass]="{ 'is-invalid': f.submitted && password.errors }" 
+          placeholder="Mot de passe" 
+          class="field"
+        >
+        <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
+          <div *ngIf="password.errors['required']">Le mot de passe!</div>
+          <div *ngIf="password.errors['minlength']">
+            Le mot de passe a au moins 4 caractères
+          </div>
+        </div>
+        <button id="submit" name="sign-in-button" class="flat-button signin mt-5">Se connecter</button>
+        <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger mt-3" role="alert">
+          {{ errorMessage }}
+        </div>
+      </form>
+</div>

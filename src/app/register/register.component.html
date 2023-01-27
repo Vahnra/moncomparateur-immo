@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col s6 offset-s3">
+        <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+            <input 
+                type="text" 
+                class="field" 
+                name="username" 
+                [(ngModel)]="form.username" 
+                required minlength="3"
+                maxlength="20" 
+                #username="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+                placeholder="Nom"
+            >
+            <div class="invalid-feedback" *ngIf="username.errors && f.submitted">
+                <div *ngIf="username.errors['required']">Veuillez entrer un nom</div>
+                <div *ngIf="username.errors['minlength']">
+                    Ce nom est trop court.
+                </div>
+                <div *ngIf="username.errors['maxlength']">
+                    Ce nom est trop long.
+                </div>
+            </div>
+            <input 
+                type="text" 
+                class="field" 
+                name="email" 
+                [(ngModel)]="form.email" 
+                required minlength="3"
+                maxlength="20" 
+                #email="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                placeholder="Email"
+            >
+            <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+                <div *ngIf="email.errors['required']">Veuillez entrer un email</div>
+                <div *ngIf="email.errors['minlength']">
+                    Ce nom est trop court.
+                </div>
+                <div *ngIf="email.errors['maxlength']">
+                    Ce nom est trop long.
+                </div>
+            </div>
+            <input 
+                type="text" 
+                class="field" 
+                name="postalCode" 
+                [(ngModel)]="form.email" 
+                required minlength="5"
+                maxlength="5" 
+                #postalCode="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                placeholder="Code postal"
+            >
+            <div class="invalid-feedback" *ngIf="postalCode.errors && f.submitted">
+                <div *ngIf="postalCode.errors['required']">Veuillez entrer un code posta</div>
+                <div *ngIf="postalCode.errors['minlength']">
+                    Ce code postal n'est pas valide.
+                </div>
+                <div *ngIf="postalCode.errors['maxlength']">
+                    Ce code postal n'est pas valide.
+                </div>
+            </div>
+            <input 
+                type="password" 
+                name="password" 
+                [(ngModel)]="form.password" 
+                required minlength="4"
+                #password="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && password.errors }" 
+                class="field"
+                placeholder="Mot de passe"
+            >
+            <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
+                <div *ngIf="password.errors['required']">Votre mot de passe.</div>
+                <div *ngIf="password.errors['minlength']">
+                    Le mots de passe doit avoir au moins 4 caractères
+                </div>
+            </div>
+            <button id="submit" name="sign-in-button" class="flat-button signin mt-3">Inscription</button>
+            <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                {{ errorMessage }}
+            </div>
+            <div class="alert alert-success" *ngIf="isSuccessful">
+                Votre inscription s'est déroulé avec succès.
+            </div>
+        </form>
+    </div>
+</div>

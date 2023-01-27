@@ -1,0 +1,13 @@
+<input #mapSearchField class="my-map-search-field" type="text" placeholder="Rechercher">
+<div *ngIf="apiLoaded | async">
+    <google-map google-map height="87.5vh" width="100%" [center]="center" >
+        <!-- <map-marker
+        *ngFor="let marker of markers"
+        [position]="marker.position"
+        [label]="marker.label"
+        [title]="marker.title"
+        [options]="marker.options"
+        >
+        </map-marker> -->
+    </google-map>
+</div>

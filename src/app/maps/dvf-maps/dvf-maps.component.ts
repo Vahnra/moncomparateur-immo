@@ -5,6 +5,8 @@ import { catchError, map } from 'rxjs/operators';
 import { GoogleMap } from '@angular/google-maps';
 import { MapsService } from '../maps.service';
 import { Dvf } from 'src/app/models/dvf';
+import { ReverseGeocoding } from 'src/app/models/reverse-geocoding';
+import { CoordinatesData } from 'src/app/models/coordinates-data';
 
 @Component({
   selector: 'app-dvf-maps',
@@ -293,6 +295,8 @@ export class DvfMapsComponent implements OnInit {
   bbox: string;
   markers: any = [];
   test: Dvf;
+  commune: string;
+  codeCommune: string;
 
   addMarker(latitude: string, longitude: string, valeur_fonciere: string) {
     this.markers.push({
@@ -310,6 +314,18 @@ export class DvfMapsComponent implements OnInit {
        },
     });
   }
+
+  GeoJSON = {
+    type: 'Feature',
+    geometry: {
+        type: 'Polygon',
+        coordinates: [] as CoordinatesData[]
+    },
+    properties: {
+      fields: "geometry",
+      limit: 100
+    }
+  };
 
   constructor(httpClient: HttpClient, private mapsService: MapsService) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDAdytsYr9eTg45_wJMa4gtlbdlO0-8dto&libraries=places', 'callback')
@@ -360,17 +376,36 @@ export class DvfMapsComponent implements OnInit {
         }
       });
       this.map.fitBounds(bounds);
-      console.log(this.map.getCenter()?.lat());
+      // console.log(this.map.getCenter()?.lat());
       this.mapsService.refreshDvf(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe(dvf => {    
         this.test = JSON.parse(JSON.stringify(dvf))
         // console.log(test.features);
         this.test.features.forEach((item) => {
           // console.log(item['properties'])
           this.addMarker(item['geometry']['coordinates'][1], item['geometry']['coordinates'][0], item['properties']['code_voie'])
-
-        })
-        
+        })   
       })
+
+      this.mapsService.requestReverseGeocoding(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe((reverseGeocoding: ReverseGeocoding) => {
+        this.commune = reverseGeocoding.data[0].postal_code;
+        // console.log(this.commune);
+        
+        this.mapsService.getInseeCode(this.commune).subscribe(data => {
+          // console.log(JSON.parse(JSON.stringify(data))[0].code);
+          this.codeCommune = JSON.parse(JSON.stringify(data))[0].code;
+          this.mapsService.getCadastre(this.codeCommune).subscribe(data => {
+            console.log(data);
+            this.map.data.addGeoJson(data);
+   
+          })
+        });
+
+        
+        
+        
+      });
+      
+      
       
     })
   }, 1000)

@@ -281,6 +281,8 @@ export class MapsViewComponent implements OnInit {
           }
         });
         this.map.fitBounds(bounds);
+        console.log(JSON.stringify(this.map.getBounds()));
+        
 
         this.mapsService.refreshDpe(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe(dpe => {
           this.test = JSON.parse(JSON.stringify(dpe));  
@@ -290,7 +292,11 @@ export class MapsViewComponent implements OnInit {
           var month = today.getMonth() + 1;
           var year = today.getFullYear();
           var datenow = year + "-" + month + "-" + day;
-          console.log(datenow);
+          // console.log(datenow);
+
+          this.mapsService.requestReverseGeocoding(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe((reverseGeocoding: ReverseGeocoding) => {
+            console.log(reverseGeocoding);
+          });
 
           this.test.results.forEach((item) => {
             if (item['Date_établissement_DPE'] > '2022-09-01') {
@@ -298,12 +304,14 @@ export class MapsViewComponent implements OnInit {
               let names: string = item['_geopoint'];
               let nameArr = names.split(',');
               this.addMarker(nameArr[0], nameArr[1], item['Etiquette_DPE']);
-              this.mapsService.requestReverseGeocoding(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe((reverseGeocoding: ReverseGeocoding) => {
-                // console.log(reverseGeocoding);
-              });
+              // this.mapsService.requestReverseGeocoding(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe((reverseGeocoding: ReverseGeocoding) => {
+              //   console.log(reverseGeocoding);
+              // });
             }
           })
         });
+
+
       })
     }, 1000)
   }
