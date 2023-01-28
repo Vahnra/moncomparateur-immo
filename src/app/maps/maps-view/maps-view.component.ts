@@ -31,7 +31,7 @@ export class MapsViewComponent implements OnInit {
   
   options = {
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' })
     ],
     zoom: 15,
     center: latLng(48.8, 2.3)
@@ -39,7 +39,7 @@ export class MapsViewComponent implements OnInit {
 
   layersControl = {
     baseLayers: {
-      'Plan': tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
+      'Plan': tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' }),
       'Vue satellite': tileLayer('https://wxs.ign.fr/{ignApiKey}/geoportail/wmts?'+
       '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM'+
       '&LAYER={ignLayer}&STYLE={style}&FORMAT={format}'+
@@ -69,56 +69,32 @@ export class MapsViewComponent implements OnInit {
         apikey: 'choisirgeoportail',
         format: 'image/png',
         style: 'PCI vecteur'
-      })
+      }),
     },
     overlays: {
       'PBE': this.pbe
     }
   }
 
-  customPopup = `<div class="row" style="margin-bottom: 0;>
-    <div class="col s12" style="margin-bottom: 0;">
-      <div class="card z-depth-0" style="margin-bottom: 0;">
-    
-          <span class="col s6 right-align"><strong>N°DPE</strong></span><span class="col s6">{{ dpeNumber }}</span>
-          <span class="col s6 right-align"><strong>Date DPE</strong></span><span class="col s6">{{ dpeDate }}</span>
-          <span class="col s6 right-align"><strong>Etiquette DPE</strong></span><span class="col s6">{{ consommation }}</span>
-          <span class="col s6 right-align"><strong>Adresse</strong></span><span class="col s6">{{ adress }}</span>
-          <!-- <span class="col s6 right-align">Complément d'adresse</span><span class="col s6">{{ moreAdress }}</span> -->
-          <span class="col s6 right-align"><strong>Type</strong></span><span class="col s6">{{ typeOfLodging }}</span>
-          <!-- <span class="col s6 right-align">Année de construction</span><span class="col s6">{{ buildingDate }}</span> -->
-          <span class="col s6 right-align"><strong>Surface</strong></span><span class="col s6">{{ areaSize }}</span> 
-          <a class="center-align col s12" href="">Ajouter aux favoris</a>
-  
-      </div>
-    </div>
-  </div>`
-  
-
-
-  constructor(public httpClient: HttpClient, private mapsService: MapsService) {
- 
-  }
+  constructor(public httpClient: HttpClient, private mapsService: MapsService) { }
 
 
   ngOnInit() { }
 
   ngAfterViewInit(): void { }
 
-  
-
   test: Dpe;
-  
 
   onMapReady(map: Map) {
+
     // add geosearch
-    
     const searchControl = GeoSearchControl({
       provider: this.provider,
       style:"bar"
     });
     map.addControl(searchControl);
     
+
     map.addLayer(this.pbe)
     // console.log(map.getCenter());
     navigator.geolocation.getCurrentPosition((position) => {
