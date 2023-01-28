@@ -22,6 +22,7 @@
     "@angular/service-worker": "^15.0.0",
     "@asymmetrik/ngx-leaflet": "^15.0.1",
     "leaflet": "^1.9.3",
+    "leaflet-geosearch": "^3.7.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

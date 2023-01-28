@@ -1,10 +1,9 @@
-<div style="height: 90vh;"
+<div style="height: 95vh;"
      leaflet 
      [leafletOptions]="options"
      [leafletLayersControl]="layersControl"
      (leafletMapReady)="onMapReady($event)"
-     (leafletMapMove)="test2($event)"
-     
+     (leafletMapMoveEnd)="test2($event)"    
      [leafletLayers]="layerMainGroup"
 >
 </div>
