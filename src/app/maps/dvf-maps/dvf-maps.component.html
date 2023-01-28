@@ -2,14 +2,14 @@
 <div *ngIf="apiLoaded | async">
     <google-map google-map height="87.5vh" width="100%" [center]="center" [options]="options">
         <map-marker-clusterer [imagePath]="markerClustererImagePath">
-        <map-marker
-        *ngFor="let marker of markers"
-        [position]="marker.position"
-        [label]="marker.label"
-        [title]="marker.title"
-        [options]="marker.options"
-        >
-        </map-marker>
-    </map-marker-clusterer>
+            <map-marker
+            *ngFor="let marker of markers"
+            [position]="marker.position"
+            [label]="marker.label"
+            [title]="marker.title"
+            [options]="marker.options"
+            >
+            </map-marker>
+        </map-marker-clusterer>
     </google-map>
 </div>

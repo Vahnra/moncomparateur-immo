@@ -16,11 +16,11 @@ export class MapsViewComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap
   @ViewChild('mapSearchField') searchField: ElementRef;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow: MapInfoWindow;
-  
+
   apiLoaded: Observable<boolean>;
   center: google.maps.LatLngLiteral;
   options: google.maps.MapOptions = {
-    center: {lat: 48.866667, lng:  2.333333},
+    center: { lat: 48.866667, lng: 2.333333 },
     zoom: 12,
     disableDefaultUI: true,
     tilt: 0,
@@ -29,16 +29,19 @@ export class MapsViewComponent implements OnInit {
   bbox: string;
   bounds: object;
   dpes$: Observable<Dpe[]> = new Observable();
-  reverseGeocoding: ReverseGeocoding|undefined;
+  reverseGeocoding: ReverseGeocoding | undefined;
   markers: any = [];
+  lookup: any = [];
   test: Dpe;
   zoomLevel: any;
+  subject: Subject<any> = new Subject();
+  enableCall: boolean = true;
 
   addMarker(
-    latitude: string, 
-    longitude: string, 
+    latitude: string,
+    longitude: string,
     markerIcon: string,
-    consommation: string, 
+    consommation: string,
     dpeNumber: string,
     dpeDate: string,
     adress: string,
@@ -46,7 +49,7 @@ export class MapsViewComponent implements OnInit {
     typeOfLodging: string,
     buildingDate: string,
     areaSize: string
-    ) {
+  ) {
     this.markers.push({
       position: {
         lat: parseFloat(latitude),
@@ -65,24 +68,21 @@ export class MapsViewComponent implements OnInit {
       buildingDate: buildingDate,
       areaSize: areaSize,
       title: consommation,
-      options: { 
-      
-       },
+      options: {
+      },
     });
   }
   markerClustererImagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
 
   constructor(public httpClient: HttpClient, private mapsService: MapsService) {
     this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDAdytsYr9eTg45_wJMa4gtlbdlO0-8dto&libraries=places', 'callback')
-        .pipe(
-          map(() => true),
-          catchError(() => of(false)),
-        );
+      .pipe(
+        map(() => true),
+        catchError(() => of(false)),
+      );
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() { }
 
   ngAfterViewInit(): void {
 
@@ -95,7 +95,7 @@ export class MapsViewComponent implements OnInit {
         };
 
         this.mapsService.refreshDpe(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe(dpe => {
-   
+
         });
         this.mapsService.requestReverseGeocoding(this.center.lat, this.center.lng).subscribe((reverseGeocoding: ReverseGeocoding) => {
           // console.log(reverseGeocoding);
@@ -124,10 +124,10 @@ export class MapsViewComponent implements OnInit {
         });
         this.map.fitBounds(bounds);
         console.log(JSON.stringify(this.map.getBounds()));
-        
+
 
         this.mapsService.refreshDpe(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe(dpe => {
-          this.test = JSON.parse(JSON.stringify(dpe));  
+          this.test = JSON.parse(JSON.stringify(dpe));
           this.markers = [];
           let today = new Date;
           var day = today.getDate();
@@ -146,27 +146,27 @@ export class MapsViewComponent implements OnInit {
               let names: string = item['_geopoint'];
               let nameArr = names.split(',');
               console.log(item['Etiquette_DPE']);
-              
+
               // if (item['Etiquette_DPE'] == 'A') {
               //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE']);
               // } 
-  
+
               // if (item['Etiquette_DPE'] == 'B') {
               //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/green_MarkerB.png', item['Etiquette_DPE']);
               // } 
-  
+
               // if (item['Etiquette_DPE'] == 'C') {
               //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/paleblue_MarkerC.png', item['Etiquette_DPE']);
               // } 
-  
+
               // if (item['Etiquette_DPE'] == 'D') {
               //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE']);
               // } 
-  
+
               // if (item['Etiquette_DPE'] == 'E') {
               //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/yellow_MarkerD.png', item['Etiquette_DPE']);
               // } 
-  
+
               // if (item['Etiquette_DPE'] == 'F') {
               //   this.addMarker(nameArr[0], nameArr[1],'/assets/icons/orange_MarkerF.png', item['Etiquette_DPE']);
               // } 
@@ -182,51 +182,73 @@ export class MapsViewComponent implements OnInit {
     }, 1000)
   }
 
-  subject: Subject<any> = new Subject();
-  
+
+
+  isLocationFree(search: any) {
+    for (var i = 0, l = this.lookup.length; i < l; i++) {
+      if (this.lookup[i][0] === search[0] && this.lookup[i][1] === search[1]) {
+        return false
+      }
+    }
+    return true
+  }
+
   refreshDpe() {
+    
     if (this.zoomLevel > 14) {
-       
+      if (!this.enableCall) return;
+
+      this.enableCall = false;
       this.mapsService.refreshDpe(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).pipe(debounceTime(500)).subscribe(dpe => {
         this.test = JSON.parse(JSON.stringify(dpe));
-        // console.log(dpe);
-        this.markers = [];
+
         this.test.results.forEach((item) => {
-          if (item['Date_établissement_DPE'] > '2022-09-01') {
-            let names: string = item['_geopoint'];
-            let nameArr = names.split(',');
-            
-            if (item['Etiquette_DPE'] == 'A') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
-            } 
+          let names: string = item['_geopoint'];
+          let nameArr = names.split(',');
+          if (this.isLocationFree(nameArr) == true) {
 
-            if (item['Etiquette_DPE'] == 'B') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/green_MarkerB.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
-            } 
+            if (item['Date_établissement_DPE'] > '2022-09-01') {
 
-            if (item['Etiquette_DPE'] == 'C') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/paleblue_MarkerC.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
-            } 
+              if (item['Etiquette_DPE'] == 'A') {
+                this.lookup.push([nameArr[0], nameArr[1]]);
+                this.addMarker(nameArr[0], nameArr[1], '/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
+              }
 
-            if (item['Etiquette_DPE'] == 'D') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
-            } 
+              if (item['Etiquette_DPE'] == 'B') {
+                this.lookup.push([nameArr[0], nameArr[1]]);
+                this.addMarker(nameArr[0], nameArr[1], '/assets/icons/green_MarkerB.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
+              }
 
-            if (item['Etiquette_DPE'] == 'E') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/yellow_MarkerD.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
-            } 
+              if (item['Etiquette_DPE'] == 'C') {
+                this.lookup.push([nameArr[0], nameArr[1]]);
+                this.addMarker(nameArr[0], nameArr[1], '/assets/icons/paleblue_MarkerC.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
+              }
 
-            if (item['Etiquette_DPE'] == 'F') {
-              this.addMarker(nameArr[0], nameArr[1],'/assets/icons/orange_MarkerF.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
-            } 
-            
+              if (item['Etiquette_DPE'] == 'D') {
+                this.lookup.push([nameArr[0], nameArr[1]]);
+                this.addMarker(nameArr[0], nameArr[1], '/assets/icons/darkgreen_MarkerA.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
+              }
+
+              if (item['Etiquette_DPE'] == 'E') {
+                this.lookup.push([nameArr[0], nameArr[1]]);
+                this.addMarker(nameArr[0], nameArr[1], '/assets/icons/yellow_MarkerD.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
+              }
+
+              if (item['Etiquette_DPE'] == 'F') {
+                this.lookup.push([nameArr[0], nameArr[1]]);
+                this.addMarker(nameArr[0], nameArr[1], '/assets/icons/orange_MarkerF.png', item['Etiquette_DPE'], item['N°DPE'], item['Date_établissement_DPE'], item['Adresse_(BAN)'], item['Complément_d\'adresse_logement'], item['Type_bâtiment'], item['Année_construction'], item['Surface_habitable_logement']);
+              }
+            }
           }
-        }) 
-     
-        
+        })
+
+
         this.mapsService.requestReverseGeocoding(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe((reverseGeocoding: ReverseGeocoding) => {
           // console.log(reverseGeocoding);
         });
+
+        setTimeout(() => this.enableCall = true, 1000);
+
       });
 
     }
@@ -242,7 +264,7 @@ export class MapsViewComponent implements OnInit {
   moreAdress: string = '';
 
   openInfo(marker: MapMarker, dpeNumber: string, dpeDate: string, adress: string, typeOfLodging: string, areaSize: string, consommation: string) {
-    
+
     this.dpeDate = dpeDate;
     this.dpeNumber = dpeNumber;
     this.adress = adress;
@@ -252,12 +274,11 @@ export class MapsViewComponent implements OnInit {
     this.consommation = consommation;
     // this.moreAdress = moreAdress;
     this.infoWindow.open(marker);
-    
+
   }
 
-  
   test2() {
     this.zoomLevel = this.map.getZoom();
-  
+
   }
 }

@@ -5,7 +5,7 @@
 <div *ngIf="apiLoaded | async" style="height: 90vh;">
   <google-map google-map height="100%" width="100%" [center]="center" [options]="options" (zoomChanged)="test2()"
     (idle)="refreshDpe()">
-    <!-- <map-marker-clusterer [imagePath]="markerClustererImagePath"> -->
+    <map-marker-clusterer [imagePath]="markerClustererImagePath">
       <map-marker 
         #markerElem="mapMarker" 
         *ngFor="let marker of markers" 
@@ -16,7 +16,7 @@
         (mapClick)="openInfo(markerElem, marker.dpeNumber,  marker.dpeDate, marker.adress, marker.typeOfLodging, marker.areaSize, marker.title)"
       >
       </map-marker>
-    <!-- </map-marker-clusterer> -->
+    </map-marker-clusterer>
     <map-info-window>
       <div class="row" style="margin-bottom: 0;">
         <div class="col s12" style="margin-bottom: 0;">
