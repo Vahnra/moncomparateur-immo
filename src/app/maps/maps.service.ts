@@ -31,7 +31,7 @@ export class MapsService {
   private dpe$: Subject<Dpe> = new Subject();
 
   refreshDpe(latitude: number|undefined, longitude: number|undefined) {
-    return this.httpClient.get<Dpe[]>(`${this.dpeUrl}${longitude}:${latitude}:250`);
+    return this.httpClient.get<Dpe[]>(`${this.dpeUrl}${longitude}:${latitude}:500`);
   }
 
   refreshDvf(latitude: number|undefined, longitude: number|undefined) {

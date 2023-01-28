@@ -5,6 +5,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { DvfMapsComponent } from './dvf-maps/dvf-maps.component';
 import { SitadelMapsComponent } from './sitadel-maps/sitadel-maps.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 
 
@@ -19,6 +20,7 @@ import { SitadelMapsComponent } from './sitadel-maps/sitadel-maps.component';
     GoogleMapsModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    LeafletModule
   ]
 })
 export class MapsModule { }

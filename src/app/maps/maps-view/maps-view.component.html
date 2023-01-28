@@ -1,40 +1,10 @@
-<div style="min-height: 5vh; margin-bottom: 0;">
-  <input #mapSearchField class="my-map-search-field" type="text" placeholder="Rechercher"
-    style="margin-bottom: 0; height: 5vh;" />
-</div>
-<div *ngIf="apiLoaded | async" style="height: 90vh;">
-  <google-map google-map height="100%" width="100%" [center]="center" [options]="options" (zoomChanged)="test2()"
-    (idle)="refreshDpe()">
-    <map-marker-clusterer [imagePath]="markerClustererImagePath">
-      <map-marker 
-        #markerElem="mapMarker" 
-        *ngFor="let marker of markers" 
-        [position]="marker.position"
-        [title]="marker.title" 
-        [icon]="marker.icon" 
-        [options]="marker.options"
-        (mapClick)="openInfo(markerElem, marker.dpeNumber,  marker.dpeDate, marker.adress, marker.typeOfLodging, marker.areaSize, marker.title)"
-      >
-      </map-marker>
-    </map-marker-clusterer>
-    <map-info-window>
-      <div class="row" style="margin-bottom: 0;">
-        <div class="col s12" style="margin-bottom: 0;">
-          <div class="card z-depth-0" style="margin-bottom: 0;">
-         
-              <span class="col s6 right-align"><strong>N°DPE</strong></span><span class="col s6">{{ dpeNumber }}</span>
-              <span class="col s6 right-align"><strong>Date DPE</strong></span><span class="col s6">{{ dpeDate }}</span>
-              <span class="col s6 right-align"><strong>Etiquette DPE</strong></span><span class="col s6">{{ consommation }}</span>
-              <span class="col s6 right-align"><strong>Adresse</strong></span><span class="col s6">{{ adress }}</span>
-              <!-- <span class="col s6 right-align">Complément d'adresse</span><span class="col s6">{{ moreAdress }}</span> -->
-              <span class="col s6 right-align"><strong>Type</strong></span><span class="col s6">{{ typeOfLodging }}</span>
-              <!-- <span class="col s6 right-align">Année de construction</span><span class="col s6">{{ buildingDate }}</span> -->
-              <span class="col s6 right-align"><strong>Surface</strong></span><span class="col s6">{{ areaSize }}</span> 
-              <a class="center-align col s12" href="">Ajouter aux favoris</a>
-       
-          </div>
-        </div>
-      </div>
-    </map-info-window>
-  </google-map>
+<div style="height: 90vh;"
+     leaflet 
+     [leafletOptions]="options"
+     [leafletLayersControl]="layersControl"
+     (leafletMapReady)="onMapReady($event)"
+     (leafletMapMove)="test2($event)"
+     
+     [leafletLayers]="layerMainGroup"
+>
 </div>
