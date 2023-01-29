@@ -5,5 +5,8 @@
      (leafletMapReady)="onMapReady($event)"
      (leafletMapMoveEnd)="test2($event)"    
      [leafletLayers]="layerMainGroup"
+     [leafletMarkerCluster]="markerClusterData"
+     (leafletMarkerClusterReady)="markerClusterReady($event)"
+
 >
 </div>

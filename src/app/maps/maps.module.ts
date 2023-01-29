@@ -6,6 +6,7 @@ import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import { DvfMapsComponent } from './dvf-maps/dvf-maps.component';
 import { SitadelMapsComponent } from './sitadel-maps/sitadel-maps.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 
 
 
@@ -20,7 +21,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     GoogleMapsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    LeafletModule
+    LeafletModule,
+    LeafletMarkerClusterModule
   ]
 })
 export class MapsModule { }

@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
-    if (req.headers.get("continue")){
+
            
       const authToken = this.storageService.getToken();
       req = req.clone({
@@ -24,7 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
       });
       return next.handle(req);
-    }
+
     return next.handle(req);
   }
 }

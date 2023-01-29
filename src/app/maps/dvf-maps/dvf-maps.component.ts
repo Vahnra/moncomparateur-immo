@@ -1,12 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { GoogleMap } from '@angular/google-maps';
+
 import { MapsService } from '../maps.service';
-import { Dvf } from 'src/app/models/dvf';
-import { ReverseGeocoding } from 'src/app/models/reverse-geocoding';
-import { CoordinatesData } from 'src/app/models/coordinates-data';
+import { circle, latLng, polygon, tileLayer, Map, marker, icon, Icon, LayerGroup } from 'leaflet';
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+import { Dpe } from 'src/app/models/dpe';
+import * as Leaflet from 'leaflet';
 
 @Component({
   selector: 'app-dvf-maps',
@@ -14,60 +13,74 @@ import { CoordinatesData } from 'src/app/models/coordinates-data';
   styleUrls: ['./dvf-maps.component.css']
 })
 export class DvfMapsComponent implements OnInit {
-  @ViewChild(GoogleMap) map: GoogleMap
-  @ViewChild('mapSearchField') searchField: ElementRef;
+  map!: Leaflet.Map
+  enableCall: boolean = true;
 
-  apiLoaded: Observable<boolean>;
-  center: google.maps.LatLngLiteral;
-  options: google.maps.MapOptions = {
-    center: {lat: 48.866667, lng:  2.333333},
-    zoom: 12,
-    disableDefaultUI: true,
-    minZoom: 10,
-    mapId: '77984aa3e0b4e0f3'
-  };
-  bbox: string;
-  markers: any = [];
-  test: Dvf;
-  commune: string;
-  codeCommune: string;
-  markerClustererImagePath = 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m';
+  pbe: LayerGroup = new LayerGroup();
+  provider = new OpenStreetMapProvider();
+  markerClusterGroup: Leaflet.MarkerClusterGroup;
+  markerClusterData: Leaflet.Marker[] = [];
+  markerClusterOptions: Leaflet.MarkerClusterGroupOptions;
 
-  addMarker(latitude: string, longitude: string, valeur_fonciere: string) {
-    this.markers.push({
-      position: {
-        lat: latitude,
-        lng: longitude,
-      },
-      label: {
-        color: 'white',
-        text: valeur_fonciere,
-      },
-      title: valeur_fonciere,
-      options: { 
-      
-       },
-    });
+  lookup: any = [];
+  layerMainGroup: LayerGroup[] = [];
+  center: any;
+  markerData: Leaflet.Marker[] = [];
+
+  customOptions = {
+    'minWidth': 300,
   }
 
-  GeoJSON = {
-    type: 'Feature',
-    geometry: {
-        type: 'Polygon',
-        coordinates: [] as CoordinatesData[]
-    },
-    properties: {
-      fields: "geometry",
-      limit: 100
-    }
+  options = {
+    layers: [
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' })
+    ],
+    zoom: 15,
+    center: latLng(48.8, 2.3)
   };
 
+  layersControl = {
+    baseLayers: {
+      'Plan': tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' }),
+      'Vue satellite': tileLayer('https://wxs.ign.fr/{ignApiKey}/geoportail/wmts?' +
+        '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM' +
+        '&LAYER={ignLayer}&STYLE={style}&FORMAT={format}' +
+        '&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}', {
+        ignApiKey: 'decouverte',
+        ignLayer: 'ORTHOIMAGERY.ORTHOPHOTOS',
+        style: 'normal',
+        format: 'image/jpeg',
+        service: 'WMTS'
+      }),
+      'Plan IGN': tileLayer('https://wxs.ign.fr/{ignApiKey}/geoportail/wmts?' +
+        '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM' +
+        '&LAYER={ignLayer}&STYLE={style}&FORMAT={format}' +
+        '&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}',
+        {
+          ignApiKey: 'decouverte',
+          ignLayer: 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
+          style: 'normal',
+          format: 'image/png',
+          service: 'WMTS',
+        }),
+      'Plan cadastre': tileLayer('https://wxs.ign.fr/{apikey}/geoportail/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE={style}&TILEMATRIXSET=PM&FORMAT={format}&LAYER=CADASTRALPARCELS.PARCELLAIRE_EXPRESS&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
+        attribution: '<a target="_blank" href="https://www.geoportail.gouv.fr/">Geoportail France</a>',
+        bounds: [[-75, -180], [81, 180]],
+        minZoom: 2,
+        maxZoom: 19,
+        apikey: 'choisirgeoportail',
+        format: 'image/png',
+        style: 'PCI vecteur',
+      }),
+    },
+    overlays: {
+      'PBE': this.pbe,
+    }
+  }
+
+
   constructor(httpClient: HttpClient, private mapsService: MapsService) {
-    this.apiLoaded = httpClient.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyDAdytsYr9eTg45_wJMa4gtlbdlO0-8dto&libraries=places', 'callback')
-        .pipe(
-          map(() => true),
-          catchError(() => of(false)),
-        );
+
   }
 
   ngOnInit() {
@@ -76,71 +89,47 @@ export class DvfMapsComponent implements OnInit {
 
   ngAfterViewInit(): void {
   
-    setTimeout(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
-      // let bound = JSON.parse(JSON.stringify(this.map.getBounds())) 
-      // console.log(this.bbox);
-      // this.bbox = bound.west + ',' + bound.south + ',' + bound.east + ',' + bound.north
-      this.mapsService.refreshDvf(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe(dvf => {
-        // console.log(dpe);
-      });
-      
+  }
+
+  onMapReady(map: Map) {
+
+    // add geosearch
+    const searchControl = GeoSearchControl({
+      provider: this.provider,
+      style: "bar"
     });
+    map.addControl(searchControl);
+    map.addLayer(this.pbe)
+ 
+    navigator.geolocation.getCurrentPosition((position) => {
+      map.setView([position.coords.latitude, position.coords.longitude])
+    })// End of get current position
 
-    const searchBox = new google.maps.places.SearchBox(
-      this.searchField.nativeElement,
-    );
-    
-    searchBox.addListener('places_changed', () => {
-      const places = searchBox.getPlaces();
-      if (places?.length === 0) {
-        return;
+  }
+
+  test2($event: any) {
+
+    if (!this.enableCall) return;
+    this.enableCall = false;
+
+
+
+    setTimeout(() => this.enableCall = true, 1000);
+
+  }
+
+  markerClusterReady(group: Leaflet.MarkerClusterGroup) {
+    this.markerClusterGroup = group;
+  }
+
+  //check if marker is already put at the exact same coordinate
+  isLocationFree(search: any) {
+    for (var i = 0, l = this.lookup.length; i < l; i++) {
+      if (this.lookup[i][0] === search[0] && this.lookup[i][1] === search[1]) {
+        return false
       }
-      const bounds = new google.maps.LatLngBounds();
-      places?.forEach(place => {
-        if (!place.geometry || !place.geometry.location) {
-          return
-        }
-        if (place.geometry.viewport) {
-          bounds.union(place.geometry.viewport);
-        } else {
-          bounds.extend(place.geometry.location)
-        }
-      });
-      this.map.fitBounds(bounds);
-      // console.log(this.map.getCenter()?.lat());
-      this.mapsService.refreshDvf(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe(dvf => {    
-        this.test = JSON.parse(JSON.stringify(dvf))
-        // console.log(test.features);
-        this.test.features.forEach((item) => {
-          // console.log(item['properties'])
-          this.addMarker(item['geometry']['coordinates'][1], item['geometry']['coordinates'][0], item['properties']['code_voie'])
-        })   
-      })
-
-      this.mapsService.requestReverseGeocoding(this.map.getCenter()?.lat(), this.map.getCenter()?.lng()).subscribe((reverseGeocoding: ReverseGeocoding) => {
-        this.commune = reverseGeocoding.data[0].postal_code;
-        // console.log(this.commune);
-        
-        this.mapsService.getInseeCode(this.commune).subscribe(data => {
-          // console.log(JSON.parse(JSON.stringify(data))[0].code);
-          this.codeCommune = JSON.parse(JSON.stringify(data))[0].code;
-          this.mapsService.getCadastre(this.codeCommune).subscribe(data => {
-            console.log(data);
-            this.map.data.addGeoJson(data);
-   
-          })
-        });   
-      });
-      
-      
-      
-    })
-  }, 1000)
+    }
+    return true
   }
 
 }

@@ -28,11 +28,10 @@ export class RegisterComponent {
 
     this.authService.register(username, email, password, postalCode).subscribe({
       next: data => {
-        console.log(data);
-        if (data.error) {
-          this.isSignUpFailed = true;
-          this.errorMessage = data.error;
-        }
+  
+      },
+      error: error => {
+        
       }
     });
   }
