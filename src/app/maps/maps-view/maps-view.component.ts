@@ -248,7 +248,6 @@ export class MapsViewComponent implements OnInit {
         console.log(data); 
       },
       error: error => console.log(error)
-      
     })
   }
   
