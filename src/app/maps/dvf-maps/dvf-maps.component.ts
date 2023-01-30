@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { MapsService } from '../maps.service';
@@ -6,6 +6,8 @@ import { circle, latLng, polygon, tileLayer, Map, marker, icon, Icon, LayerGroup
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { Dpe } from 'src/app/models/dpe';
 import * as Leaflet from 'leaflet';
+import { FavoritesService } from 'src/app/_services/favorites.service';
+import { Dvf } from 'src/app/models/dvf';
 
 @Component({
   selector: 'app-dvf-maps',
@@ -26,6 +28,8 @@ export class DvfMapsComponent implements OnInit {
   layerMainGroup: LayerGroup[] = [];
   center: any;
   markerData: Leaflet.Marker[] = [];
+  currentMarker: Leaflet.Marker;
+  test: Dvf;
 
   customOptions = {
     'minWidth': 300,
@@ -79,9 +83,12 @@ export class DvfMapsComponent implements OnInit {
   }
 
 
-  constructor(httpClient: HttpClient, private mapsService: MapsService) {
-
-  }
+  constructor(
+    public httpClient: HttpClient, 
+    private mapsService: MapsService, 
+    private favoritesService: FavoritesService, 
+    private zone: NgZone
+    ) { }
 
   ngOnInit() {
     
@@ -112,14 +119,66 @@ export class DvfMapsComponent implements OnInit {
     if (!this.enableCall) return;
     this.enableCall = false;
 
+    this.mapsService.refreshDvf($event.target.getCenter().lat, $event.target.getCenter().lng).subscribe(data => {
+      
+      this.test = JSON.parse(JSON.stringify(data))
 
+      this.test.features.forEach((item) => {
 
+        this.addMarker(item);
+
+      }) //End of foreach
+      this.markerClusterGroup.clearLayers()
+      this.markerClusterData = this.markerData;
+      this.markerClusterGroup.addLayers(this.markerClusterData)
+      
+    }) // End of map service call
+
+    console.log(this.lookup);
+    
     setTimeout(() => this.enableCall = true, 1000);
 
   }
 
   markerClusterReady(group: Leaflet.MarkerClusterGroup) {
     this.markerClusterGroup = group;
+  }
+
+  addMarker(item: any) {
+
+    let nameArr = [item.properties.lat, item.properties.lon];
+
+    if (this.isLocationFree(nameArr) == true) {
+
+      // console.log(item);
+      
+        this.lookup.push([item.properties.lat, item.properties.lon]);
+        
+        let customPopup = `
+              <div class="row" style="margin-bottom: 0;>
+                <div class="col s12" style="margin-bottom: 0;">
+                  <div class="card z-depth-0" style="margin-bottom: 0;">
+                
+                      
+                      <a class="center-align col s12 favorite-button" href="#" >Ajouter aux favoris</a>
+              
+                  </div>
+                </div>
+              </div>`
+
+        this.markerData.push(Leaflet.marker([item.properties.lat, item.properties.lon], {
+          icon: icon({
+            ...Icon.Default.prototype.options,
+            iconUrl: 'assets/marker-icon.png',
+            iconRetinaUrl: 'assets/marker-icon-2x.png',
+            shadowUrl: 'assets/marker-shadow.png'
+          })
+        }).on('click', () => {
+          this.zone.run(() => this.onMarkerClick(item))
+        }));
+      
+      
+    }
   }
 
   //check if marker is already put at the exact same coordinate
@@ -132,4 +191,8 @@ export class DvfMapsComponent implements OnInit {
     return true
   }
 
+  onMarkerClick(item: any) {
+    this.currentMarker = item;
+    // console.log(item);  
+  }
 }

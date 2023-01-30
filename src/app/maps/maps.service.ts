@@ -8,7 +8,8 @@ import { ReverseGeocoding } from '../models/reverse-geocoding';
 const httpOptions = {
   headers: new HttpHeaders({ 
     'Content-Type': 'application/json',
-    'accepts': '*/*'
+    'Access-Control-Allow-Origin':'*',
+    'continue': 'continue'
   })
 };
 
@@ -20,7 +21,7 @@ export class MapsService {
   constructor(private httpClient: HttpClient) { }
 
   // private dpeUrl = 'https://data.ademe.fr/data-fair/api/v1/datasets/dpe-france/lines?page=1&size=1000&select=%2A&q_mode=simple&geo_distance=';
-  private dpeUrl = 'https://data.ademe.fr/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines?page=1&size=1000&geo_distance=';
+  private dpeUrl = 'https://data.ademe.fr/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines?page=1&size=10000&geo_distance=';
   private dvfUrl = 'https://api.cquest.org/dvf?';
   private geocodingUrl = 'http://api.positionstack.com/v1/reverse?access_key=936b3bfe42efae87b5705d9df35b9933&query='
   private sitadelUrl = 'https://api-preprod.sogefi-sig.com/2Besqie6xBzrxMj85psAPXm7cLy7A57eoEx/audrso/v2/open/dossiers/intersects'
