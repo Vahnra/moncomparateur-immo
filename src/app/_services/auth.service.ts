@@ -20,14 +20,17 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   // Inscription
-  register(username: string, email: string, password: string, postalCode: string): Observable<any> {
+  register(username: string, email: string, password: string, postalCode: string, birthdayDate: Date, company: string, phoneNumbers: string): Observable<any> {
     return this.http.post(
       AUTH_API + 'register',
       {
         username,
         email,
         password,
-        postalCode
+        postalCode,
+        birthdayDate, 
+        company, 
+        phoneNumbers
       },
       httpOptions
     );

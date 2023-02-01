@@ -33,11 +33,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "./node_modules/leaflet/dist/leaflet.css",
-              "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css"
+              "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ],
             "serviceWorker": true,
             "ngswConfigPath": "ngsw-config.json"
           },
@@ -46,8 +50,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -100,6 +104,7 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
+              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css",
               "./node_modules/leaflet/dist/leaflet.css",
               "./node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css"

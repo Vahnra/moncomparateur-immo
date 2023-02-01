@@ -7,6 +7,7 @@ import { DvfMapsComponent } from './dvf-maps/dvf-maps.component';
 import { SitadelMapsComponent } from './sitadel-maps/sitadel-maps.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -14,7 +15,8 @@ import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluste
   declarations: [
     MapsViewComponent,
     DvfMapsComponent,
-    SitadelMapsComponent
+    SitadelMapsComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,

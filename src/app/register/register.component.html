@@ -1,9 +1,9 @@
 <div class="row">
-    <div class="col s6 offset-s3">
+    <div class="col-6 offset-s3">
         <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
             <input 
                 type="text" 
-                class="field" 
+                class="col-12" 
                 name="username" 
                 [(ngModel)]="form.username" 
                 required minlength="3"
@@ -23,7 +23,7 @@
             </div>
             <input 
                 type="text" 
-                class="field" 
+                class="col-12" 
                 name="email" 
                 [(ngModel)]="form.email" 
                 required minlength="3"
@@ -43,9 +43,9 @@
             </div>
             <input 
                 type="text" 
-                class="field" 
+                class="col-12" 
                 name="postalCode" 
-                [(ngModel)]="form.email" 
+                [(ngModel)]="form.postalCode" 
                 required minlength="5"
                 maxlength="5" 
                 #postalCode="ngModel" 
@@ -53,12 +53,64 @@
                 placeholder="Code postal"
             >
             <div class="invalid-feedback" *ngIf="postalCode.errors && f.submitted">
-                <div *ngIf="postalCode.errors['required']">Veuillez entrer un code posta</div>
+                <div *ngIf="postalCode.errors['required']">Veuillez entrer un code postal</div>
                 <div *ngIf="postalCode.errors['minlength']">
                     Ce code postal n'est pas valide.
                 </div>
                 <div *ngIf="postalCode.errors['maxlength']">
                     Ce code postal n'est pas valide.
+                </div>
+            </div>
+            <input 
+                type="text" 
+                class="col-12" 
+                name="company" 
+                [(ngModel)]="form.company" 
+                required minlength="5"
+                maxlength="5" 
+                #company="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                placeholder="Nom de votre agence"
+            >
+            <div class="invalid-feedback" *ngIf="company.errors && f.submitted">
+                <div *ngIf="company.errors['required']">Veuillez entrer le nom de votre agence</div>
+                <div *ngIf="company.errors['minlength']">
+                    Ce nom n'est pas valide.
+                </div>
+                <div *ngIf="company.errors['maxlength']">
+                    Ce nom n'est pas valide.
+                </div>
+            </div>
+            <input 
+                type="date" 
+                class="col-12" 
+                name="birthdayDate" 
+                [(ngModel)]="form.birthdayDate" 
+                #birthdayDate="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                placeholder="Votre date de naissance"
+            >
+            <div class="invalid-feedback" *ngIf="birthdayDate.errors && f.submitted">
+                <div *ngIf="birthdayDate.errors['required']">Veuillez entrer votre date de naissance</div>
+            </div>
+            <input 
+                type="text" 
+                class="col-12" 
+                name="phoneNumbers" 
+                [(ngModel)]="form.phoneNumbers" 
+                required minlength="10"
+                maxlength="10" 
+                #phoneNumbers="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                placeholder="Numéro de téléphone"
+            >
+            <div class="invalid-feedback" *ngIf="phoneNumbers.errors && f.submitted">
+                <div *ngIf="phoneNumbers.errors['required']">Veuillez entrer un numéro de téléphone</div>
+                <div *ngIf="phoneNumbers.errors['minlength']">
+                    Ce numéro n'est pas valide.
+                </div>
+                <div *ngIf="phoneNumbers.errors['maxlength']">
+                    Ce numéro n'est pas valide.
                 </div>
             </div>
             <input 

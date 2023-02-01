@@ -11,6 +11,9 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './_helpers/auth.interceptor';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { AdminModule } from './admin/admin.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -24,13 +27,16 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     MapsModule,
     FormsModule,
     HttpClientModule,
+    AdminModule,
     LeafletModule,
+    UserModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    BrowserAnimationsModule
   ],
   providers: [
     {

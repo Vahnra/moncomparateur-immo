@@ -13,7 +13,10 @@ export class RegisterComponent {
     username: null,
     email: null,
     password: null,
-    postalCode: null
+    postalCode: null,
+    birthdayDate: null,
+    company: null,
+    phoneNumbers: null
   };
   isSuccessful = false;
   isSignUpFailed = false;
@@ -24,9 +27,12 @@ export class RegisterComponent {
   }
 
   onSubmit(): void {
-    const { username, email, password, postalCode } = this.form;
+    
+    const { username, email, password, postalCode, birthdayDate, company, phoneNumbers } = this.form;
 
-    this.authService.register(username, email, password, postalCode).subscribe({
+    
+
+    this.authService.register(username, email, password, postalCode, birthdayDate, company, phoneNumbers).subscribe({
       next: data => {
   
       },
