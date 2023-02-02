@@ -27,9 +27,13 @@ export class LoginComponent {
       next: data => {
         this.storageService.saveUser(data);
         console.log(data);
-        
+        this.router.navigate([`/` ]);
    
       }
     });
+  }
+
+  goToRegister() {
+    this.router.navigate([`/register` ])
   }
 }

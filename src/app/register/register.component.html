@@ -1,141 +1,171 @@
-<div class="row">
-    <div class="col-6 offset-s3">
-        <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
-            <input 
-                type="text" 
-                class="col-12" 
-                name="username" 
-                [(ngModel)]="form.username" 
-                required minlength="3"
-                maxlength="20" 
-                #username="ngModel" 
-                [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
-                placeholder="Nom"
-            >
-            <div class="invalid-feedback" *ngIf="username.errors && f.submitted">
-                <div *ngIf="username.errors['required']">Veuillez entrer un nom</div>
-                <div *ngIf="username.errors['minlength']">
-                    Ce nom est trop court.
-                </div>
-                <div *ngIf="username.errors['maxlength']">
-                    Ce nom est trop long.
-                </div>
+<div class="container-xl bg-white text-dark ">
+    <form method="post">
+      <div class="row ">
+        <div class="col-lg-6 mx-auto border-1 border mt-4 my-auto" style="border-radius: 6px">
+  
+          <div class="row">
+  
+            <div class="col-12">
+              <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Inscription</h1>
             </div>
-            <input 
-                type="text" 
-                class="col-12" 
-                name="email" 
-                [(ngModel)]="form.email" 
-                required minlength="3"
-                maxlength="20" 
-                #email="ngModel" 
-                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
-                placeholder="Email"
-            >
-            <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
-                <div *ngIf="email.errors['required']">Veuillez entrer un email</div>
-                <div *ngIf="email.errors['minlength']">
-                    Ce nom est trop court.
+  
+            <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Nom</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    name="username" 
+                    [(ngModel)]="form.username" 
+                    required minlength="3"
+                    maxlength="20" 
+                    #username="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+                    placeholder="Nom"
+                >
+                <div class="invalid-feedback" *ngIf="username.errors && f.submitted">
+                    <div *ngIf="username.errors['required']">Veuillez entrer un nom</div>
+                    <div *ngIf="username.errors['minlength']">
+                        Ce nom est trop court.
+                    </div>
+                    <div *ngIf="username.errors['maxlength']">
+                        Ce nom est trop long.
+                    </div>
                 </div>
-                <div *ngIf="email.errors['maxlength']">
-                    Ce nom est trop long.
+                <label class="mb-2 mt-2 form-label" for="inputEmail">E-mail</label>
+                <input 
+                    type="text" 
+                    class="form-control"  
+                    name="email" 
+                    [(ngModel)]="form.email" 
+                    required minlength="3"
+                    maxlength="20" 
+                    #email="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                    placeholder="Email"
+                >
+                <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+                    <div *ngIf="email.errors['required']">Veuillez entrer un email</div>
+                    <div *ngIf="email.errors['minlength']">
+                        Ce nom est trop court.
+                    </div>
+                    <div *ngIf="email.errors['maxlength']">
+                        Ce nom est trop long.
+                    </div>
                 </div>
-            </div>
-            <input 
-                type="text" 
-                class="col-12" 
-                name="postalCode" 
-                [(ngModel)]="form.postalCode" 
-                required minlength="5"
-                maxlength="5" 
-                #postalCode="ngModel" 
-                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
-                placeholder="Code postal"
-            >
-            <div class="invalid-feedback" *ngIf="postalCode.errors && f.submitted">
-                <div *ngIf="postalCode.errors['required']">Veuillez entrer un code postal</div>
-                <div *ngIf="postalCode.errors['minlength']">
-                    Ce code postal n'est pas valide.
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Code postal</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    name="postalCode" 
+                    [(ngModel)]="form.postalCode" 
+                    required minlength="5"
+                    maxlength="5" 
+                    #postalCode="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                    placeholder="Code postal"
+                >
+                <div class="invalid-feedback" *ngIf="postalCode.errors && f.submitted">
+                    <div *ngIf="postalCode.errors['required']">Veuillez entrer un code postal</div>
+                    <div *ngIf="postalCode.errors['minlength']">
+                        Ce code postal n'est pas valide.
+                    </div>
+                    <div *ngIf="postalCode.errors['maxlength']">
+                        Ce code postal n'est pas valide.
+                    </div>
                 </div>
-                <div *ngIf="postalCode.errors['maxlength']">
-                    Ce code postal n'est pas valide.
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Nom de votre agence</label>
+                <input 
+                    type="text" 
+                    class="form-control"  
+                    name="company" 
+                    [(ngModel)]="form.company" 
+                    required minlength="5"
+                    maxlength="5" 
+                    #company="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                    placeholder="Nom de votre agence"
+                >
+                <div class="invalid-feedback" *ngIf="company.errors && f.submitted">
+                    <div *ngIf="company.errors['required']">Veuillez entrer le nom de votre agence</div>
+                    <div *ngIf="company.errors['minlength']">
+                        Ce nom n'est pas valide.
+                    </div>
+                    <div *ngIf="company.errors['maxlength']">
+                        Ce nom n'est pas valide.
+                    </div>
                 </div>
-            </div>
-            <input 
-                type="text" 
-                class="col-12" 
-                name="company" 
-                [(ngModel)]="form.company" 
-                required minlength="5"
-                maxlength="5" 
-                #company="ngModel" 
-                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
-                placeholder="Nom de votre agence"
-            >
-            <div class="invalid-feedback" *ngIf="company.errors && f.submitted">
-                <div *ngIf="company.errors['required']">Veuillez entrer le nom de votre agence</div>
-                <div *ngIf="company.errors['minlength']">
-                    Ce nom n'est pas valide.
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Date de naissance</label>
+                <input 
+                    type="date" 
+                    class="form-control"  
+                    name="birthdayDate" 
+                    [(ngModel)]="form.birthdayDate" 
+                    #birthdayDate="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                    placeholder="Votre date de naissance"
+                >
+                <div class="invalid-feedback" *ngIf="birthdayDate.errors && f.submitted">
+                    <div *ngIf="birthdayDate.errors['required']">Veuillez entrer votre date de naissance</div>
                 </div>
-                <div *ngIf="company.errors['maxlength']">
-                    Ce nom n'est pas valide.
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Numéro de téléphone</label>
+                <input 
+                    type="text" 
+                    class="form-control"  
+                    name="phoneNumbers" 
+                    [(ngModel)]="form.phoneNumbers" 
+                    required minlength="10"
+                    maxlength="10" 
+                    #phoneNumbers="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                    placeholder="Numéro de téléphone"
+                >
+                <div class="invalid-feedback" *ngIf="phoneNumbers.errors && f.submitted">
+                    <div *ngIf="phoneNumbers.errors['required']">Veuillez entrer un numéro de téléphone</div>
+                    <div *ngIf="phoneNumbers.errors['minlength']">
+                        Ce numéro n'est pas valide.
+                    </div>
+                    <div *ngIf="phoneNumbers.errors['maxlength']">
+                        Ce numéro n'est pas valide.
+                    </div>
                 </div>
-            </div>
-            <input 
-                type="date" 
-                class="col-12" 
-                name="birthdayDate" 
-                [(ngModel)]="form.birthdayDate" 
-                #birthdayDate="ngModel" 
-                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
-                placeholder="Votre date de naissance"
-            >
-            <div class="invalid-feedback" *ngIf="birthdayDate.errors && f.submitted">
-                <div *ngIf="birthdayDate.errors['required']">Veuillez entrer votre date de naissance</div>
-            </div>
-            <input 
-                type="text" 
-                class="col-12" 
-                name="phoneNumbers" 
-                [(ngModel)]="form.phoneNumbers" 
-                required minlength="10"
-                maxlength="10" 
-                #phoneNumbers="ngModel" 
-                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
-                placeholder="Numéro de téléphone"
-            >
-            <div class="invalid-feedback" *ngIf="phoneNumbers.errors && f.submitted">
-                <div *ngIf="phoneNumbers.errors['required']">Veuillez entrer un numéro de téléphone</div>
-                <div *ngIf="phoneNumbers.errors['minlength']">
-                    Ce numéro n'est pas valide.
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Mot de passe</label>
+                <input 
+                    type="password" 
+                    name="password" 
+                    class="form-control" 
+                    [(ngModel)]="form.password" 
+                    required minlength="4"
+                    #password="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && password.errors }" 
+                    placeholder="Mot de passe"
+                >
+                <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
+                    <div *ngIf="password.errors['required']">Votre mot de passe.</div>
+                    <div *ngIf="password.errors['minlength']">
+                        Le mots de passe doit avoir au moins 4 caractères
+                    </div>
                 </div>
-                <div *ngIf="phoneNumbers.errors['maxlength']">
-                    Ce numéro n'est pas valide.
+                <div class="text-center">
+                    <button id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-3 btn btn-primary">Inscription</button>
                 </div>
-            </div>
-            <input 
-                type="password" 
-                name="password" 
-                [(ngModel)]="form.password" 
-                required minlength="4"
-                #password="ngModel" 
-                [ngClass]="{ 'is-invalid': f.submitted && password.errors }" 
-                class="field"
-                placeholder="Mot de passe"
-            >
-            <div class="invalid-feedback" *ngIf="password.errors && f.submitted">
-                <div *ngIf="password.errors['required']">Votre mot de passe.</div>
-                <div *ngIf="password.errors['minlength']">
-                    Le mots de passe doit avoir au moins 4 caractères
+                <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                    {{ errorMessage }}
                 </div>
-            </div>
-            <button id="submit" name="sign-in-button" class="flat-button signin mt-3">Inscription</button>
-            <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-                {{ errorMessage }}
-            </div>
-            <div class="alert alert-success" *ngIf="isSuccessful">
-                Votre inscription s'est déroulé avec succès.
-            </div>
-        </form>
-    </div>
-</div>
+                <div class="alert alert-success" *ngIf="isSuccessful">
+                    Votre inscription s'est déroulé avec succès.
+                </div>
+            </form>
+          
+          </div>
+  
+        </div>
+  
+      </div>
+  
+      <div class="row">
+        <div class="col-12 text-center mb-4" style="margin-top: 1.2rem">Vous avez déjà un compte ?<a (click)="goToLogIn()" style="cursor: pointer; color: blue;"> Connectez vous</a></div>
+      </div>
+      
+    </form>
+    
+  </div>

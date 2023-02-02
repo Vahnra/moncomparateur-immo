@@ -30,8 +30,6 @@ export class RegisterComponent {
     
     const { username, email, password, postalCode, birthdayDate, company, phoneNumbers } = this.form;
 
-    
-
     this.authService.register(username, email, password, postalCode, birthdayDate, company, phoneNumbers).subscribe({
       next: data => {
   
@@ -41,4 +39,9 @@ export class RegisterComponent {
       }
     });
   }
+
+  goToLogIn() {
+    this.router.navigate(['/login'])
+  }
+
 }

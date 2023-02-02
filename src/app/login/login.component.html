@@ -1,40 +1,65 @@
-<div>
-    <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate id="sign-in">
-        <input 
-          type="text" 
-          class="form-control" 
-          name="username" 
-          [(ngModel)]="form.username" 
-          required 
-          #username="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && username.errors }" 
-          placeholder="Nom" 
-          class="field"
-        >
-        <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
-          Mettez votre nom!
-        </div>
-        <input 
-          type="password"
-          class="form-control"
-          name="password"
-          [(ngModel)]="form.password"
-          required
-          minlength="4"
-          #password="ngModel"
-          [ngClass]="{ 'is-invalid': f.submitted && password.errors }" 
-          placeholder="Mot de passe" 
-          class="field"
-        >
-        <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
-          <div *ngIf="password.errors['required']">Le mot de passe!</div>
-          <div *ngIf="password.errors['minlength']">
-            Le mot de passe a au moins 4 caractères
+<div class="container-xl bg-white text-dark ">
+  <form method="post">
+    <div class="row ">
+      <div class="col-lg-6 mx-auto border-1 border mt-4 my-auto" style="border-radius: 6px">
+
+        <div class="row">
+
+          <div class="col-12">
+            <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Merci de vous connecter</h1>
           </div>
+
+          <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate id="sign-in">
+            <label class="mb-2 form-label" for="inputEmail">E-mail</label>
+              <input 
+                type="text" 
+                class="form-control" 
+                name="username" 
+                [(ngModel)]="form.username" 
+                required 
+                #username="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && username.errors }" 
+                placeholder="example@mail.fr" 
+              >
+              <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
+                Mettez votre nom!
+              </div>
+              <label class="mb-2 mt-2 form-label" for="inputEmail">Mot de passe</label>
+              <input 
+                type="password"
+                class="form-control"
+                name="password"
+                [(ngModel)]="form.password"
+                required
+                minlength="4"
+                #password="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && password.errors }" 
+                placeholder="Mot de passe" 
+              >
+              <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
+                <div *ngIf="password.errors['required']">Le mot de passe!</div>
+                <div *ngIf="password.errors['minlength']">
+                  Le mot de passe a au moins 4 caractères
+                </div>
+              </div>
+              <div class="text-center">
+                <button id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-5 btn btn-primary">Se connecter</button>
+              </div>
+              <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger mt-3" role="alert">
+                {{ errorMessage }}
+              </div>
+            </form>
+        
         </div>
-        <button id="submit" name="sign-in-button" class="flat-button signin mt-5">Se connecter</button>
-        <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger mt-3" role="alert">
-          {{ errorMessage }}
-        </div>
-      </form>
+
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-12 text-center mb-4" style="margin-top: 1.2rem">Pas de compte ?<a (click)="goToRegister()" style="cursor: pointer; color: blue;"> Inscrivez-vous</a></div>
+    </div>
+    
+  </form>
+  
 </div>

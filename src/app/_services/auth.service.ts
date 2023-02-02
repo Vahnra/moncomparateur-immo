@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 const AUTH_API = 'http://localhost:8000/api/';
@@ -17,7 +18,7 @@ const httpOptions = {
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   // Inscription
   register(username: string, email: string, password: string, postalCode: string, birthdayDate: Date, company: string, phoneNumbers: string): Observable<any> {
@@ -48,5 +49,11 @@ export class AuthService {
     );
   }
 
+  doLogout() {
+    let removeToken = localStorage.removeItem('access_token');
+    if (removeToken == null) {
+      this.router.navigate(['log-in']);
+    }
+  }
   
 }

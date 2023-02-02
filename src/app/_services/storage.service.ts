@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 const USER_KEY = 'token';
 
@@ -7,7 +8,7 @@ const USER_KEY = 'token';
 })
 export class StorageService {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   clean(): void {
     window.sessionStorage.clear();
@@ -31,5 +32,12 @@ export class StorageService {
   get isLoggedIn(): boolean {
     let authToken = localStorage.getItem(USER_KEY);
     return authToken !== null ? true : false;
+  }
+
+  doLogout() {
+    let removeToken = localStorage.removeItem(USER_KEY);
+    if (removeToken == null) {
+      this.router.navigate(['log-in']);
+    }
   }
 }
