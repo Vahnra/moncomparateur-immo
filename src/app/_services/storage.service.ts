@@ -30,12 +30,12 @@ export class StorageService {
   }
   
   get isLoggedIn(): boolean {
-    let authToken = localStorage.getItem(USER_KEY);
+    let authToken = sessionStorage.getItem(USER_KEY);
     return authToken !== null ? true : false;
   }
 
   doLogout() {
-    let removeToken = localStorage.removeItem(USER_KEY);
+    let removeToken = sessionStorage.removeItem(USER_KEY);
     if (removeToken == null) {
       this.router.navigate(['log-in']);
     }

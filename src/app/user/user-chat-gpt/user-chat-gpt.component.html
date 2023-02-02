@@ -1,0 +1,46 @@
+<app-user-header></app-user-header>
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-md-12">
+            <br>
+            <div class="card" style="border-radius: 0;">
+                <h4 class="card-header text-center bg-white">Chat avec Mr BOT powered by ChatGPT</h4>
+                <div class="card-body m-0 p-0">
+                    <div class="row m-0 p-0 frame-outer-box">
+    
+                        <!-- <div class="col-md-10 mx-auto row"> -->
+                            <div class="frame-box mt-3 mb-3" #scrollMe>
+                                <div *ngFor="let item of chatConversation" >
+                                    <p class="card-text padding" [ngClass]="item.cssClass">
+                                        {{getText(item.response)}}
+                                    </p>
+                                </div>
+
+                                <div class="text-center mt-3">
+                                    <img src="../../assets/loading.gif" *ngIf="showSpinner" width="50px" height="50px">
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-11 m-0 p-0">
+                                <input type="text" 
+                                class="form-control border-start-0 border-bottom-0" 
+                                [(ngModel)]="promptText"
+                                placeholder="Commencer par demander ce que vous voulez" 
+                                style="border-radius: 0;"
+                                (keydown.enter)="checkResponse()">
+                            </div>
+
+                            <div class="col-md-1 ps-0 pe-0">
+                                <div class="btn btn-primary push-right" (click)="checkResponse()" style="border-radius: 0; width: 100%;">Envoyer</div>
+                            </div>
+                        <!-- </div> -->
+    
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

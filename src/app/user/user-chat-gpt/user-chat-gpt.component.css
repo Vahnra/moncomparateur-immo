@@ -1,0 +1,36 @@
+
+
+.person {
+  font-style: italic;
+  color: rgb(255, 255, 255);
+  width: 80%;
+  background-color: #435F7A;
+  margin-top: 1vh;
+  margin-left: 1vh;
+  border-radius: 15px;
+}
+
+.bot {    
+  color: rgb(3, 4, 3);
+  width: 80%;
+  background-color: #ffffff;
+  margin-top: 1vh;
+  margin-left: 1vh;
+  border-radius: 15px;
+}
+
+.frame-box{
+  min-height: 400px;
+  max-height: 400px;
+  overflow-y: scroll;
+  background-color: #E6EAEA;
+}
+
+
+.padding{
+  padding: 5px;
+}
+
+.frame-outer-box {
+  background-color: #E6EAEA;
+}

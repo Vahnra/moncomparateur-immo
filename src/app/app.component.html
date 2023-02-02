@@ -1,32 +1,36 @@
 
 <router-outlet></router-outlet>
 
-<nav class="navbar bg-light fixed-bottom ">
+<nav class="navbar bg-light sticky-bottom">
     <div class="container-fluid">
 
         <div class="row col-12 mx-auto">
-            <div class="col-3 mx-auto text-center" (click)="goToHome()" style="cursor: pointer;">          
+            <div class="col-2 mx-auto text-center" (click)="goToHome()" style="cursor: pointer;">          
                 <a class="nav-link active" aria-current="page"><i class="fa-solid fa-house fa-xl"></i></a>
                 <span>Accueil</span>
             </div>
-            <div *ngIf="isLoggedIn" class="col-3 mx-auto text-center">
-                <a class="nav-link" href="#"><i class="fa-solid fa-calendar-days fa-xl"></i></a>
+            <div *ngIf="isLoggedIn" (click)="goToCalendar()" class="col-2 mx-auto text-center" style="cursor: pointer;">
+                <a class="nav-link"><i class="fa-solid fa-calendar-days fa-xl"></i></a>
                 <span>Agenda</span>
             </div>
-            <div *ngIf="isLoggedIn" class="col-3 mx-auto text-center">
-                <a class="nav-link" href="#"><i class="fa-solid fa-note-sticky fa-xl"></i></a>
+            <div *ngIf="isLoggedIn" class="col-2 mx-auto text-center" style="cursor: pointer;">
+                <a class="nav-link"><i class="fa-solid fa-note-sticky fa-xl"></i></a>
                 <span>Commentaire</span>
             </div>
+            <div *ngIf="isLoggedIn" (click)="goToChatGPT()" class="col-2 mx-auto text-center" style="cursor: pointer;">
+                <a class="nav-link"><i class="fa-solid fa-robot fa-xl"></i></a>
+                <span>ChatGPT</span>
+            </div>
             
-            <div *ngIf="isLoggedIn" class="col-3 mx-auto text-center">
-                <a class="nav-link" (click)="goToUserDashboard()"><i class="fa-solid fa-user fa-xl"></i></a>
+            <div *ngIf="isLoggedIn" (click)="goToUserDashboard()" class="col-2 mx-auto text-center" style="cursor: pointer;">
+                <a class="nav-link"><i class="fa-solid fa-user fa-xl"></i></a>
                 <span>Compte</span>
             </div>
-            <div *ngIf="isLoggedIn != false" (click)="goToLogIn()" class="col-3 mx-auto text-center" style="cursor: pointer;">
+            <div *ngIf="isLoggedIn == false" (click)="goToLogIn()" class="col-2 mx-auto text-center" style="cursor: pointer;">
                 <a class="nav-link" ><i class="fa-sharp fa-solid fa-right-to-bracket fa-xl"></i></a>
                 <span>Connexion</span>
             </div>
-            <div *ngIf="isLoggedIn != false" (click)="goToRegister()" class="col-3 mx-auto text-center" style="cursor: pointer;">
+            <div *ngIf="isLoggedIn == false" (click)="goToRegister()" class="col-2 mx-auto text-center" style="cursor: pointer;">
                 <a class="nav-link" ><i class="fa-solid fa-pen-to-square fa-xl"></i></a>
                 <span>Inscription</span>
             </div>

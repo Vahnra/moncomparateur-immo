@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 import { StorageService } from './_services/storage.service';
 import { UserService } from './_services/user.service';
 
@@ -10,7 +11,7 @@ import { UserService } from './_services/user.service';
 })
 export class AppComponent {
   title = 'moncomparateur-immo';
-  isLoggedIn: boolean;
+  isLoggedIn: boolean = false;
   userId: number;
 
   constructor(private userService: UserService, private router: Router, private storageService: StorageService) {
@@ -18,29 +19,40 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
-    if (this.storageService.isLoggedIn) {
-      this.userService.getCurrentUser().subscribe( userId => {
-        this.userId = userId;
+
+    if (this.storageService.isLoggedIn == true) {
+      this.userService.getCurrentUser().pipe(catchError(async error => this.storageService.clean())).subscribe(userId => {
+        if (userId) {
+          console.log(userId);
+          this.userId = userId;
+          this.isLoggedIn = true;
+        }
       });
-      this.isLoggedIn = true;
     }
-    
   }
 
   goToUserDashboard() {
-    this.router.navigate([`/user/${this.userId}/dashboard` ])
+    this.router.navigate([`/user/${this.userId}/dashboard`])
   }
 
   goToRegister() {
-    this.router.navigate([`/register` ])
+    this.router.navigate([`/register`])
   }
 
   goToLogIn() {
-    this.router.navigate([`/login` ])
+    this.router.navigate([`/login`])
   }
 
   goToHome() {
     this.router.navigate(['/'])
+  }
+
+  goToChatGPT() {
+    this.router.navigate([`/user/${this.userId}/chatGPT`])
+  }
+
+  goToCalendar() {
+    this.router.navigate([`/user/${this.userId}/calendar`])
   }
 }
 

@@ -27,8 +27,10 @@ export class LoginComponent {
       next: data => {
         this.storageService.saveUser(data);
         console.log(data);
-        this.router.navigate([`/` ]);
-   
+        this.router.navigate([`/` ]).then(() => {
+          window.location.reload();
+        });
+  
       }
     });
   }

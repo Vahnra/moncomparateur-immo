@@ -9,6 +9,8 @@ import { MapsViewComponent } from './maps/maps-view/maps-view.component';
 import { SitadelMapsComponent } from './maps/sitadel-maps/sitadel-maps.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './shared/auth.guard';
+import { UserCalendarComponent } from './user/user-calendar/user-calendar.component';
+import { UserChatGPTComponent } from './user/user-chat-gpt/user-chat-gpt.component';
 import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.component';
 
 const routes: Routes = [
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'dashboard/voir-utilisateurs', component: UserShowComponent },
   { path: 'dashboard/creer-utilisateur', component: UserCreateComponent },
   { path: 'user/:id/dashboard', component: UserDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'user/:id/calendar', component: UserCalendarComponent, canActivate: [AuthGuard] },
+  { path: 'user/:id/chatGPT', component: UserChatGPTComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
