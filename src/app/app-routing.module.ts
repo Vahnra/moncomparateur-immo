@@ -8,6 +8,7 @@ import { DvfMapsComponent } from './maps/dvf-maps/dvf-maps.component';
 import { MapsViewComponent } from './maps/maps-view/maps-view.component';
 import { SitadelMapsComponent } from './maps/sitadel-maps/sitadel-maps.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from './shared/auth.guard';
 import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.component';
 
 const routes: Routes = [
@@ -19,7 +20,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'dashboard/voir-utilisateurs', component: UserShowComponent },
   { path: 'dashboard/creer-utilisateur', component: UserCreateComponent },
-  { path: 'user/:id/dashboard', component: UserDashboardComponent },
+  { path: 'user/:id/dashboard', component: UserDashboardComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
