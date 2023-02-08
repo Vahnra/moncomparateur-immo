@@ -58,12 +58,18 @@
             </li>
         </ul>
     </div>
-    <p class="text-start ms-3 mt-3">Type de bien : {{project.type}}</p>
+    <p class="text-start ms-3 mt-3"><b>Type de bien :</b> {{project.type}}</p>
     <img src="assets/images/50819.jpg" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title">{{project.city}}</h5>
         <p class="card-text">{{project.adress}}</p>
         <p class="card-text">{{project.complementAdress}}</p>
         <a href="#" class="btn btn-primary">Modifier la fiche</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="text-center row align-items-center" *ngIf="!project" style="height: 70vh;">
+        <app-loader></app-loader>
     </div>
 </div>

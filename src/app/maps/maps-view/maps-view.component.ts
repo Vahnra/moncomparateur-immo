@@ -44,9 +44,14 @@ export class MapsViewComponent implements OnInit {
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' })
     ],
     zoom: 15,
-    center: latLng(48.8, 2.3)
+    center: latLng(48.8, 2.3),
+    zoomControl: false,
   };
 
+  leafletLayersControlOptions = {
+    position: 'bottomright'
+  };
+  
   layersControl = {
     baseLayers: {
       'Plan': tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
@@ -87,7 +92,7 @@ export class MapsViewComponent implements OnInit {
     },
     overlays: {
       'PBE': this.pbe,
-    }
+    },
   }
 
   constructor(
@@ -111,10 +116,10 @@ export class MapsViewComponent implements OnInit {
     // add geosearch
     const searchControl = GeoSearchControl({
       provider: this.provider,
-      style: "bar"
+      style: "bar",
+      searchLabel: 'Entrée une adresse'
     });
     map.addControl(searchControl);
-
 
     map.addLayer(this.pbe);
     // console.log(map.getCenter());
@@ -138,7 +143,8 @@ export class MapsViewComponent implements OnInit {
 
     const alicanteMarker = marker([38.34517, -0.48149]).on('click', event => {
       console.log('Yay, my marker was clicked!', event);
-  });
+   });
+   
   }
 
   test2($event: any) {
@@ -155,7 +161,7 @@ export class MapsViewComponent implements OnInit {
         this.addMarker(item);
 
       }) //End of foreach
-      this.markerClusterGroup.clearLayers()
+      // this.markerClusterGroup.clearLayers()
       this.markerClusterData = this.markerData;
       this.markerClusterGroup.addLayers(this.markerClusterData)
       
@@ -192,19 +198,19 @@ export class MapsViewComponent implements OnInit {
         this.lookup.push([nameArr[0], nameArr[1]]);
         let customPopup = `
               <div class="row" style="margin-bottom: 0;>
-                <div class="col s12" style="margin-bottom: 0;">
-                  <div class="card z-depth-0" style="margin-bottom: 0;">
-                
-                      <span class="col s6 right-align"><strong>N°DPE</strong></span><span class="col s6" id="dpe-number">${item['N°DPE']}</span>
-                      <span class="col s6 right-align"><strong>Date DPE</strong></span><span class="col s6" id="dpe-date">${item['Date_établissement_DPE']}</span>
-                      <span class="col s6 right-align"><strong>Etiquette DPE</strong></span><span class="col s6" id="dpe-class">${item['Etiquette_DPE']}</span>
-                      <span class="col s6 right-align"><strong>Adresse</strong></span><span class="col s6" id="adress">${item['Adresse_(BAN)']}</span>
-                      <!-- <span class="col s6 right-align">Complément d'adresse</span><span class="col s6">${item['Complément_d\'adresse_logement']}</span> -->
-                      <span class="col s6 right-align"><strong>Type de logement</strong></span><span class="col s6" id="building-type">${item['Type_bâtiment']}</span>
-                      <!-- <span class="col s6 right-align">Année de construction</span><span class="col s6">${item['Année_construction']}</span> -->
-                      <span class="col s6 right-align"><strong>Surface habitable</strong></span><span class="col s6" id="area-size">${item['Surface_habitable_logement']}</span> 
-                      <a class="center-align col s12 favorite-button" href="#" >Ajouter aux favoris</a>
-              
+                <div class="col-12" style="margin-bottom: 0;">
+                  <div class="card border-0" style="margin-bottom: 0;">
+                    <div class="row" >
+                      <span class="col-6 text-end"><strong>N°DPE</strong></span><span class="col-6" id="dpe-number">${item['N°DPE']}</span>
+                      <span class="col-6 text-end"><strong>Date DPE</strong></span><span class="col-6" id="dpe-date">${item['Date_établissement_DPE']}</span>
+                      <span class="col-6 text-end"><strong>Etiquette DPE</strong></span><span class="col-6" id="dpe-class">${item['Etiquette_DPE']}</span>
+                      <span class="col-6 text-end"><strong>Adresse</strong></span><span class="col-6" id="adress">${item['Adresse_(BAN)']}</span>
+                      <!-- <span class="col-6 text-end">Complément d'adresse</span><span class="col-6">${item['Complément_d\'adresse_logement']}</span> -->
+                      <span class="col-6 text-end"><strong>Type de logement</strong></span><span class="col-6" id="building-type">${item['Type_bâtiment']}</span>
+                      <!-- <span class="col-6 text-end">Année de construction</span><span class="col-6">${item['Année_construction']}</span> -->
+                      <span class="col-6 text-end"><strong>Surface habitable</strong></span><span class="col-6" id="area-size">${item['Surface_habitable_logement']}</span> 
+                      <a class="text-center col-12 favorite-button" href="#" >Ajouter aux favoris</a>
+                    </div>
                   </div>
                 </div>
               </div>`

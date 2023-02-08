@@ -42,7 +42,12 @@ export class UserProjectMapComponent implements OnInit {
       tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' })
     ],
     zoom: 15,
-    center: latLng(48.8, 2.3)
+    center: latLng(48.8, 2.3),
+    zoomControl: false,
+  };
+
+  leafletLayersControlOptions = {
+    position: 'bottomright'
   };
 
   layersControl = {
@@ -80,7 +85,7 @@ export class UserProjectMapComponent implements OnInit {
       }),
     },
     overlays: {
-      'PBE': this.pbe,
+ 
     }
   }
 
@@ -107,7 +112,8 @@ export class UserProjectMapComponent implements OnInit {
       style: "bar"
     });
     map.addControl(searchControl);
- 
+    map.addControl(Leaflet.control.zoom({ position: 'bottomright' }));
+
     navigator.geolocation.getCurrentPosition((position) => {
       map.setView([position.coords.latitude, position.coords.longitude])
     })// End of get current position
@@ -118,7 +124,6 @@ export class UserProjectMapComponent implements OnInit {
 
     if (!this.enableCall) return;
     
-
     this.projectService.getUserProjects().subscribe(data => {  
       data.forEach((element:any) => {
         this.addMarker(element);

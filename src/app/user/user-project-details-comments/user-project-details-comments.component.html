@@ -5,7 +5,7 @@
         <button class="navbar-toggler mx-auto" type="button" aria-controls="offcanvasNavbar">Listes
             <i class="fa-solid fa-bars"></i>
         </button>
-        <button class="navbar-toggler mx-auto" type="button">Carte
+        <button class="navbar-toggler mx-auto" type="button" (click)="goToMap()">Carte
             <i class="fa-solid fa-map-location-dot"></i>
         </button>
         <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="offcanvas"
@@ -68,9 +68,14 @@
                     <p class="card-text">{{ item.text }}</p>
                 </div>
                 <div class="card-footer text-muted">
-                    {{item.created_at}}
+                    {{item.created_at | date}}
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="container">
+    <div class="text-center row align-items-center" *ngIf="!project" style="height: 70vh;">
+        <app-loader></app-loader>
     </div>
 </div>

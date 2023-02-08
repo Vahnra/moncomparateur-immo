@@ -17,6 +17,7 @@ import { MapsModule } from '../maps/maps.module';
 import { UserProjectDetailsComponent } from './user-project-details/user-project-details.component';
 import { UserProjectDetailsCommentsComponent } from './user-project-details-comments/user-project-details-comments.component';
 import { UserProjectDetailsCommentsAddComponent } from './user-project-details-comments-add/user-project-details-comments-add.component';
+import { LoaderComponent } from './loader/loader.component';
 
 
 
@@ -30,7 +31,8 @@ import { UserProjectDetailsCommentsAddComponent } from './user-project-details-c
     UserProjectMapComponent,
     UserProjectDetailsComponent,
     UserProjectDetailsCommentsComponent,
-    UserProjectDetailsCommentsAddComponent
+    UserProjectDetailsCommentsAddComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,7 @@ import { UserProjectDetailsCommentsAddComponent } from './user-project-details-c
     CalendarModule,
     LeafletModule,
     LeafletMarkerClusterModule, 
-    MapsModule
+    MapsModule,
   ]
 })
 export class UserModule { }

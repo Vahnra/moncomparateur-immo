@@ -52,6 +52,7 @@
      leaflet 
      [leafletOptions]="options"
      [leafletLayersControl]="layersControl"
+     [leafletLayersControlOptions]="leafletLayersControlOptions"
      (leafletMapReady)="onMapReady($event)"  
      (leafletMapMoveEnd)="getUserProjects($event)"
      [leafletLayers]="layerMainGroup"

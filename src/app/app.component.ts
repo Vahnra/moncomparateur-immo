@@ -18,8 +18,16 @@ export class AppComponent {
 
   }
 
-  ngOnInit(): void {
+  private tokenExpired(token: string) {
+    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+    return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+  }
 
+  ngOnInit(): void {
+    if (this.tokenExpired(this.storageService.getToken())) {
+      this.storageService.clean()  
+    }
+    
     if (this.storageService.isLoggedIn == true) {
       this.userService.getCurrentUser().subscribe(userId => {
         if (userId) {
@@ -55,7 +63,7 @@ export class AppComponent {
   }
 
   goToProject() {
-    this.router.navigate([`/user/${this.userId}/project`])
+    this.router.navigate([`/user/${this.userId}/project-map`])
   }
 }
 
