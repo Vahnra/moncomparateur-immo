@@ -9,15 +9,35 @@ import { UserService } from 'src/app/_services/user.service';
 })
 export class UserDashboardComponent implements OnInit {
 
+  userId = this.route.snapshot.paramMap.get('id');
+
   constructor(private userService: UserService, private router: Router, private route: ActivatedRoute,) {
 
   }
 
   ngOnInit(): void {
     const userId: string|null = this.route.snapshot.paramMap.get('id');
-    this.userService.getUser(userId).subscribe( data => {
-      console.log(data);
-      
+    this.userService.getUser(userId).subscribe( data => {   
     })
+  }
+
+  goToChatGPT() {
+    this.router.navigate([`/user/${this.userId}/chatGPT`])
+  }
+
+  goToCalendar() {
+    this.router.navigate([`/user/${this.userId}/calendar`])
+  }
+
+  goToDpe() {
+    this.router.navigate([`/`])
+  }
+
+  goToDvf() {
+    this.router.navigate([`/dvf`])
+  }
+
+  goToProjectMap() {
+    this.router.navigate([`/user/${this.userId}/project-map`])
   }
 }

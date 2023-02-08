@@ -1,20 +1,22 @@
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
-import { MapsService } from '../maps.service';
-import { circle, latLng, polygon, tileLayer, Map, marker, icon, Icon, LayerGroup } from 'leaflet';
-import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
-import { Dpe } from 'src/app/models/dpe';
+import { Component, HostListener, NgZone, OnInit } from '@angular/core';
+import { ProjectService } from 'src/app/_services/project.service';
 import * as Leaflet from 'leaflet';
-import { FavoritesService } from 'src/app/_services/favorites.service';
-import { Dvf } from 'src/app/models/dvf';
+import { latLng, LayerGroup, tileLayer, Map, icon, Icon } from 'leaflet';
+import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
+import { Project } from 'src/app/models/project';
+import { MapsService } from 'src/app/maps/maps.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-dvf-maps',
-  templateUrl: './dvf-maps.component.html',
-  styleUrls: ['./dvf-maps.component.css']
+  selector: 'app-user-project-map',
+  templateUrl: './user-project-map.component.html',
+  styleUrls: ['./user-project-map.component.css']
 })
-export class DvfMapsComponent implements OnInit {
+export class UserProjectMapComponent implements OnInit {
+  @HostListener('document:click', ['$event']) click(event:any) { 
+    if(event.target.classList.contains("fiche-button")){ this.onVoirFicheClick(); }
+  }
+  
   map!: Leaflet.Map
   enableCall: boolean = true;
 
@@ -29,7 +31,7 @@ export class DvfMapsComponent implements OnInit {
   center: any;
   markerData: Leaflet.Marker[] = [];
   currentMarker: Leaflet.Marker;
-  test: Dvf;
+  allProjects: Project;
 
   customOptions = {
     'minWidth': 300,
@@ -82,31 +84,29 @@ export class DvfMapsComponent implements OnInit {
     }
   }
 
+  constructor(private projectService: ProjectService, private mapService: MapsService, private zone: NgZone, private router: Router) {
 
-  constructor(
-    public httpClient: HttpClient, 
-    private mapsService: MapsService, 
-    private favoritesService: FavoritesService, 
-    private zone: NgZone
-    ) { }
+  }
 
   ngOnInit() {
     
   }
 
-  ngAfterViewInit(): void {
-  
+  ngAfterViewInit(): void { 
+
+  }
+
+  ngAfterViewChecked() {
+    
   }
 
   onMapReady(map: Map) {
-
     // add geosearch
     const searchControl = GeoSearchControl({
       provider: this.provider,
       style: "bar"
     });
     map.addControl(searchControl);
-    map.addLayer(this.pbe)
  
     navigator.geolocation.getCurrentPosition((position) => {
       map.setView([position.coords.latitude, position.coords.longitude])
@@ -114,29 +114,24 @@ export class DvfMapsComponent implements OnInit {
 
   }
 
-  test2($event: any) {
+  getUserProjects($event: any) {
 
     if (!this.enableCall) return;
-    this.enableCall = false;
-
-    this.mapsService.refreshDvf($event.target.getCenter().lat, $event.target.getCenter().lng).subscribe(data => {
-      
-      this.test = JSON.parse(JSON.stringify(data))
-
-      this.test.features.forEach((item) => {
-
-        this.addMarker(item);
-
-      }) //End of foreach
-      this.markerClusterGroup.clearLayers()
-      this.markerClusterData = this.markerData;
-      this.markerClusterGroup.addLayers(this.markerClusterData)
-      
-    }) // End of map service call
-
-    console.log(this.lookup);
     
-    setTimeout(() => this.enableCall = true, 1000);
+
+    this.projectService.getUserProjects().subscribe(data => {  
+      data.forEach((element:any) => {
+        this.addMarker(element);
+      });
+      // this.markerClusterGroup.clearLayers();
+      this.markerClusterData = this.markerData;
+      this.markerClusterGroup.addLayers(this.markerClusterData);
+    })
+
+    // this.enableCall = false;
+    
+    // var popup = this.map.layer.getPopup();
+    setTimeout(() => this.enableCall = false, 4000);
 
   }
 
@@ -144,30 +139,34 @@ export class DvfMapsComponent implements OnInit {
     this.markerClusterGroup = group;
   }
 
-  // add a marker
   addMarker(item: any) {
 
-    let nameArr = [item.properties.lat, item.properties.lon];
+    this.mapService.requestGeocoding(item.adress).subscribe(data => {
 
-    if (this.isLocationFree(nameArr) == true) {
-
-      // console.log(item);
+      let test = JSON.parse(JSON.stringify(data))
       
-        this.lookup.push([item.properties.lat, item.properties.lon]);
-        
+      let nameArr = [test.data[0].latitude, test.data[0].longitude];
+
+      if (this.isLocationFree(nameArr) == true) {
+
+        this.lookup.push([test.data[0].latitude, test.data[0].longitude]);
+
         let customPopup = `
               <div class="row" style="margin-bottom: 0;>
-                <div class="col s12" style="margin-bottom: 0;">
-                  <div class="card z-depth-0" style="margin-bottom: 0;">
-                
-                      
-                      <a class="center-align col s12 favorite-button" href="#" >Ajouter aux favoris</a>
-              
+                <div >
+                  <div class="card" >
+                      <h3>${item.city}</h3>
+                      <div>${item.adress}</div>
+                      <div>${item.complement_adress}</div>
+                      <div>${item.created_at}</div>
+                      <div class="col-6 text-center mx-auto mt-3">
+                        <button type="button" class="btn btn-primary fiche-button">Voir la fiche</button>
+                      </div>       
                   </div>
                 </div>
               </div>`
 
-        this.markerData.push(Leaflet.marker([item.properties.lat, item.properties.lon], {
+        this.markerData.push(Leaflet.marker([test.data[0].latitude, test.data[0].longitude], {
           icon: icon({
             ...Icon.Default.prototype.options,
             iconUrl: 'assets/marker-icon.png',
@@ -176,12 +175,13 @@ export class DvfMapsComponent implements OnInit {
           })
         }).on('click', () => {
           this.zone.run(() => this.onMarkerClick(item))
-        }));
+        }).bindPopup(customPopup, this.customOptions).openPopup());
       
-      
-    }
-  }
+      }
+    });
 
+  }
+  
   //check if marker is already put at the exact same coordinate
   isLocationFree(search: any) {
     for (var i = 0, l = this.lookup.length; i < l; i++) {
@@ -194,6 +194,10 @@ export class DvfMapsComponent implements OnInit {
 
   onMarkerClick(item: any) {
     this.currentMarker = item;
-    // console.log(item);  
+  }
+
+  onVoirFicheClick() {
+    let markerData = JSON.parse(JSON.stringify(this.currentMarker));
+    this.router.navigate([`/user/project/${markerData.id}`])
   }
 }

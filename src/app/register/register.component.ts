@@ -22,9 +22,7 @@ export class RegisterComponent {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService, private router: Router) {
-    
-  }
+  constructor(private authService: AuthService, private router: Router) { }
 
   onSubmit(): void {
     

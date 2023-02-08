@@ -21,9 +21,8 @@ export class AppComponent {
   ngOnInit(): void {
 
     if (this.storageService.isLoggedIn == true) {
-      this.userService.getCurrentUser().pipe(catchError(async error => this.storageService.clean())).subscribe(userId => {
+      this.userService.getCurrentUser().subscribe(userId => {
         if (userId) {
-          console.log(userId);
           this.userId = userId;
           this.isLoggedIn = true;
         }
@@ -53,6 +52,10 @@ export class AppComponent {
 
   goToCalendar() {
     this.router.navigate([`/user/${this.userId}/calendar`])
+  }
+
+  goToProject() {
+    this.router.navigate([`/user/${this.userId}/project`])
   }
 }
 

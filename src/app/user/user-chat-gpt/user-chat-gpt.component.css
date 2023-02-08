@@ -1,4 +1,6 @@
-
+.test {
+  white-space: pre-line;
+}
 
 .person {
   font-style: italic;

@@ -2,10 +2,10 @@
 
 <div class="container mb-4">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 p-0">
             <br>
             <div class="card" style="border-radius: 0;">
-                <h4 class="card-header text-center bg-white">Chat avec Mr BOT powered by ChatGPT</h4>
+                <h4 class="card-header text-center bg-white">Chat avec Mr BOT</h4>
                 <div class="card-body m-0 p-0">
                     <div class="row m-0 p-0 frame-outer-box">
     
@@ -13,7 +13,7 @@
                             <div class="frame-box mt-3 mb-3" #scrollMe>
                                 <div *ngFor="let item of chatConversation" >
                                     <p class="card-text padding" [ngClass]="item.cssClass">
-                                        {{getText(item.response)}}
+                                        {{item.response}}
                                     </p>
                                 </div>
 

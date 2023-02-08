@@ -48,7 +48,7 @@ export class UserChatGPTComponent implements OnInit, AfterViewChecked {
   }
 
   getText(data: string) {
-    return data.split('\n').filter(f => f.length > 0);
+    return data.replace(/\n/g, '<br/>');
   }
 
   async invokeGPT() {
@@ -73,11 +73,11 @@ export class UserChatGPTComponent implements OnInit, AfterViewChecked {
       this.promptText = '';
       this.showSpinner = true;
       let apiResponse = await openai.createCompletion(requestData);
-
+      
       this.response = apiResponse.data as ResponseModel;
-      let responseFormat = this.response.choices[0].text
-
-      this.pushChatContent(responseFormat, 'Mr Bot', 'bot ms-auto');
+      let responseFormat = this.response.choices[0].text;
+ 
+      this.pushChatContent(responseFormat, 'Mr Bot', 'bot ms-auto test');
 
       let test = new Audio('assets/among_us_chat.mp3');
 

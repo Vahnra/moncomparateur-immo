@@ -1,0 +1,95 @@
+
+
+<nav class="navbar bg-light sticky-bottom">
+    <div class="container-fluid">
+        <button class="navbar-toggler mx-auto" type="button" aria-controls="offcanvasNavbar">Listes
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <button class="navbar-toggler mx-auto" type="button">Carte
+            <i class="fa-solid fa-map-location-dot"></i>
+        </button>
+        <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">Filtres
+            <i class="fa-solid fa-arrow-down-wide-short"></i>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                <option selected>Choisissez</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                            <label for="floatingSelect">Type de bien</label>
+                        </div>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                <option selected>Choisissez</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                            <label for="floatingSelect">Ville</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container-xl bg-white text-dark ">
+    <form method="post">
+        <div class="row ">
+            <div class="col-lg-6 mx-auto border border-0 mt-4 my-auto" style="border-radius: 6px">
+
+                <div class="row">
+
+                    <div class="col-12">
+                        <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Ajout d'un commentaire</h1>
+                    </div>
+
+                    <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+                        <label class="mb-2 mt-2 form-label" for="inputEmail">Titre</label>
+                        <input type="text" class="form-control" name="title" [(ngModel)]="form.title" required
+                            #title="ngModel" [ngClass]="{ 'is-invalid': f.submitted && title.errors }"
+                            placeholder="Ville">
+                        <div class="invalid-feedback" *ngIf="title.errors && f.submitted">
+                            <div *ngIf="title.errors['required']">Veuillez entrer un titre</div>
+                        </div>
+                        <label class="mb-2 mt-2 form-label" for="inputEmail">Commentaire</label>
+                        <textarea rows="5" class="form-control" name="text" [(ngModel)]="form.text" #text="ngModel"
+                            [ngClass]="{ 'is-invalid': f.submitted && text.errors }"
+                            placeholder="Entrez votre commentaire"></textarea>
+                        <div class="invalid-feedback" *ngIf="text.errors && f.submitted">
+                            <div *ngIf="text.errors['required']">Veuillez entrer une adresse</div>
+                        </div>
+                        <div class="text-center">
+                            <button id="submit" name="sign-in-button"
+                                class="btn btn-lg mb-3 px-5 no-border-radius signin mt-3 btn btn-primary">Ajouter</button>
+                        </div>
+                        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                            {{ errorMessage }}
+                        </div>
+                        <div class="alert alert-success" *ngIf="isSuccessful">
+                            Le comentaire a bien été ajouté.
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+</div>

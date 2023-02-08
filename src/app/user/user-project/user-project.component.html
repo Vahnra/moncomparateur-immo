@@ -1,0 +1,113 @@
+<div class="container-xl bg-white text-dark ">
+    <form method="post">
+      <div class="row ">
+        <div class="col-lg-6 mx-auto border-1 border mt-4 my-auto" style="border-radius: 6px">
+  
+          <div class="row">
+  
+            <div class="col-12">
+              <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Création d'une nouvelle fiche</h1>
+            </div>
+  
+            <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Type de bien</label>
+                <select 
+                    class="form-select" 
+                    name="type" 
+                    [(ngModel)]="form.type" 
+                    required
+                    #type="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && type.errors }"
+                >
+                    <option selected disabled>--Selectionner une option--</option>
+                    <option value="maison">Maison</option>
+                    <option value="appartement">Appartement</option>
+                    <option value="immeuble">Immeuble</option>
+                    <option value="local">Local commercial</option>
+                    <option value="entrepot">Entrepot/Hangar</option>
+                    <option value="terrain">Terrain</option>
+                    <option value="other">Autre</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="type.errors && f.submitted">
+                    <div *ngIf="type.errors['required']">Veuillez choisir un type de bien</div>
+                </div>
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Ville</label>
+                <input 
+                    type="text" 
+                    class="form-control"  
+                    name="city" 
+                    [(ngModel)]="form.city" 
+                    required
+                    #city="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && city.errors }"
+                    placeholder="Ville"
+                >
+                <div class="invalid-feedback" *ngIf="city.errors && f.submitted">
+                    <div *ngIf="city.errors['required']">Veuillez entrer une ville</div>
+                </div>
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Adresse</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    name="adress" 
+                    [(ngModel)]="form.adress" 
+                    required 
+                    minlength="5"
+                    #adress="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && adress.errors }"
+                    placeholder="Adresse du bien"
+                >
+                <div class="invalid-feedback" *ngIf="adress.errors && f.submitted">
+                    <div *ngIf="adress.errors['required']">Veuillez entrer une adresse</div>
+                    <div *ngIf="adress.errors['minlength']">
+                        Cette adresse n'est pas valide.
+                    </div>
+                    <div *ngIf="adress.errors['maxlength']">
+                        Cette adresse n'est pas valide.
+                    </div>
+                </div>
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Complément d'adresse</label>
+                <input 
+                    type="text" 
+                    class="form-control"  
+                    name="complementAdress" 
+                    [(ngModel)]="form.complementAdress" 
+                    #complementAdress="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && complementAdress.errors }"
+                    placeholder="Complément d'adresse"
+                >
+                <div class="invalid-feedback" *ngIf="complementAdress.errors && f.submitted">
+                </div>
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Commentaires</label>
+                <textarea
+                    rows="5"
+                    class="form-control"  
+                    name="comments" 
+                    [(ngModel)]="form.comments" 
+                    #comments="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && comments.errors }"
+                    placeholder="Entrez votre commentaire"
+                ></textarea>
+                <div class="invalid-feedback" *ngIf="comments.errors && f.submitted">
+    
+                </div>
+                <div class="text-center">
+                    <button id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-3 btn btn-primary">Ajouter</button>
+                </div>
+                <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                    {{ errorMessage }}
+                </div>
+                <div class="alert alert-success" *ngIf="isSuccessful">
+                    La fiche a bien été ajouté.
+                </div>
+            </form>
+          
+          </div>
+  
+        </div>
+  
+      </div>
+      
+    </form>
+    
+  </div>

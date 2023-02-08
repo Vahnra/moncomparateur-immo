@@ -147,7 +147,7 @@ export class MapsViewComponent implements OnInit {
     this.enableCall = false;
 
     this.mapsService.refreshDpe($event.target.getCenter().lat, $event.target.getCenter().lng).subscribe(data => {
-
+      
       this.test = JSON.parse(JSON.stringify(data))
 
       this.test.results.forEach((item) => {

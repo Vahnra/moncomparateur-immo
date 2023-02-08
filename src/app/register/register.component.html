@@ -79,20 +79,14 @@
                     class="form-control"  
                     name="company" 
                     [(ngModel)]="form.company" 
-                    required minlength="5"
-                    maxlength="5" 
+                    required 
                     #company="ngModel" 
                     [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
                     placeholder="Nom de votre agence"
                 >
                 <div class="invalid-feedback" *ngIf="company.errors && f.submitted">
                     <div *ngIf="company.errors['required']">Veuillez entrer le nom de votre agence</div>
-                    <div *ngIf="company.errors['minlength']">
-                        Ce nom n'est pas valide.
-                    </div>
-                    <div *ngIf="company.errors['maxlength']">
-                        Ce nom n'est pas valide.
-                    </div>
+
                 </div>
                 <label class="mb-2 mt-2 form-label" for="inputEmail">Date de naissance</label>
                 <input 

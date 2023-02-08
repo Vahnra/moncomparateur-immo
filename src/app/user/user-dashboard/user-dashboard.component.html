@@ -1,1 +1,67 @@
 <app-user-header></app-user-header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-6 mx-auto" (click)="goToDpe()" style="cursor: pointer;">
+            <div class="d-flex align-items-end justify-content-center mb-5" style="height: 15vh; font-size: 3em;">
+                <i class="fa-solid fa-map-location-dot fa-2xl"></i>
+            </div>
+            <div class="d-flex align-items-start justify-content-center" style="height: 15vh;">
+                Carte DPE
+            </div>
+        </div>
+        <div class="col-6 mx-auto" (click)="goToDvf()" style="cursor: pointer;">
+            <div class="d-flex align-items-end justify-content-center mb-5" style="height: 15vh; font-size: 3em;">
+                <i class="fa-solid fa-map-location fa-2xl"></i>
+            </div>
+            <div class="d-flex align-items-start justify-content-center" style="height: 15vh; ">
+                Carte DVF
+            </div>
+        </div>
+        <div class="col-6 mx-auto" (click)="goToProjectMap()" style="cursor: pointer;">
+            <div class="d-flex align-items-end justify-content-center mb-5" style="height: 15vh; font-size: 3em;">
+                <i class="fa-solid fa-map-location fa-2xl"></i>
+            </div>
+            <div class="d-flex align-items-start justify-content-center" style="height: 15vh; ">
+                Carte Fiche
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 mx-auto" (click)="goToCalendar()" style="cursor: pointer;">
+            <div class="d-flex align-items-end justify-content-center mb-5" style="height: 15vh; font-size: 3em;">
+                <i class="fa-solid fa-calendar-days fa-2xl"></i>
+            </div>
+            <div class="d-flex align-items-start justify-content-center" style="height: 15vh;">
+                Agenda
+            </div>
+        </div>
+        <div class="col-6 mx-auto" style="cursor: pointer;">
+            <div class="d-flex align-items-end justify-content-center mb-5" style="height: 15vh; font-size: 3em;">
+                <i class="fa-solid fa-note-sticky fa-2xl"></i>
+            </div>
+            <div class="d-flex align-items-start justify-content-center" style="height: 15vh;">
+                Vos fiches
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 mx-auto" (click)="goToChatGPT()" style="cursor: pointer;">
+            <div class="d-flex align-items-end justify-content-center mb-5" style="height: 15vh; font-size: 3em;">
+                <i class="fa-solid fa-robot fa-2xl"></i>
+            </div>
+            <div class="d-flex align-items-start justify-content-center" style="height: 15vh;">
+                ChatGPT
+            </div>
+        </div>
+        <div class="col-6 mx-auto" style="cursor: pointer;">
+            <div class="d-flex align-items-end justify-content-center mb-5" style="height: 15vh; font-size: 3em;">
+                <i class="fa-solid fa-heart fa-2xl"></i>
+            </div>
+            <div class="d-flex align-items-start justify-content-center" style="height: 15vh;">
+                Favoris
+            </div>
+        </div>
+    </div>
+   
+</div>

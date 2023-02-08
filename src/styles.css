@@ -5,4 +5,10 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    height: 100vh;
+    max-height: 100vh;
+    min-height: 100vh;
+}

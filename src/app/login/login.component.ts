@@ -26,11 +26,9 @@ export class LoginComponent {
     this.authService.login(username, password).subscribe({
       next: data => {
         this.storageService.saveUser(data);
-        console.log(data);
         this.router.navigate([`/` ]).then(() => {
           window.location.reload();
         });
-  
       }
     });
   }

@@ -12,6 +12,11 @@ import { AuthGuard } from './shared/auth.guard';
 import { UserCalendarComponent } from './user/user-calendar/user-calendar.component';
 import { UserChatGPTComponent } from './user/user-chat-gpt/user-chat-gpt.component';
 import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.component';
+import { UserProjectDetailsCommentsAddComponent } from './user/user-project-details-comments-add/user-project-details-comments-add.component';
+import { UserProjectDetailsCommentsComponent } from './user/user-project-details-comments/user-project-details-comments.component';
+import { UserProjectDetailsComponent } from './user/user-project-details/user-project-details.component';
+import { UserProjectMapComponent } from './user/user-project-map/user-project-map.component';
+import { UserProjectComponent } from './user/user-project/user-project.component';
 
 const routes: Routes = [
   { path: '', component: MapsViewComponent },
@@ -25,6 +30,11 @@ const routes: Routes = [
   { path: 'user/:id/dashboard', component: UserDashboardComponent, canActivate: [AuthGuard] },
   { path: 'user/:id/calendar', component: UserCalendarComponent, canActivate: [AuthGuard] },
   { path: 'user/:id/chatGPT', component: UserChatGPTComponent, canActivate: [AuthGuard] },
+  { path: 'user/:id/project', component: UserProjectComponent, canActivate: [AuthGuard] },
+  { path: 'user/:id/project-map', component: UserProjectMapComponent, canActivate: [AuthGuard] },
+  { path: 'user/project/:id', component: UserProjectDetailsComponent, canActivate: [AuthGuard] },
+  { path: 'user/project/:id/comments', component: UserProjectDetailsCommentsComponent, canActivate: [AuthGuard] },
+  { path: 'user/project/:id/comments/ajouter', component: UserProjectDetailsCommentsAddComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
