@@ -3,8 +3,10 @@ export interface Project {
     type: string,
     city: string,
     adress: string,
+    status: string,
+    phoneNumbers: number,
     complementAdress: string,
-    createdAt: string,
+    created_at: string,
     comments: [
         text: any,
         created_at: string,

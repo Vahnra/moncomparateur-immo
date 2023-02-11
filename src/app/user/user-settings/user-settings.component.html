@@ -19,10 +19,10 @@
         </div>
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="true" href="#">Statistiques</a>
+                <a class="nav-link" style="cursor: pointer" (click)="goToUserDashboard()">Statistiques</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="goToSettings()" style="cursor: pointer">Paramètres</a>
+                <a class="nav-link active" aria-current="true" >Paramètres</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
@@ -30,27 +30,8 @@
         </ul>
     </div>
     <div class="card-body">
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Prospection
-              <span class="badge bg-primary rounded-pill">14</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Estimation
-              <span class="badge bg-primary rounded-pill">2</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Mandat
-              <span class="badge bg-primary rounded-pill">1</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Visite
-              <span class="badge bg-primary rounded-pill">1</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Contre Visite
-              <span class="badge bg-primary rounded-pill">1</span>
-            </li>
-          </ul>
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
     </div>
 </div>

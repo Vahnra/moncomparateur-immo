@@ -15,8 +15,10 @@ import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.com
 import { UserProjectDetailsCommentsAddComponent } from './user/user-project-details-comments-add/user-project-details-comments-add.component';
 import { UserProjectDetailsCommentsComponent } from './user/user-project-details-comments/user-project-details-comments.component';
 import { UserProjectDetailsComponent } from './user/user-project-details/user-project-details.component';
+import { UserProjectListComponent } from './user/user-project-list/user-project-list.component';
 import { UserProjectMapComponent } from './user/user-project-map/user-project-map.component';
 import { UserProjectComponent } from './user/user-project/user-project.component';
+import { UserSettingsComponent } from './user/user-settings/user-settings.component';
 
 const routes: Routes = [
   { path: '', component: MapsViewComponent },
@@ -28,9 +30,11 @@ const routes: Routes = [
   { path: 'dashboard/voir-utilisateurs', component: UserShowComponent },
   { path: 'dashboard/creer-utilisateur', component: UserCreateComponent },
   { path: 'user/:id/dashboard', component: UserDashboardComponent, canActivate: [AuthGuard] },
+  { path: 'user/:id/paramètres', component: UserSettingsComponent, canActivate: [AuthGuard] },
   { path: 'user/:id/calendar', component: UserCalendarComponent, canActivate: [AuthGuard] },
   { path: 'user/:id/chatGPT', component: UserChatGPTComponent, canActivate: [AuthGuard] },
   { path: 'user/:id/project', component: UserProjectComponent, canActivate: [AuthGuard] },
+  { path: 'user/:id/project-list', component: UserProjectListComponent, canActivate: [AuthGuard] },
   { path: 'user/:id/project-map', component: UserProjectMapComponent, canActivate: [AuthGuard] },
   { path: 'user/project/:id', component: UserProjectDetailsComponent, canActivate: [AuthGuard] },
   { path: 'user/project/:id/comments', component: UserProjectDetailsCommentsComponent, canActivate: [AuthGuard] },

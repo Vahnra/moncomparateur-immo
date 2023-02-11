@@ -7,6 +7,7 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { Dpe } from 'src/app/models/dpe';
 import * as Leaflet from 'leaflet';
 import { FavoritesService } from 'src/app/_services/favorites.service';
+import { ProjectService } from 'src/app/_services/project.service';
 
 
 
@@ -99,6 +100,7 @@ export class MapsViewComponent implements OnInit {
     public httpClient: HttpClient, 
     private mapsService: MapsService, 
     private favoritesService: FavoritesService, 
+    private projectService: ProjectService,
     private zone: NgZone
     ) { }
 
@@ -155,7 +157,7 @@ export class MapsViewComponent implements OnInit {
     this.mapsService.refreshDpe($event.target.getCenter().lat, $event.target.getCenter().lng).subscribe(data => {
       
       this.test = JSON.parse(JSON.stringify(data))
-
+      
       this.test.results.forEach((item) => {
 
         this.addMarker(item);
@@ -209,7 +211,7 @@ export class MapsViewComponent implements OnInit {
                       <span class="col-6 text-end"><strong>Type de logement</strong></span><span class="col-6" id="building-type">${item['Type_bâtiment']}</span>
                       <!-- <span class="col-6 text-end">Année de construction</span><span class="col-6">${item['Année_construction']}</span> -->
                       <span class="col-6 text-end"><strong>Surface habitable</strong></span><span class="col-6" id="area-size">${item['Surface_habitable_logement']}</span> 
-                      <a class="text-center col-12 favorite-button" href="#" >Ajouter aux favoris</a>
+                      <a class="text-center col-12 favorite-button" href="#" >Créer une fiche de prospection</a>
                     </div>
                   </div>
                 </div>
@@ -232,7 +234,6 @@ export class MapsViewComponent implements OnInit {
 
   onMarkerClick(item: any) {
     this.currentMarker = item;
-    // console.log(item);  
   }
 
   onAjouterFavorisClick() {
@@ -244,18 +245,21 @@ export class MapsViewComponent implements OnInit {
     var areaSize = document.getElementById("area-size")?.innerHTML;
 
     let markerData = JSON.parse(JSON.stringify(this.currentMarker));
-    console.log(markerData);
 
     let names: string = markerData['_geopoint'];
     let nameArr = names.split(',');
     
-    this.favoritesService.addFavorite(markerData['N°DPE'], markerData['Date_établissement_DPE'], markerData['Etiquette_DPE'], markerData['Adresse_(BAN)'], markerData['Type_bâtiment'], markerData['Surface_habitable_logement'], nameArr[0], nameArr[1]).subscribe({
-      next: data => {
-        console.log(data); 
-      },
-      error: error => console.log(error)
+    // this.favoritesService.addFavorite(markerData['N°DPE'], markerData['Date_établissement_DPE'], markerData['Etiquette_DPE'], markerData['Adresse_(BAN)'], markerData['Type_bâtiment'], markerData['Surface_habitable_logement'], nameArr[0], nameArr[1]).subscribe({
+    //   next: data => {
+    //     console.log(data); 
+    //   },
+    //   error: error => console.log(error)
+    // })
+    this.projectService.addProjectFromMarker(markerData['Type_bâtiment'], markerData['Nom__commune_(BAN)'], markerData['Adresse_brute'], markerData['Complément_d\'adresse_logement']).subscribe(data => {
+      console.log(data);
+      
     })
-    
   }
   
+
 }

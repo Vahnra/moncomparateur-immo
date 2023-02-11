@@ -22,8 +22,8 @@
                 <!-- <span>ChatGPT</span> -->
             </div>
             
-            <div *ngIf="isLoggedIn" (click)="goToUserDashboard()" class="col-2 mx-auto text-center" style="cursor: pointer;">
-                <a class="nav-link"><i class="fa-solid fa-user fa-xl"></i></a>
+            <div *ngIf="isLoggedIn" class="col-2 mx-auto text-center" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <a class="nav-link"><i class="fa-solid fa-ellipsis"></i></a>
                 <!-- <span>Compte</span> -->
             </div>
             <div *ngIf="isLoggedIn == false" (click)="goToLogIn()" class="col-2 mx-auto text-center" style="cursor: pointer;">
@@ -77,3 +77,87 @@
         </div>
     </div>
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-md-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4 mx-auto" (click)="goToDpe()" style="cursor: pointer;"  data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mb-3" style="height: 5vh;">
+                            <i class="fa-solid fa-map-location-dot fa-2xl"></i>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-center">
+                            Carte DPE
+                        </div>
+                    </div>
+                    <div class="col-4 mx-auto" (click)="goToDvf()" style="cursor: pointer;"  data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mb-3" style="height: 5vh;">
+                            <i class="fa-solid fa-map-location fa-2xl"></i>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-center">
+                            Carte DVF
+                        </div>
+                    </div>
+                    <div class="col-4 mx-auto" (click)="goToProjectMap()" style="cursor: pointer;"  data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mb-3" style="height: 5vh;">
+                            <i class="fa-solid fa-map-location fa-2xl"></i>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-center" style="height: 5vh; ">
+                            Carte Fiche
+                        </div>
+                    </div>                 
+                </div>
+                <div class="row">
+                    <div class="col-4 mx-auto" (click)="goToProjectList()" style="cursor: pointer;"  data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mb-3" style="height: 5vh;">
+                            <i class="fa-solid fa-bars fa-2xl"></i>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-center" style="height: 5vh; ">
+                            Liste Fiche
+                        </div>
+                    </div>
+                    <div class="col-4 mx-auto" (click)="goToCalendar()" style="cursor: pointer;"  data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mb-3" style="height: 5vh;">
+                            <i class="fa-solid fa-calendar-days fa-2xl"></i>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-center" style="height: 5vh;">
+                            Agenda
+                        </div>
+                    </div>
+                    <div class="col-4 mx-auto" style="cursor: pointer;"  data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mb-3" style="height: 5vh;">
+                            <i class="fa-solid fa-note-sticky fa-2xl"></i>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-center" style="height: 5vh;">
+                            Vos fiches
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 mx-auto" (click)="goToChatGPT()" style="cursor: pointer;"  data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mb-3" style="height: 5vh;">
+                            <i class="fa-solid fa-robot fa-2xl"></i>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-center" style="height: 5vh;">
+                            ChatGPT
+                        </div>
+                    </div>
+                    <div class="col-4 mx-auto" style="cursor: pointer;"  data-bs-dismiss="modal" (click)="goToUserDashboard()">
+                        <div class="d-flex align-items-end justify-content-center mb-3" style="height: 5vh; ">
+                            <i class="fa-solid fa-user fa-2xl"></i>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-center" style="height: 5vh;">
+                            Profile
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  

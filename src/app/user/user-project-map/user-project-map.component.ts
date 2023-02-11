@@ -6,6 +6,9 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { Project } from 'src/app/models/project';
 import { MapsService } from 'src/app/maps/maps.service';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/_services/storage.service';
+import { UserService } from 'src/app/_services/user.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-project-map',
@@ -32,7 +35,12 @@ export class UserProjectMapComponent implements OnInit {
   markerData: Leaflet.Marker[] = [];
   currentMarker: Leaflet.Marker;
   allProjects: Project;
-
+  userId: number;
+  isLoggedIn: boolean = false;
+  
+  apicallSub?:Subscription;
+  apiMarkerSub?:Subscription;
+  
   customOptions = {
     'minWidth': 300,
   }
@@ -89,12 +97,19 @@ export class UserProjectMapComponent implements OnInit {
     }
   }
 
-  constructor(private projectService: ProjectService, private mapService: MapsService, private zone: NgZone, private router: Router) {
+  constructor(private projectService: ProjectService, private mapService: MapsService, private zone: NgZone, private router: Router, private storageService: StorageService, private userService: UserService) {
 
   }
 
   ngOnInit() {
-    
+    if (this.storageService.isLoggedIn == true) {
+      this.userService.getCurrentUser().subscribe(userId => {
+        if (userId) {
+          this.userId = userId;
+          this.isLoggedIn = true;
+        }
+      }).unsubscribe();
+    }
   }
 
   ngAfterViewInit(): void { 
@@ -103,6 +118,13 @@ export class UserProjectMapComponent implements OnInit {
 
   ngAfterViewChecked() {
     
+  }
+  
+  ngOnDestroy() {
+    if(this.apicallSub){
+      this.apicallSub.unsubscribe();
+      this.apiMarkerSub?.unsubscribe()
+    }
   }
 
   onMapReady(map: Map) {
@@ -124,7 +146,7 @@ export class UserProjectMapComponent implements OnInit {
 
     if (!this.enableCall) return;
     
-    this.projectService.getUserProjects().subscribe(data => {  
+    this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
       data.forEach((element:any) => {
         this.addMarker(element);
       });
@@ -146,9 +168,9 @@ export class UserProjectMapComponent implements OnInit {
 
   addMarker(item: any) {
 
-    this.mapService.requestGeocoding(item.adress).subscribe(data => {
-
-      let test = JSON.parse(JSON.stringify(data))
+    this.apiMarkerSub = this.mapService.requestGeocoding(item.adress, item.city).subscribe(data => {
+      
+      let test = JSON.parse(JSON.stringify(data));
       
       let nameArr = [test.data[0].latitude, test.data[0].longitude];
 
@@ -204,5 +226,9 @@ export class UserProjectMapComponent implements OnInit {
   onVoirFicheClick() {
     let markerData = JSON.parse(JSON.stringify(this.currentMarker));
     this.router.navigate([`/user/project/${markerData.id}`])
+  }
+
+  goToListe() {
+    this.router.navigate([`/user/${this.userId}/project-list`])
   }
 }

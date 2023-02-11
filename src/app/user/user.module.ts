@@ -18,6 +18,8 @@ import { UserProjectDetailsComponent } from './user-project-details/user-project
 import { UserProjectDetailsCommentsComponent } from './user-project-details-comments/user-project-details-comments.component';
 import { UserProjectDetailsCommentsAddComponent } from './user-project-details-comments-add/user-project-details-comments-add.component';
 import { LoaderComponent } from './loader/loader.component';
+import { UserProjectListComponent } from './user-project-list/user-project-list.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
 
 
 
@@ -32,7 +34,9 @@ import { LoaderComponent } from './loader/loader.component';
     UserProjectDetailsComponent,
     UserProjectDetailsCommentsComponent,
     UserProjectDetailsCommentsAddComponent,
-    LoaderComponent
+    LoaderComponent,
+    UserProjectListComponent,
+    UserSettingsComponent,
   ],
   imports: [
     CommonModule,

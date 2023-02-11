@@ -65,5 +65,22 @@ export class AppComponent {
   goToProject() {
     this.router.navigate([`/user/${this.userId}/project-map`])
   }
+
+  goToDpe() {
+    this.router.navigate([`/`])
+  }
+
+  goToDvf() {
+    this.router.navigate([`/dvf`])
+  }
+
+  goToProjectMap() {
+    this.router.navigate([`/user/${this.userId}/project-map`])
+  }
+  
+  goToProjectList() {
+    this.router.navigate([`/user/${this.userId}/project-list`])
+  }
+
 }
 

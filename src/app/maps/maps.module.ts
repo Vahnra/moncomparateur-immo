@@ -8,6 +8,7 @@ import { SitadelMapsComponent } from './sitadel-maps/sitadel-maps.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
 import { FooterComponent } from './footer/footer.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -24,7 +25,8 @@ import { FooterComponent } from './footer/footer.component';
     HttpClientModule,
     HttpClientJsonpModule,
     LeafletModule,
-    LeafletMarkerClusterModule
+    LeafletMarkerClusterModule,
+    NgbModule
   ]
 })
 export class MapsModule { }

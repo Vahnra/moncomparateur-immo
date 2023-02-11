@@ -49,6 +49,15 @@
 
 <div class="card text-center border border-0" *ngIf="project">
     <div class="card-header">
+        <div class="mb-2">
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Status : Prospection</option>
+                <option value="1">Status : Estimation</option>
+                <option value="2">Status : Mandat</option>
+                <option value="3">Status : Visite</option>
+                <option value="3">Status : Contre Visite</option>
+            </select>
+        </div>
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
                 <a class="nav-link" (click)="goToDetails()">Fiche</a>

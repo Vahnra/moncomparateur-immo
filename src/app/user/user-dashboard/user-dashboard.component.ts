@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/_services/user.service';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -10,15 +12,21 @@ import { UserService } from 'src/app/_services/user.service';
 export class UserDashboardComponent implements OnInit {
 
   userId = this.route.snapshot.paramMap.get('id');
+  user: User;
 
-  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute,) {
+  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private authService: AuthService) {
 
   }
 
   ngOnInit(): void {
     const userId: string|null = this.route.snapshot.paramMap.get('id');
-    this.userService.getUser(userId).subscribe( data => {   
+    this.userService.getUser(userId).subscribe( data => {
+      this.user = data;
     })
+  }
+
+  logOut() {
+    this.authService.doLogout();
   }
 
   goToChatGPT() {
@@ -39,5 +47,9 @@ export class UserDashboardComponent implements OnInit {
 
   goToProjectMap() {
     this.router.navigate([`/user/${this.userId}/project-map`])
+  }
+
+  goToSettings() {
+    this.router.navigate([`/user/${this.userId}/paramètres`])
   }
 }

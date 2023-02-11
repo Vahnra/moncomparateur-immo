@@ -50,9 +50,11 @@ export class AuthService {
   }
 
   doLogout() {
-    let removeToken = localStorage.removeItem('access_token');
+    let removeToken = sessionStorage.removeItem('token');
     if (removeToken == null) {
-      this.router.navigate(['log-in']);
+      this.router.navigate(['login']).then(() => {
+        window.location.reload();
+      });
     }
   }
   

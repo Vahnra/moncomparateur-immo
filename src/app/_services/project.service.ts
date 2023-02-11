@@ -39,6 +39,25 @@ export class ProjectService {
     )
   }
 
+  // add project
+  addProjectFromMarker(
+    type: String,
+    city: String,
+    adress: String,
+    complementAdress: String,
+    ): Observable<any> {
+    return this.http.post(
+      PROJECT_API + '/add-from-marker',
+      {
+        type,
+        city,
+        adress,
+        complementAdress
+      },
+      httpOptions
+    )
+  }
+
   // get all user projects
   getUserProjects(): Observable<any> {
     return this.http.get(
@@ -51,5 +70,15 @@ export class ProjectService {
     return this.http.get(
       PROJECT_API + `/${projectId}`, httpOptions
     );
+  }
+
+  updateProjectStatus(status: string, projectId: any) {
+    return this.http.put(
+      PROJECT_API + `/status/${projectId}`, 
+      {
+        status: status
+      },
+      httpOptions
+    )
   }
 }
