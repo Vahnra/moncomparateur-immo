@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { UserStats } from '../models/stats-user';
 
 const AUTH_API = 'http://localhost:8000/api';
 
@@ -37,5 +38,10 @@ export class UserService {
     );
   }
 
+  getProjectStats() {
+    return this.http.get<UserStats>(
+      AUTH_API + '/stats-user', httpOptions
+    )
+  }
 
 }

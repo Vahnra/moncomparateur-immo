@@ -19,6 +19,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { ToastsContainerComponent } from './toasts-container/toasts-container.component';
+import { getFrenchPaginatorIntl } from './french-paginator-intl';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 registerLocaleData(localeFr);
 
@@ -27,6 +30,7 @@ registerLocaleData(localeFr);
     AppComponent,
     RegisterComponent,
     LoginComponent,
+    ToastsContainerComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +56,10 @@ registerLocaleData(localeFr);
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
+    },
+    { 
+      provide: MatPaginatorIntl, 
+      useValue: getFrenchPaginatorIntl() 
     }
   ],
   bootstrap: [AppComponent]

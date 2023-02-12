@@ -20,6 +20,15 @@ import { UserProjectDetailsCommentsAddComponent } from './user-project-details-c
 import { LoaderComponent } from './loader/loader.component';
 import { UserProjectListComponent } from './user-project-list/user-project-list.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { MatExpansionModule, MatAccordion } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule, } from '@angular/material/form-field';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import { MatSortModule } from '@angular/material/sort';
+import { UserProjectUpdateComponent } from './user-project-update/user-project-update.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -37,6 +46,7 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
     LoaderComponent,
     UserProjectListComponent,
     UserSettingsComponent,
+    UserProjectUpdateComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +57,16 @@ import { UserSettingsComponent } from './user-settings/user-settings.component';
     LeafletModule,
     LeafletMarkerClusterModule, 
     MapsModule,
+    MatExpansionModule,
+    MatIconModule,
+    RouterModule,
+    MatFormFieldModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatInputModule,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule,
   ]
 })
 export class UserModule { }

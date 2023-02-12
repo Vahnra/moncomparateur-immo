@@ -14,6 +14,11 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/moncomparateur-immo",
+            "allowedCommonJsDependencies": [
+              "leaflet",
+              "leaflet.markercluster",
+              "openai"
+            ],
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [

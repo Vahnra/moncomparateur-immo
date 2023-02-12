@@ -13,15 +13,34 @@ export class UserDashboardComponent implements OnInit {
 
   userId = this.route.snapshot.paramMap.get('id');
   user: User;
+  prospectionStats: number;
+  estimationsStats: number;
+  mandatsStats: number;
+  visitesStats: number;
+  contreVisitesStats: number;
 
-  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute, private authService: AuthService) {
-
-  }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private authService: AuthService
+    ) { }
 
   ngOnInit(): void {
     const userId: string|null = this.route.snapshot.paramMap.get('id');
     this.userService.getUser(userId).subscribe( data => {
       this.user = data;
+    })
+    this.userService.getProjectStats().subscribe({
+      next: data => {
+        this.prospectionStats = data["0"];
+        this.estimationsStats = data["1"];
+        this.mandatsStats = data["2"];
+        this.visitesStats = data["3"];
+        this.contreVisitesStats = data["4"];
+      }, error: err => {
+        console.log(err);
+      }, complete: () => {}
     })
   }
 

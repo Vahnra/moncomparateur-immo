@@ -7,6 +7,7 @@ import { DvfFiche } from 'src/app/models/dvf-fiche';
 import { Project } from 'src/app/models/project';
 import { ProjectService } from 'src/app/_services/project.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { ToastService } from 'src/app/_services/toast.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
@@ -33,7 +34,15 @@ export class UserProjectDetailsComponent implements OnInit {
     {value: 'contre-visite', text: 'Status : Contre Visite'},
   ]
 
-  constructor(private projectService: ProjectService, private route: ActivatedRoute, private router: Router, private storageService: StorageService, private userService: UserService, private mapsService: MapsService, ) { }
+  constructor(
+    private projectService: ProjectService, 
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private storageService: StorageService, 
+    private userService: UserService, 
+    private mapsService: MapsService, 
+    private toastService: ToastService
+    ) { }
 
   ngOnInit(): void {
     this.projectId = this.route.snapshot.paramMap.get('id');
@@ -79,9 +88,14 @@ export class UserProjectDetailsComponent implements OnInit {
 
   changeStatus(option: any) {
     this.projectService.updateProjectStatus(option.value, this.projectId).subscribe({
-      next: data => console.log(data),
+      next: response => null,
       error: err => console.log(err),
-      complete: () => console.log('GG')   
+      complete: () => this.toastService.show('La fiche a bien été mis à jour.', `Le status est maintenant ${option.value}.`, {  delay: 3000 })   
     })
   }
+
+  clickUpdate() {
+    this.router.navigate([`user/${this.userId}/project-update/${this.projectId}`]) 
+  }
+  
 }

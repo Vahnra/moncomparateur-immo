@@ -38,6 +38,7 @@ export class ProjectService {
       httpOptions
     )
   }
+  
 
   // add project
   addProjectFromMarker(
@@ -55,6 +56,37 @@ export class ProjectService {
         complementAdress
       },
       httpOptions
+    )
+  }
+
+  // update project
+  updateProject(
+    type: String,
+    city: String,
+    adress: String,
+    phone_numbers: String,
+    status: String,
+    complement_adress: string,
+    projectId: number
+    ): Observable<any> {
+    return this.http.put(
+      PROJECT_API  + `/${projectId}`,
+      {
+        type,
+        city,
+        adress,
+        phone_numbers,
+        status,
+        complement_adress
+      },
+      httpOptions
+    )
+  }
+
+  // delete project
+  deleteProject(projectId: number) {
+    return this.http.delete(
+      PROJECT_API  + `/${projectId}`, httpOptions
     )
   }
 

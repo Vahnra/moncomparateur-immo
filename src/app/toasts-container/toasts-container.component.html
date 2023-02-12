@@ -1,0 +1,14 @@
+<ngb-toast
+  *ngFor="let toast of toastService.toasts"
+  [class]="toast.classname"
+  [header]="toast.header" 
+  [autohide]="true" 
+  [delay]="toast.delay || 5000"
+  (hiddden)="toastService.remove(toast)"
+>
+  <div>{{toast.body}}</div>
+  <div *ngIf="toast.button" class="text-center mt-3">
+    <a class="text-primary text-decoration-underline" (click)="goToAddedFiche(toast.button)" style="cursor: pointer;">Voir la fiche</a>
+  </div>
+</ngb-toast>
+

@@ -23,7 +23,7 @@
 
 .frame-box{
   min-height: 400px;
-  max-height: 400px;
+  /* max-height: 400px; */
   overflow-y: scroll;
   background-color: #E6EAEA;
 }

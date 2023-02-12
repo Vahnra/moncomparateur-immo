@@ -1,4 +1,4 @@
-import { Component, HostListener, NgZone, OnInit } from '@angular/core';
+import { Component, HostListener, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/_services/project.service';
 import * as Leaflet from 'leaflet';
 import { latLng, LayerGroup, tileLayer, Map, icon, Icon } from 'leaflet';
@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './user-project-map.component.html',
   styleUrls: ['./user-project-map.component.css']
 })
-export class UserProjectMapComponent implements OnInit {
+export class UserProjectMapComponent implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event']) click(event:any) { 
     if(event.target.classList.contains("fiche-button")){ this.onVoirFicheClick(); }
   }
@@ -97,8 +97,9 @@ export class UserProjectMapComponent implements OnInit {
     }
   }
 
-  constructor(private projectService: ProjectService, private mapService: MapsService, private zone: NgZone, private router: Router, private storageService: StorageService, private userService: UserService) {
-
+  constructor(private projectService: ProjectService, private mapService: MapsService, private zone: NgZone, private router: Router, private storageService: StorageService, private userService: UserService) 
+  {
+    
   }
 
   ngOnInit() {
@@ -110,6 +111,12 @@ export class UserProjectMapComponent implements OnInit {
         }
       }).unsubscribe();
     }
+
+    this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
+      data.forEach((element:any) => {
+        this.addMarker(element);
+      });
+    })
   }
 
   ngAfterViewInit(): void { 
@@ -125,6 +132,7 @@ export class UserProjectMapComponent implements OnInit {
       this.apicallSub.unsubscribe();
       this.apiMarkerSub?.unsubscribe()
     }
+  
   }
 
   onMapReady(map: Map) {
@@ -134,31 +142,33 @@ export class UserProjectMapComponent implements OnInit {
       style: "bar"
     });
     map.addControl(searchControl);
-    map.addControl(Leaflet.control.zoom({ position: 'bottomright' }));
 
     navigator.geolocation.getCurrentPosition((position) => {
       map.setView([position.coords.latitude, position.coords.longitude])
     })// End of get current position
-
+    
   }
 
   getUserProjects($event: any) {
 
-    if (!this.enableCall) return;
+    // if (!this.enableCall) return;
+
+    this.markerClusterData = this.markerData;
+    this.markerClusterGroup.addLayers(this.markerClusterData);
     
-    this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
-      data.forEach((element:any) => {
-        this.addMarker(element);
-      });
-      // this.markerClusterGroup.clearLayers();
-      this.markerClusterData = this.markerData;
-      this.markerClusterGroup.addLayers(this.markerClusterData);
-    })
+    // this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
+    //   data.forEach((element:any) => {
+    //     this.addMarker(element);
+    //   });
+    //   // this.markerClusterGroup.clearLayers();
+    //   this.markerClusterData = this.markerData;
+    //   this.markerClusterGroup.addLayers(this.markerClusterData);
+    // })
 
     // this.enableCall = false;
     
     // var popup = this.map.layer.getPopup();
-    setTimeout(() => this.enableCall = false, 4000);
+    // setTimeout(() => this.enableCall = false, 4000);
 
   }
 
@@ -170,8 +180,7 @@ export class UserProjectMapComponent implements OnInit {
 
     this.apiMarkerSub = this.mapService.requestGeocoding(item.adress, item.city).subscribe(data => {
       
-      let test = JSON.parse(JSON.stringify(data));
-      
+      let test = JSON.parse(JSON.stringify(data));     
       let nameArr = [test.data[0].latitude, test.data[0].longitude];
 
       if (this.isLocationFree(nameArr) == true) {
@@ -230,5 +239,9 @@ export class UserProjectMapComponent implements OnInit {
 
   goToListe() {
     this.router.navigate([`/user/${this.userId}/project-list`])
+  }
+
+  refresh() {
+    window.location.reload();
   }
 }

@@ -1,4 +1,4 @@
-<div class="card" *ngIf="user">
+<div class="card border-0" *ngIf="user">
     <div class="card-header">
         <div class="row mb-3" style="height: 90px;">
             <div class="col-3 ">
@@ -29,27 +29,27 @@
             </li>
         </ul>
     </div>
-    <div class="card-body">
+    <div class="card-body ">
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Prospection
-              <span class="badge bg-primary rounded-pill">14</span>
+              <span class="badge bg-primary rounded-pill">{{ prospectionStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Estimation
-              <span class="badge bg-primary rounded-pill">2</span>
+              <span class="badge bg-primary rounded-pill">{{ estimationsStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Mandat
-              <span class="badge bg-primary rounded-pill">1</span>
+              <span class="badge bg-primary rounded-pill">{{ mandatsStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Visite
-              <span class="badge bg-primary rounded-pill">1</span>
+              <span class="badge bg-primary rounded-pill">{{ visitesStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
               Contre Visite
-              <span class="badge bg-primary rounded-pill">1</span>
+              <span class="badge bg-primary rounded-pill">{{ contreVisitesStats }}</span>
             </li>
           </ul>
     </div>

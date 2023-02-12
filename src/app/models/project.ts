@@ -4,9 +4,10 @@ export interface Project {
     city: string,
     adress: string,
     status: string,
-    phoneNumbers: number,
-    complementAdress: string,
+    phone_numbers: number,
+    complement_adress: string,
     created_at: string,
+    updated_at: string,
     comments: [
         text: any,
         created_at: string,

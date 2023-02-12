@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { MapsService } from '../maps.service';
@@ -8,6 +8,8 @@ import { Dpe } from 'src/app/models/dpe';
 import * as Leaflet from 'leaflet';
 import { FavoritesService } from 'src/app/_services/favorites.service';
 import { ProjectService } from 'src/app/_services/project.service';
+import { ToastService } from 'src/app/_services/toast.service';
+import { ReplaySubject, takeUntil } from 'rxjs';
 
 
 
@@ -16,11 +18,13 @@ import { ProjectService } from 'src/app/_services/project.service';
   templateUrl: './maps-view.component.html',
   styleUrls: ['./maps-view.component.css']
 })
-export class MapsViewComponent implements OnInit {
+export class MapsViewComponent implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event']) click(event:any) { 
     if(event.target.classList.contains("favorite-button")){ this.onAjouterFavorisClick(); }
   }
 
+  destroy: ReplaySubject<any> = new ReplaySubject<any>(1);
+  
   map!: Leaflet.Map
   enableCall: boolean = true;
 
@@ -55,7 +59,7 @@ export class MapsViewComponent implements OnInit {
   
   layersControl = {
     baseLayers: {
-      'Plan': tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+      'Plan par défaut': tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
         maxZoom: 19, 
         attribution: '...' 
       }),
@@ -92,7 +96,7 @@ export class MapsViewComponent implements OnInit {
       }),
     },
     overlays: {
-      'PBE': this.pbe,
+ 
     },
   }
 
@@ -101,6 +105,7 @@ export class MapsViewComponent implements OnInit {
     private mapsService: MapsService, 
     private favoritesService: FavoritesService, 
     private projectService: ProjectService,
+    public toastService: ToastService,
     private zone: NgZone
     ) { }
 
@@ -110,6 +115,10 @@ export class MapsViewComponent implements OnInit {
   }
 
   ngAfterViewInit(): void { }
+
+  ngOnDestroy(): void {
+    this.destroy.next(null);
+  }
 
   test: Dpe;
 
@@ -123,13 +132,13 @@ export class MapsViewComponent implements OnInit {
     });
     map.addControl(searchControl);
 
-    map.addLayer(this.pbe);
+    // map.addLayer(this.pbe);
     // console.log(map.getCenter());
     navigator.geolocation.getCurrentPosition((position) => {
       // console.log(position);
-      map.setView([position.coords.latitude, position.coords.longitude])
+      map.setView([position.coords.latitude, position.coords.longitude]);
 
-      this.mapsService.refreshDpe(map.getCenter().lat, map.getCenter().lng).subscribe(data => {
+      this.mapsService.refreshDpe(map.getCenter().lat, map.getCenter().lng).pipe(takeUntil(this.destroy)).subscribe(data => {
 
         this.test = JSON.parse(JSON.stringify(data))
 
@@ -154,7 +163,7 @@ export class MapsViewComponent implements OnInit {
     if (!this.enableCall) return;
     this.enableCall = false;
 
-    this.mapsService.refreshDpe($event.target.getCenter().lat, $event.target.getCenter().lng).subscribe(data => {
+    this.mapsService.refreshDpe($event.target.getCenter().lat, $event.target.getCenter().lng).pipe(takeUntil(this.destroy)).subscribe(data => {
       
       this.test = JSON.parse(JSON.stringify(data))
       
@@ -237,12 +246,12 @@ export class MapsViewComponent implements OnInit {
   }
 
   onAjouterFavorisClick() {
-    var dpeNumber = document.getElementById("dpe-number")?.innerHTML;
-    var dpeDate = document.getElementById("dpe-date")?.innerHTML;
-    var dpeClass = document.getElementById("dpe-class")?.innerHTML;
-    var adress = document.getElementById("adress")?.innerHTML;
-    var buildingType = document.getElementById("building-type")?.innerHTML;
-    var areaSize = document.getElementById("area-size")?.innerHTML;
+    // var dpeNumber = document.getElementById("dpe-number")?.innerHTML;
+    // var dpeDate = document.getElementById("dpe-date")?.innerHTML;
+    // var dpeClass = document.getElementById("dpe-class")?.innerHTML;
+    // var adress = document.getElementById("adress")?.innerHTML;
+    // var buildingType = document.getElementById("building-type")?.innerHTML;
+    // var areaSize = document.getElementById("area-size")?.innerHTML;
 
     let markerData = JSON.parse(JSON.stringify(this.currentMarker));
 
@@ -255,10 +264,14 @@ export class MapsViewComponent implements OnInit {
     //   },
     //   error: error => console.log(error)
     // })
-    this.projectService.addProjectFromMarker(markerData['Type_bâtiment'], markerData['Nom__commune_(BAN)'], markerData['Adresse_brute'], markerData['Complément_d\'adresse_logement']).subscribe(data => {
-      console.log(data);
-      
-    })
+    this.projectService
+      .addProjectFromMarker(markerData['Type_bâtiment'], markerData['Nom__commune_(BAN)'], markerData['Adresse_brute'], markerData['Complément_d\'adresse_logement']).pipe(takeUntil(this.destroy))
+      .subscribe({next: response => {     
+        this.toastService.showFromDpe('La fiche a bien été créé', markerData['Adresse_(BAN)'], response, { delay: 5000 });
+      }, error: err => {
+        this.toastService.show('Une erreur s\'est produite', 'La fiche existe déjà.', { classname: 'bg-danger text-light', delay: 5000 })
+      },
+      })
   }
   
 

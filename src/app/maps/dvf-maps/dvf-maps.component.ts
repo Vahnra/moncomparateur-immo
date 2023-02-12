@@ -106,7 +106,7 @@ export class DvfMapsComponent implements OnInit {
       style: "bar"
     });
     map.addControl(searchControl);
-    map.addLayer(this.pbe)
+    // map.addLayer(this.pbe)
  
     navigator.geolocation.getCurrentPosition((position) => {
       map.setView([position.coords.latitude, position.coords.longitude])

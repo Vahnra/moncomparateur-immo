@@ -1,83 +1,128 @@
 <nav class="navbar bg-light" style="height: 50px;">
-    <div class="container-fluid">
-         <button class="navbar-toggler mx-auto" type="button"
-              aria-controls="offcanvasNavbar">Listes
-              <i class="fa-solid fa-bars"></i>
-         </button>
-         <button class="navbar-toggler mx-auto" type="button" (click)="goToMap()">Carte
-              <i class="fa-solid fa-map-location-dot"></i>
-         </button>
-         <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-              aria-controls="offcanvasNavbar">Filtres
-              <i class="fa-solid fa-arrow-down-wide-short"></i>
-         </button>
-         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-              aria-labelledby="offcanvasNavbarLabel">
-              <div class="offcanvas-header">
-                   <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
-                   <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-              </div>
-              <div class="offcanvas-body">
-                   <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                        <li class="nav-item">
-                             <div class="form-floating">
-                                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                       <option selected>Choisissez</option>
-                                       <option value="1">One</option>
-                                       <option value="2">Two</option>
-                                       <option value="3">Three</option>
-                                  </select>
-                                  <label for="floatingSelect">Type de bien</label>
-                             </div>
-                        </li>
-                        <li class="nav-item mt-3">
-                             <div class="form-floating">
-                                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                       <option selected>Choisissez</option>
-                                       <option value="1">One</option>
-                                       <option value="2">Two</option>
-                                       <option value="3">Three</option>
-                                  </select>
-                                  <label for="floatingSelect">Ville</label>
-                             </div>
-                        </li>
-                   </ul>
-              </div>
-         </div>
-    </div>
+     <div class="container-fluid">
+          <button class="navbar-toggler mx-auto" type="button" aria-controls="offcanvasNavbar">Listes
+               <i class="fa-solid fa-bars"></i>
+          </button>
+          <button class="navbar-toggler mx-auto" type="button" (click)="goToMap()">Carte
+               <i class="fa-solid fa-map-location-dot"></i>
+          </button>
+          <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="offcanvas"
+               data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">Filtres
+               <i class="fa-solid fa-arrow-down-wide-short"></i>
+          </button>
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+               aria-labelledby="offcanvasNavbarLabel">
+               <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+               </div>
+               <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                         <li class="nav-item">
+                              <div class="form-floating">
+                                   <select class="form-select" id="floatingSelect"
+                                        aria-label="Floating label select example">
+                                        <option selected>Choisissez</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                   </select>
+                                   <label for="floatingSelect">Type de bien</label>
+                              </div>
+                         </li>
+                         <li class="nav-item mt-3">
+                              <div class="form-floating">
+                                   <select class="form-select" id="floatingSelect"
+                                        aria-label="Floating label select example">
+                                        <option selected>Choisissez</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                   </select>
+                                   <label for="floatingSelect">Ville</label>
+                              </div>
+                         </li>
+                    </ul>
+               </div>
+          </div>
+     </div>
 </nav>
 
-     <h3 class="text-center mt-3 mb-3">Liste de vos fiches</h3>
+<!-- <h3 class="text-center mt-3 mb-3">Liste de vos fiches</h3> -->
 
-<table class="table">
-     <thead>
-          <tr>
-               <th scope="col">#</th>
-               <th scope="col">Titre</th>
-               <th scope="col">Adresse</th>
-               <th scope="col">Handle</th>
-          </tr>
-     </thead>
-     <tbody>
-          <tr *ngFor="let item of userProjects">
-               <th scope="row">1</th>
-               <td>Mark</td>
-               <td>Otto</td>
-               <td>@mdo</td>
-          </tr>
-     </tbody>
-</table>
+<div class="container mt-3" style="margin-bottom: 75px;">
+     <mat-form-field style="width: 100%;">
+          <mat-label>Rechercher</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input style="width: 100%;">
+     </mat-form-field>
 
-<div class="card text-center rounded-0" *ngFor="let item of userProjects">
-     <div class="card-header">
-          Featured
+     <div class="mat-elevation-z8 mb-5">
+          <table class="mat-table" mat-table [dataSource]="dataSource" matSort matSortActive="updated_at" matSortDisableClear matSortDirection="desc">
+
+               <!-- ID Column -->
+               <ng-container matColumnDef="updated_at">
+                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Modifier le </th>
+                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Modifier le"> {{row.updated_at | date}} </td>
+               </ng-container>
+
+               <!-- Progress Column -->
+               <ng-container matColumnDef="type">
+                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Type"> {{row.type | titlecase}} </td>
+               </ng-container>
+
+               <!-- Name Column -->
+               <ng-container matColumnDef="city">
+                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Ville </th>
+                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Ville"> {{row.city | titlecase}} </td>
+               </ng-container>
+
+               <!-- Fruit Column -->
+               <ng-container matColumnDef="adress">
+                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Adresse </th>
+                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Adresse">
+                         {{row.adress | titlecase}} </td>
+               </ng-container>
+
+               <!-- Fruit Column -->
+               <ng-container matColumnDef="status">
+                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Status"> {{row.status | titlecase}}
+                    </td>
+               </ng-container>
+
+               <!-- Fruit Column -->
+               <ng-container matColumnDef="phone_numbers">
+                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Téléphone </th>
+                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Téléphone">
+                         {{row.phone_numbers}} </td>
+               </ng-container>
+
+               <ng-container matColumnDef="actions">
+                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Actions">
+                         <button mat-icon-button (click)="goToDetails(row.id)">
+                              <mat-icon>info</mat-icon>
+                         </button>
+                         <button mat-icon-button (click)="clickUpdate(row.id)">
+                              <mat-icon>launch</mat-icon>
+                         </button>
+                         <button mat-icon-button (click)="clickDelete(row.id)">
+                              <mat-icon color="warn">delete</mat-icon>
+                         </button>
+                    </td>
+               </ng-container>
+
+               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+               <!-- Row shown when there is no matching data. -->
+               <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">Aucun résultats pour le filtre "{{input.value}}"</td>
+               </tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
      </div>
-     <div class="card-body">
-          <h5 class="card-title">Special title treatment</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-     </div>
-     <div class="card-footer text-muted">
-          {{item.created_at}}
-     </div>
+
 </div>

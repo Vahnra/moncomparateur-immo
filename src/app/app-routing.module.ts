@@ -17,6 +17,7 @@ import { UserProjectDetailsCommentsComponent } from './user/user-project-details
 import { UserProjectDetailsComponent } from './user/user-project-details/user-project-details.component';
 import { UserProjectListComponent } from './user/user-project-list/user-project-list.component';
 import { UserProjectMapComponent } from './user/user-project-map/user-project-map.component';
+import { UserProjectUpdateComponent } from './user/user-project-update/user-project-update.component';
 import { UserProjectComponent } from './user/user-project/user-project.component';
 import { UserSettingsComponent } from './user/user-settings/user-settings.component';
 
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'user/:id/calendar', component: UserCalendarComponent, canActivate: [AuthGuard] },
   { path: 'user/:id/chatGPT', component: UserChatGPTComponent, canActivate: [AuthGuard] },
   { path: 'user/:id/project', component: UserProjectComponent, canActivate: [AuthGuard] },
+  { path: 'user/:id/project-update/:projectId', component: UserProjectUpdateComponent, canActivate: [AuthGuard] },
   { path: 'user/:id/project-list', component: UserProjectListComponent, canActivate: [AuthGuard] },
   { path: 'user/:id/project-map', component: UserProjectMapComponent, canActivate: [AuthGuard] },
   { path: 'user/project/:id', component: UserProjectDetailsComponent, canActivate: [AuthGuard] },
