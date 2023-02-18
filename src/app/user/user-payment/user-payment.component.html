@@ -1,0 +1,132 @@
+<div class="card" *ngIf="user">
+    <div class="card-header">
+        <div class="row mb-3" style="height: 90px;">
+            <div class="col-3 ">
+                <div class="d-flex align-items-center justify-content-center" style="height: 90px;">
+                    <img src="assets/images/user-profile.png" alt="" style="width: 100%;">
+                </div>
+            </div>
+            <div class="col-7">
+                <h4 class="mt-2">{{ user.username }}</h4>
+                <div>Utilisateur gratuit</div>
+                <div>{{ user.email }}</div>
+            </div>
+            <div class="col-2">
+                <div class="d-flex align-items-end justify-content-center" style="height: 45px; cursor: pointer;" (click)="logOut()">
+                    <i class="fa-solid fa-right-from-bracket fa-2xl"></i>
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a class="nav-link" style="cursor: pointer" (click)="goToUserDashboard()">Statistiques</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="true" >Paramètres</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body mb-5">
+        <p>Votre abonnement</p>
+        <div class="card rounded-4">
+            <div class="card-header">
+                <div class="fs-2">Premium personnel</div> 
+                <div class="fs-6">1 compte Premium</div>
+            </div>
+            <div class="card-body">
+                <form class="row" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+                    <p class="card-text col-6 mt-1">Options :</p>
+                    <p class="col-6 text-end">
+                        <select 
+                            class="form-select" 
+                            aria-label="Default select example"
+                            name="option"
+                            [(ngModel)]="form.option"
+                            #option="ngModel"
+                            (change)="ChangeOption($event.target)"
+                        >
+                            <option value="0" selected>Aucune</option>
+                            <option value="1">1 ville</option>
+                            <option value="2">2 villes</option>
+                            <option value="3">3 villes</option>
+                            <option value="4">4 villes</option>
+                            <option value="5">5 villes</option>
+                            <option value="6">6 villes</option>
+                            <option value="7">7 villes</option>
+                            <option value="8">8 villes</option>
+                            <option value="9">9 villes</option>
+                            <option value="10">10 villes</option>
+                        </select>
+                    </p>
+                    <p class="card-text col-6 mt-1">Abonnement :</p>
+                    <p class="col-6 text-end">
+                        <select 
+                            class="form-select" 
+                            aria-label="Default select example"
+                            name="type"
+                            [(ngModel)]="form.type"
+                            #type="ngModel"
+                            (change)="ChangeAbonnement($event.target)"
+                        >
+                            <option selected value="1">Mensuel</option>
+                            <option value="2">Annuel</option>
+                        </select>
+                    </p>
+                    <p class="card-text col-6">Prix mensuel :</p>
+                    <p *ngIf="optionSelected == 0 && abonnementSelected == '1'" class="col-6 text-end">18.99€</p>
+                    <p *ngIf="optionSelected == 0 && abonnementSelected == '2'" class="col-6 text-end">16.14€</p>
+                    <p *ngIf="optionSelected == 1 && abonnementSelected == '1'" class="col-6 text-end">23.98€</p>
+                    <p *ngIf="optionSelected == 1 && abonnementSelected == '2'" class="col-6 text-end">20.40€</p>
+                    <p *ngIf="optionSelected == 2 && abonnementSelected == '1'" class="col-6 text-end">26.98€</p>
+                    <p *ngIf="optionSelected == 2 && abonnementSelected == '2'" class="col-6 text-end">22.93€</p>
+                    <p *ngIf="optionSelected == 3 && abonnementSelected == '1'" class="col-6 text-end">29.97€</p>
+                    <p *ngIf="optionSelected == 3 && abonnementSelected == '2'" class="col-6 text-end">25.47€</p>
+                    <p *ngIf="optionSelected == 4 && abonnementSelected == '1'" class="col-6 text-end">32.96€</p>
+                    <p *ngIf="optionSelected == 4 && abonnementSelected == '2'" class="col-6 text-end">28.02€</p>
+                    <p *ngIf="optionSelected == 5 && abonnementSelected == '1'" class="col-6 text-end">35.95€</p>
+                    <p *ngIf="optionSelected == 5 && abonnementSelected == '2'" class="col-6 text-end">30.56€</p>
+                    <p *ngIf="optionSelected == 6 && abonnementSelected == '1'" class="col-6 text-end">38.94€</p>
+                    <p *ngIf="optionSelected == 6 && abonnementSelected == '2'" class="col-6 text-end">33.10€</p>
+                    <p *ngIf="optionSelected == 7 && abonnementSelected == '1'" class="col-6 text-end">41.93€</p>
+                    <p *ngIf="optionSelected == 7 && abonnementSelected == '2'" class="col-6 text-end">35.64€</p>
+                    <p *ngIf="optionSelected == 8 && abonnementSelected == '1'" class="col-6 text-end">44.92€</p>
+                    <p *ngIf="optionSelected == 8 && abonnementSelected == '2'" class="col-6 text-end">38.18€</p>
+                    <p *ngIf="optionSelected == 9 && abonnementSelected == '1'" class="col-6 text-end">47.91€</p>
+                    <p *ngIf="optionSelected == 9 && abonnementSelected == '2'" class="col-6 text-end">40.72€</p>
+                    <p *ngIf="optionSelected == 10 && abonnementSelected == '1'" class="col-6 text-end">50.90€</p>
+                    <p *ngIf="optionSelected == 10 && abonnementSelected == '2'" class="col-6 text-end">43.26€</p>
+                    <p class="card-text col-6">Prochaine date de facturation :</p>
+                    <p class="col-6 text-end">16 mars 2023</p>
+                    <p class="card-text pt-3 col-6 border-2 border-dark border-top">Total à payer :</p>
+                    <p *ngIf="optionSelected == 0 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">18.99€</p>           
+                    <p *ngIf="optionSelected == 0 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">227.88€</p>
+                    <p *ngIf="optionSelected == 1 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">23.98€</p>
+                    <p *ngIf="optionSelected == 1 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">244.80€</p>
+                    <p *ngIf="optionSelected == 2 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">26.98€</p>
+                    <p *ngIf="optionSelected == 2 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">275.16€</p>
+                    <p *ngIf="optionSelected == 3 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">29.97€</p>
+                    <p *ngIf="optionSelected == 3 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">305.64€</p>
+                    <p *ngIf="optionSelected == 4 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">32.96€</p>
+                    <p *ngIf="optionSelected == 4 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">336.24€</p>
+                    <p *ngIf="optionSelected == 5 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">35.95€</p>
+                    <p *ngIf="optionSelected == 5 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">366.72€</p>
+                    <p *ngIf="optionSelected == 6 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">38.94€</p>
+                    <p *ngIf="optionSelected == 6 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">397.20€</p>
+                    <p *ngIf="optionSelected == 7 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">41.93€</p>
+                    <p *ngIf="optionSelected == 7 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">427.68€</p>
+                    <p *ngIf="optionSelected == 8 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">44.92€</p>
+                    <p *ngIf="optionSelected == 8 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">458.16€</p>
+                    <p *ngIf="optionSelected == 9 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">47.91€</p>
+                    <p *ngIf="optionSelected == 9 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">488.64€</p>
+                    <p *ngIf="optionSelected == 10 && abonnementSelected == '1'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">50.90€</p>
+                    <p *ngIf="optionSelected == 10 && abonnementSelected == '2'" class="col-6 pt-3 text-end border-2 border-dark border-top fw-bold">519.12€</p>
+                    <button type="submit" class="btn">S'abonner</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

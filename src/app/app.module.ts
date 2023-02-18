@@ -22,6 +22,9 @@ import localeFr from '@angular/common/locales/fr';
 import { ToastsContainerComponent } from './toasts-container/toasts-container.component';
 import { getFrenchPaginatorIntl } from './french-paginator-intl';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatchPasswordDirective } from './directives/match-password.directive';
+import { PasswordDirectiveModule } from './shared/password-directive/password-directive.module';
+import { ProspectionModule } from './prospection/prospection.module';
 
 registerLocaleData(localeFr);
 
@@ -41,6 +44,8 @@ registerLocaleData(localeFr);
     AdminModule,
     LeafletModule,
     UserModule,
+    PasswordDirectiveModule,
+    ProspectionModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
@@ -59,7 +64,7 @@ registerLocaleData(localeFr);
     },
     { 
       provide: MatPaginatorIntl, 
-      useValue: getFrenchPaginatorIntl() 
+      useValue: getFrenchPaginatorIntl()
     }
   ],
   bootstrap: [AppComponent]

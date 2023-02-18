@@ -1,0 +1,11 @@
+.row {
+    margin: 0;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.btn:hover {
+    color: white;
+}

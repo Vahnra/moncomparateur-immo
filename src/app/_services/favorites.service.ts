@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const FAVORITES_API = 'http://localhost:8000/api/favorites';
+const FAVORITES_API = 'https://orn-chanarong.fr/api/favorites';
 const httpOptions = {
   headers: new HttpHeaders({ 
     'Content-Type': 'application/json',

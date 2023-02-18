@@ -11,8 +11,9 @@ import { AuthService } from 'src/app/_services/auth.service';
 })
 export class UserDashboardComponent implements OnInit {
 
-  userId = this.route.snapshot.paramMap.get('id');
+  userId: string|number;
   user: User;
+  roles: string;
   prospectionStats: number;
   estimationsStats: number;
   mandatsStats: number;
@@ -27,10 +28,20 @@ export class UserDashboardComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    const userId: string|null = this.route.snapshot.paramMap.get('id');
-    this.userService.getUser(userId).subscribe( data => {
-      this.user = data;
+
+    this.userService.getCurrentUser().subscribe({ 
+        next: data => {
+        this.user = data;
+        this.roles = data.status;
+        this.userId = data.id;
+      }, error: err => {
+        console.log(err);
+        
+      }, complete: () => {
+        
+      }
     })
+    
     this.userService.getProjectStats().subscribe({
       next: data => {
         this.prospectionStats = data["0"];

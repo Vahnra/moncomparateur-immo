@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   TemplateRef,
+  OnInit,
 } from '@angular/core';
 import {
   startOfDay,
@@ -23,6 +24,10 @@ import {
   CalendarView,
 } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
+import { CalendarService } from 'src/app/_services/calendar.service';
+import { UserService } from 'src/app/_services/user.service';
+import { User } from 'src/app/models/user';
+import { Router } from '@angular/router';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -46,14 +51,18 @@ const colors: Record<string, EventColor> = {
   templateUrl: './user-calendar.component.html',
   styleUrls: ['./user-calendar.component.css']
 })
-export class UserCalendarComponent {
+export class UserCalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
   
+  userId: number;
+  user: User;
+  roles: any;
+
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
 
-  locale: string = "es";
+  locale: string = "fr";
   
   viewDate: Date = new Date();
 
@@ -61,6 +70,11 @@ export class UserCalendarComponent {
     action: string;
     event: CalendarEvent;
   };
+
+  form: any = {
+    title: null,
+    startDate: null,
+  }
 
   actions: CalendarEventAction[] = [
     {
@@ -82,13 +96,44 @@ export class UserCalendarComponent {
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-   
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = false;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private modal: NgbModal, private calendarService: CalendarService, private userService: UserService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.userService.getCurrentUser().subscribe( data => {
+      
+      this.user = data;
+      this.roles = data.status;
+  
+        if (data.status == 'paid') {
+           
+          this.calendarService.getAllCalendarEvents().subscribe({
+            next: response => {
+              response.forEach(element => {      
+                let event: any = {};
+                event['title'] = element.title;
+                event['start'] = new Date(element.start);
+                event["allDay"] = element.all_day;
+                this.events.push(event);
+              });  
+            }, error: err => {
+              console.log(err);  
+            }, complete: () => {
+              this.refresh.next();
+            }
+          })
+        } else {
+          this.roles = 'free';
+          this.refresh.next();
+        }    
+       
+    })
+
+    
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -142,6 +187,8 @@ export class UserCalendarComponent {
         },
       },
     ];
+    console.log(this.events);
+    
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
@@ -154,6 +201,20 @@ export class UserCalendarComponent {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+
+  onSubmit(): void {
+    const title = this.form.title;
+    const startDate = new Date(this.form.startDate);
+
+    this.calendarService.addCalendarEvent(title, startDate).subscribe({
+      next: response => {
+        console.log(response);
+        
+      }, error: err => {
+        console.log(err); 
+      }
+    })
   }
 }
  

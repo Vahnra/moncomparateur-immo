@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const PROJECT_API = 'http://localhost:8000/api/project';
+const PROJECT_API = 'https://orn-chanarong.fr/api/project';
 const httpOptions = {
   headers: new HttpHeaders({ 
     'Content-Type': 'application/json',
@@ -24,7 +24,13 @@ export class ProjectService {
     city: String,
     adress: String,
     complementAdress: String,
-    comments: String
+    comments: String,
+    phone_numbers: String, 
+    email: String, 
+    calendarTitle: String,
+    calendarStart: Date,
+    contact: boolean, 
+    name: string
     ): Observable<any> {
     return this.http.post(
       PROJECT_API + '/add',
@@ -33,7 +39,13 @@ export class ProjectService {
         city,
         adress,
         complementAdress,
-        comments
+        comments,
+        phone_numbers, 
+        email, 
+        calendarTitle, 
+        calendarStart,
+        contact,
+        name
       },
       httpOptions
     )

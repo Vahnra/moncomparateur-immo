@@ -1,37 +1,74 @@
 <div class="card" *ngIf="user">
-    <div class="card-header">
-        <div class="row mb-3" style="height: 90px;">
-            <div class="col-3 ">
-                <div class="d-flex align-items-center justify-content-center" style="height: 90px;">
-                    <img src="assets/images/user-profile.png" alt="" style="width: 100%;">
-                </div>
-            </div>
-            <div class="col-7">
-                <h4 class="mt-2">{{ user.username }}</h4>
-                <div>Utilisateur gratuit</div>
-                <div>{{ user.email }}</div>
-            </div>
-            <div class="col-2">
-                <div class="d-flex align-items-end justify-content-center" style="height: 45px; cursor: pointer;" (click)="logOut()">
-                    <i class="fa-solid fa-right-from-bracket fa-2xl"></i>
-                </div>
-            </div>
-        </div>
-        <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-                <a class="nav-link" style="cursor: pointer" (click)="goToUserDashboard()">Statistiques</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="true" >Paramètres</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-        </ul>
+
+    <app-user-header></app-user-header>
+
+    <div class="container">
+        <select class="form-select mt-3" aria-label="Default select example" (change)="goToSelected($event.target)">
+            <option selected>Vue d'ensemble du compte</option>
+            <option value="profile-update">Modifier le profile</option>
+            <option value="password-update">Mot de passe</option>
+            <option value="factures">Factures</option>
+        </select>
     </div>
-    <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+    <div class="card-body mb-5">
+        <div *ngIf="roles == 'free'" class="p-3" style="background-color: #FFCDD2;">
+            <h5 class="card-title">Abonnement à partir de 18,99€ par mois</h5>
+            <p class="card-text">Souscrivez à notre abonnement pour accéder instantanément aux dernièrs DPE de votre secteur, ainsi qu'à un agenda pratique avec des notifications de rappel pour ne jamais manquer une opportunité. Obtenez également des statistiques détaillées pour mieux comprendre votre marché et améliorer vos performances, et laissez des commentaires sur vos fiches pour une gestion optimale de vos prospects.</p>
+            <a (click)="goToPayments()" class="btn" style="cursor: pointer;">Commencer</a>
+        </div>
+        <h4 class="mt-2">Vus d'ensemble du compte</h4>
+        <h5 class="my-4">Profil</h5>
+        <div class="row">
+            <div class="col-6 pb-2 border-bottom border-1">Nom d'utilisateur</div>
+            <div class="col-6 pb-2 border-bottom border-1 text-end">{{ user.username }}</div>
+            <div class="col-6 py-2 border-bottom border-1">Adresse e-mail</div>
+            <div class="col-6 py-2 border-bottom border-1 text-end">{{ user.email }}</div>
+            <div class="col-6 py-2 border-bottom border-1">Code postal</div>
+            <div class="col-6 py-2 border-bottom border-1 text-end">{{ user.postal_code }}</div>
+            <div class="col-6 py-2 border-bottom border-1">Agence</div>
+            <div class="col-6 py-2 border-bottom border-1 text-end">{{ user.company }}</div>
+        </div>
+        <a (click)="goToProfilUpdate()" class="btn mt-2" style="cursor: pointer;">Modifier le profil</a>
+
+        <div *ngIf="roles == 'paid' && order">
+            <h4 class="mt-5 mb-4">Votre abonnement</h4>
+            <div class="card">
+                <h5 class="card-header py-4">Premium Personnel</h5>
+                <div class="card-body">
+                    <p class="card-text">Accéder instantanément aux dernièrs DPE de votre secteur, ainsi qu'à un agenda pratique avec des notifications de rappel pour ne jamais manquer une opportunité. Obtenez également des statistiques détaillées pour mieux comprendre votre marché et améliorer vos performances, et laissez des commentaires sur vos fiches pour une gestion optimale de vos prospects.</p>
+                    <p class="card-text border-1 border-top pt-2 fw-bold">Paiements</p>
+                    <p class="card-text">Votre prochaine facture sera de {{order.price}}€. Elle sera prélevée le {{nextSubDate | date:'d/M/y'}}.</p>
+                </div>
+            </div>
+        
+            <button type="submit" class="btn w-100 mt-3">Changer d'abonnement</button>
+            <button type="button" class="btn w-100 mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Annuler l'abonnement</button>
+        </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Annulation de l'abonnement</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>En cas d'annulation, vous rebasculerez sur notre service gratuit le {{nextSubDate | date:'d/M/y'}}. Voici les changements qui interviendront à cette date :</p>
+                <p>Vous n'aurez plus accès aux derniers DPE de votre code postal.</p>
+                <p>Vous n'aurez plus accès à l'agenda.</p>
+                <p>Vous ne pourrez plus ajouter de commentaires ni accéder aux précedents commentaires de vos fiches.</p>
+                <p>Vous ne recevrez plus de notifications, mails et SMS.</p>
+                <p>Vous n'aurez plus accès a nos scénarios de prospections.</p>
+                <p>Vous ne pourrez plus utiliser notre bot.</p>
+                <button (click)="cancelSubscription()" class="btn w-100 mt-3">Poursuivre l'annulation</button>
+            </div>
+            <div class="modal-footer">
+                <button #closeModal type="button" class="btn" data-bs-dismiss="modal">Fermer</button>    
+            </div>
+        </div>
+    </div>
+</div>
+  

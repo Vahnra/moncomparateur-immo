@@ -79,7 +79,12 @@ export class UserProjectListComponent implements OnInit {
       }
     })
   }
+
   goToDetails(id: any) {
     this.router.navigate([`/user/project/${id}`])
+  }
+
+  goToNewProject() {
+    this.router.navigate([`/user/${this.userId}/project`])
   }
 }

@@ -1,12 +1,12 @@
-<nav class="navbar bg-light sticky-top">
+<nav class="navbar sticky-top" style="background-color: #000A6A;">
     <div class="container-fluid">
-        <button class="navbar-toggler mx-auto" type="button" aria-controls="offcanvasNavbar" (click)="goToList()">Listes
+        <button class="navbar-toggler mx-auto btn" type="button" aria-controls="offcanvasNavbar" (click)="goToList()">Listes
             <i class="fa-solid fa-bars"></i>
         </button>
-        <button class="navbar-toggler mx-auto" type="button" (click)="goToMap()">Carte
+        <button class="navbar-toggler mx-auto btn" type="button" (click)="goToMap()">Carte
             <i class="fa-solid fa-map-location-dot"></i>
         </button>
-        <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="offcanvas"
+        <button class="navbar-toggler mx-auto btn" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">Filtres
             <i class="fa-solid fa-arrow-down-wide-short"></i>
         </button>
@@ -44,6 +44,11 @@
         </div>
     </div>
 </nav>
+
+<div class="row bg-light pb-2 pt-2">
+    <span class="text-center" (click)="goToNewProject()" style="cursor: pointer;"> + Creation d'une nouvelle fiche</span>
+</div>
+
 <div class="container-xl bg-white text-dark mb-5">
     <form method="post">
       <div class="row ">

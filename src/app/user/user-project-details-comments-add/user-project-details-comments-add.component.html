@@ -1,18 +1,18 @@
 
 
-<nav class="navbar bg-light sticky-bottom">
+<nav class="navbar sticky-top" style="height: 50px; background-color: #000A6A;">
     <div class="container-fluid">
-        <button class="navbar-toggler mx-auto" type="button" aria-controls="offcanvasNavbar" (click)="goToList()">Listes
+        <button class="navbar-toggler mx-auto btn" type="button" aria-controls="offcanvasNavbar" (click)="goToList()">Listes
             <i class="fa-solid fa-bars"></i>
         </button>
-        <button class="navbar-toggler mx-auto" type="button" (click)="goToMap()">Carte
+        <button class="navbar-toggler mx-auto btn" type="button" (click)="goToMap()">Carte
             <i class="fa-solid fa-map-location-dot"></i>
         </button>
-        <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="offcanvas"
+        <button class="navbar-toggler mx-auto btn" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">Filtres
             <i class="fa-solid fa-arrow-down-wide-short"></i>
         </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas offcanvas-end btn" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -47,12 +47,16 @@
     </div>
 </nav>
 
+<div class="row bg-light pb-2 pt-2" style="padding-top: 50px;">
+    <span class="text-center" (click)="goToNewProject()" style="cursor: pointer;"> + Creation d'une nouvelle fiche</span>
+</div>
+
 <div class="container-xl bg-white text-dark ">
     <form method="post">
         <div class="row ">
             <div class="col-lg-6 mx-auto border border-0 mt-4 my-auto" style="border-radius: 6px">
 
-                <div class="row">
+                <div class="row" *ngIf="roles === 'paid'">
 
                     <div class="col-12">
                         <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Ajout d'un commentaire</h1>

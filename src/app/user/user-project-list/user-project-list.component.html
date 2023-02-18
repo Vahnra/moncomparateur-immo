@@ -1,16 +1,16 @@
-<nav class="navbar bg-light" style="height: 50px;">
+<nav class="navbar" style="height: 50px; background-color: #000A6A;">
      <div class="container-fluid">
-          <button class="navbar-toggler mx-auto" type="button" aria-controls="offcanvasNavbar">Listes
+          <button class="navbar-toggler mx-auto btn" type="button" aria-controls="offcanvasNavbar">Listes
                <i class="fa-solid fa-bars"></i>
           </button>
-          <button class="navbar-toggler mx-auto" type="button" (click)="goToMap()">Carte
+          <button class="navbar-toggler mx-auto btn" type="button" (click)="goToMap()">Carte
                <i class="fa-solid fa-map-location-dot"></i>
           </button>
-          <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="offcanvas"
+          <button class="navbar-toggler mx-auto btn" type="button" data-bs-toggle="offcanvas"
                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">Filtres
                <i class="fa-solid fa-arrow-down-wide-short"></i>
           </button>
-          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+          <div class="offcanvas offcanvas-end btn" tabindex="-1" id="offcanvasNavbar"
                aria-labelledby="offcanvasNavbarLabel">
                <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
@@ -49,7 +49,9 @@
 </nav>
 
 <!-- <h3 class="text-center mt-3 mb-3">Liste de vos fiches</h3> -->
-
+<div class="row bg-light pb-2 pt-2">
+     <span class="text-center" (click)="goToNewProject()" style="cursor: pointer;"> + Creation d'une nouvelle fiche</span>
+</div>
 <div class="container mt-3" style="margin-bottom: 75px;">
      <mat-form-field style="width: 100%;">
           <mat-label>Rechercher</mat-label>

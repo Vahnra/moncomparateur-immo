@@ -1,14 +1,14 @@
 
 
-<nav class="navbar bg-light sticky-bottom">
+<nav class="navbar sticky-top" style="height: 50px; background-color: #000A6A;">
     <div class="container-fluid">
-        <button class="navbar-toggler mx-auto" type="button" aria-controls="offcanvasNavbar">Listes
+        <button class="navbar-toggler mx-auto btn" type="button" aria-controls="offcanvasNavbar">Listes
             <i class="fa-solid fa-bars"></i>
         </button>
-        <button class="navbar-toggler mx-auto" type="button" (click)="goToMap()">Carte
+        <button class="navbar-toggler mx-auto btn" type="button" (click)="goToMap()">Carte
             <i class="fa-solid fa-map-location-dot"></i>
         </button>
-        <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="offcanvas"
+        <button class="navbar-toggler mx-auto btn" type="button" data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">Filtres
             <i class="fa-solid fa-arrow-down-wide-short"></i>
         </button>
@@ -47,6 +47,10 @@
     </div>
 </nav>
 
+<div class="row bg-light pb-2 pt-2" style="padding-top: 50px;">
+    <span class="text-center" (click)="goToNewProject()" style="cursor: pointer;"> + Creation d'une nouvelle fiche</span>
+</div>
+
 <div class="card text-center border border-0" *ngIf="project">
     <div class="card-header">
         <div class="mb-2">
@@ -60,14 +64,14 @@
         </div>
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a class="nav-link" (click)="goToDetails()" style="cursor: pointer;">Fiche</a>
+                <a class="nav-link" (click)="goToDetails()" style="cursor: pointer; color: #000A6A;">Fiche</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" aria-current="true">Commentaires</a>
             </li>
         </ul>
     </div>
-    <div class="card-body">
+    <div class="card-body" *ngIf="roles == 'paid'">
         <div><a class="text-primary" (click)="goToAddComment()">+ Ajouter un commentaire</a></div>
 
         <div *ngFor="let item of project.comments.reverse()">

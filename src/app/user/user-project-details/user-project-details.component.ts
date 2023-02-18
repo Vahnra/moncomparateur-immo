@@ -98,4 +98,7 @@ export class UserProjectDetailsComponent implements OnInit {
     this.router.navigate([`user/${this.userId}/project-update/${this.projectId}`]) 
   }
   
+  goToNewProject() {
+    this.router.navigate([`/user/${this.userId}/project`])
+  }
 }

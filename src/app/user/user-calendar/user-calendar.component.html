@@ -4,7 +4,7 @@
     <div class="col-md-4">
       <div class="btn-group">
         <div
-          class="btn btn-primary"
+          class="btn"
           mwlCalendarPreviousView
           [view]="view"
           [(viewDate)]="viewDate"
@@ -20,7 +20,7 @@
           Today
         </div>
         <div
-          class="btn btn-primary"
+          class="btn"
           mwlCalendarNextView
           [view]="view"
           [(viewDate)]="viewDate"
@@ -36,21 +36,21 @@
     <div class="col-md-4">
       <div class="btn-group">
         <div
-          class="btn btn-primary"
+          class="btn"
           (click)="setView(CalendarView.Month)"
           [class.active]="view === CalendarView.Month"
         >
           Month
         </div>
         <div
-          class="btn btn-primary"
+          class="btn"
           (click)="setView(CalendarView.Week)"
           [class.active]="view === CalendarView.Week"
         >
           Week
         </div>
         <div
-          class="btn btn-primary"
+          class="btn"
           (click)="setView(CalendarView.Day)"
           [class.active]="view === CalendarView.Day"
         >
@@ -94,14 +94,14 @@
 
   <br /><br /><br />
 
-<h3>
+<h3 *ngIf="roles == 'paid'">
   Ajouter un évènement
 
   <div class="clearfix"></div>
 </h3>
 
-<div class="table-responsive">
-  <form>
+<div class="table-responsive" *ngIf="roles == 'paid'">
+  <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
     <table class="table table-bordered">
       <thead>
         <tr>
@@ -118,18 +118,30 @@
             <input
               type="text"
               class="form-control"
-      
+              name="title"
+              [(ngModel)]="form.title"
+              required
+              #title="ngModel"
+              [ngClass]="{ 'is-invalid': f.submitted && title.errors }"
             />
+            <div class="invalid-feedback" *ngIf="title.errors && f.submitted">
+                <div *ngIf="title.errors['required']">Veuillez entrer un titre</div>
+            </div>
           </td>
          
           <td>
             <input
               class="form-control"
               type="date"
+              name="startDate"
+              required
               mwlFlatpickr
+              [(ngModel)]="form.startDate"
+              #startDate="ngModel"
               dateFormat="Y-m-dTH:i"
               altFormat="F j, Y H:i"
               placeholder="Not set"
+              [ngClass]="{ 'is-invalid': f.submitted && startDate.errors }"
             />
           </td>
           <td>
@@ -143,7 +155,7 @@
             />
           </td>
           <td>
-            <button class="btn btn-primary">
+            <button id="submit" name="submit-button" class="btn btn-primary">
               Ajouter
             </button>
           </td>
@@ -178,3 +190,7 @@
       </button>
     </div>
   </ng-template>
+
+<div class="overlay" *ngIf="roles == 'free'">
+  <p class="text-center text-white" style="margin-top: 40vh;">Seulement pour les utilisateurs payant</p>
+</div>

@@ -1,3 +1,9 @@
+
 .modal-fullscreen-md-down {
     height: 50%;
+}
+
+.nav-modal {
+    background-color: #000A6A; 
+    color: white; border-radius: 0px 0px 30px 30px;
 }

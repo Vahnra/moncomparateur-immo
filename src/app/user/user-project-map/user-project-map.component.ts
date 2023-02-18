@@ -37,7 +37,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
   allProjects: Project;
   userId: number;
   isLoggedIn: boolean = false;
-  
+  roles: any;
   apicallSub?:Subscription;
   apiMarkerSub?:Subscription;
   
@@ -97,26 +97,43 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private projectService: ProjectService, private mapService: MapsService, private zone: NgZone, private router: Router, private storageService: StorageService, private userService: UserService) 
+  constructor(
+    private projectService: ProjectService, 
+    private mapService: MapsService, 
+    private zone: NgZone, 
+    private router: Router, 
+    private storageService: StorageService, 
+    private userService: UserService) 
   {
-    
-  }
-
-  ngOnInit() {
-    if (this.storageService.isLoggedIn == true) {
-      this.userService.getCurrentUser().subscribe(userId => {
-        if (userId) {
-          this.userId = userId;
-          this.isLoggedIn = true;
-        }
-      }).unsubscribe();
-    }
-
     this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
       data.forEach((element:any) => {
         this.addMarker(element);
       });
     })
+  }
+
+  ngOnInit() {
+    if (this.storageService.isLoggedIn == true) {
+      this.userService.getCurrentUser().subscribe({
+        next: user => {
+          if (user) {
+            this.userId = user.id;
+            this.isLoggedIn = true;
+            this.roles = user.status;
+          }
+        }, error: err => {
+
+        }, complete: () => {
+
+        }
+      });
+    }
+
+    // this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
+    //   data.forEach((element:any) => {
+    //     this.addMarker(element);
+    //   });
+    // })
   }
 
   ngAfterViewInit(): void { 
@@ -196,7 +213,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
                       <div>${item.complement_adress}</div>
                       <div>${item.created_at}</div>
                       <div class="col-6 text-center mx-auto mt-3">
-                        <button type="button" class="btn btn-primary fiche-button">Voir la fiche</button>
+                        <button type="button" class="btn fiche-button">Voir la fiche</button>
                       </div>       
                   </div>
                 </div>
@@ -239,6 +256,10 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   goToListe() {
     this.router.navigate([`/user/${this.userId}/project-list`])
+  }
+
+  goToNewProject() {
+    this.router.navigate([`/user/${this.userId}/project`])
   }
 
   refresh() {

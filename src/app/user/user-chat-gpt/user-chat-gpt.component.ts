@@ -1,8 +1,13 @@
 import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Configuration, OpenAIApi } from 'openai';
 import { timeout } from 'rxjs';
 import { gptModels } from 'src/app/models/gpt-models';
 import { ChatWithBot, ResponseModel } from 'src/app/models/gpt-response';
+import { User } from 'src/app/models/user';
+import { ProjectService } from 'src/app/_services/project.service';
+import { StorageService } from 'src/app/_services/storage.service';
+import { UserService } from 'src/app/_services/user.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -18,8 +23,35 @@ export class UserChatGPTComponent implements OnInit, AfterViewChecked {
   gptModels = gptModels;
   promptText = '';
   showSpinner = false;
+  userId: string|number;
+  user: User;
+  roles: string;
+  isLoggedIn: boolean = false;
+
+  constructor(
+    private projectService: ProjectService, 
+    private router: Router, 
+    private storageService: StorageService, 
+    private userService: UserService
+    ) { }
 
   ngOnInit(): void {
+
+    if (this.storageService.isLoggedIn == true) {
+      this.userService.getCurrentUser().subscribe({
+        next: user => {
+          if (user) {
+            this.userId = user.id;
+            this.isLoggedIn = true;
+            this.roles = user.status;
+          }
+        }, error: err => {
+
+        }, complete: () => {
+
+        }
+      });
+    }
     
   }
 
@@ -27,8 +59,8 @@ export class UserChatGPTComponent implements OnInit, AfterViewChecked {
    
     setTimeout(() => {
       this.pushChatContent('Comment puis-je vous aider ?', 'Mr Bot', 'bot ms-auto');
-      let test = new Audio('assets/among_us_chat.mp3');
-      test.play();
+      // let test = new Audio('assets/among_us_chat.mp3');
+      // test.play();
     }, 2000)
   }
 

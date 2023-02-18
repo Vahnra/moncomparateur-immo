@@ -1,43 +1,31 @@
-<nav class="navbar bg-light sticky-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">User</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<div class="card-header" *ngIf="user">
+    <div class="row mb-3" style="height: 90px;">
+        <div class="col-3 ">
+            <div class="d-flex align-items-center justify-content-center" style="height: 90px;">
+                <img src="assets/images/user-profile.png" alt="" style="width: 100%;">
             </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="d-flex mt-3" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+        </div>
+        <div class="col-7">
+            <h4 class="mt-2">{{ user.username }}</h4>
+            <div *ngIf="roles == 'free'">Utilisateur gratuit</div>
+            <div *ngIf="roles == 'paid'">Utilisateur payant</div>
+            <div>{{ user.email }}</div>
+        </div>
+        <div class="col-2">
+            <div class="d-flex align-items-end justify-content-center" style="height: 45px; cursor: pointer;" (click)="logOut()">
+                <i class="fa-solid fa-right-from-bracket fa-2xl"></i>
             </div>
         </div>
     </div>
-</nav>
+    <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+            <a class="nav-link" style="cursor: pointer" (click)="goToUserDashboard()">Statistiques</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="true" >Paramètres</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+    </ul>
+</div>

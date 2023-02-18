@@ -43,7 +43,7 @@
                 </div>
               </div>
               <div class="text-center">
-                <button id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-5 btn btn-primary">Se connecter</button>
+                <button id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-5 btn">Se connecter</button>
               </div>
               <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger mt-3" role="alert">
                 {{ errorMessage }}
@@ -57,7 +57,7 @@
     </div>
 
     <div class="row">
-      <div class="col-12 text-center mb-4" style="margin-top: 1.2rem">Pas de compte ?<a (click)="goToRegister()" style="cursor: pointer; color: blue;"> Inscrivez-vous</a></div>
+      <div class="col-12 text-center mb-4" style="margin-top: 1.2rem">Pas de compte ?<a (click)="goToRegister()" style="cursor: pointer; color: #000A6A;"> Inscrivez-vous</a></div>
     </div>
     
   </form>

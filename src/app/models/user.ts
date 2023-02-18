@@ -1,9 +1,9 @@
 export interface User {
     id: number,
     email: string,
-    roles: string,
+    roles: [],
     username: string,
-    postalCode: string,
+    postal_code: string,
     birthdayDate: string,
     company: string,
     phoneNumbers: number

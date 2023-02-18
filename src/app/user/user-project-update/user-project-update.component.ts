@@ -69,6 +69,7 @@ export class UserProjectUpdateComponent implements OnInit {
         complete: () => {
           this.toastService.show('La fiche a bien été mis à jour.', this.project.adress, {  delay: 3000 });
           this.router.navigate([`user/${this.userId}/project-list`]);
+          window.location.reload();
         }
       })
   }
@@ -80,4 +81,9 @@ export class UserProjectUpdateComponent implements OnInit {
   goToList() {
     this.router.navigate([`/user/${this.userId}/project-list`])
   }
+
+  goToNewProject() {
+    this.router.navigate([`/user/${this.userId}/project`])
+  }
+  
 }

@@ -5,6 +5,7 @@ export interface Project {
     adress: string,
     status: string,
     phone_numbers: number,
+    email: string,
     complement_adress: string,
     created_at: string,
     updated_at: string,

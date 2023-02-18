@@ -58,9 +58,10 @@ export class AppComponent {
           
           if (this.storageService.isLoggedIn == true) {
             this.userService.getCurrentUser().subscribe({
-              next: userId => {
-                if (userId) {
-                  this.userId = userId;
+              next: user => {
+                if (user) {
+                  window.sessionStorage.setItem("role", user.roles);
+                  this.userId = user.id;
                   this.isLoggedIn = true;
                 }
               }, error: err => {
@@ -118,6 +119,14 @@ export class AppComponent {
   
   goToProjectList() {
     this.router.navigate([`/user/${this.userId}/project-list`])
+  }
+
+  goToContacts() {
+    this.router.navigate([`/user/${this.userId}/contacts`])
+  }
+
+  goToProspection() {
+    this.router.navigate([`/user/${this.userId}/scenario`])
   }
 
   goBack(): void {

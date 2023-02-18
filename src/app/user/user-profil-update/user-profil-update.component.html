@@ -1,0 +1,138 @@
+<div class="card" *ngIf="user">
+    
+    <app-user-header></app-user-header>
+    
+    <div class="container">
+        <select class="form-select mt-3" aria-label="Default select example" (change)="goToSelected($event.target)">
+            <option value="paramètres">Vue d'ensemble du compte</option>
+            <option selected>Modifier le profile</option>
+            <option value="password-update">Mot de passe</option>
+            <option value="factures">Factures</option>
+        </select>
+    </div>
+    <div class="card-body mb-5">
+        <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+            <label class="mb-2 mt-2 form-label" for="inputEmail">Nom</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                name="username" 
+                [(ngModel)]="form.username" 
+                required minlength="3"
+                maxlength="20" 
+                #username="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+                placeholder=""
+            >
+            <div class="invalid-feedback" *ngIf="username.errors && f.submitted">
+                <div *ngIf="username.errors['required']">Veuillez entrer un nom</div>
+                <div *ngIf="username.errors['minlength']">
+                    Ce nom est trop court.
+                </div>
+                <div *ngIf="username.errors['maxlength']">
+                    Ce nom est trop long.
+                </div>
+            </div>
+            <label class="mb-2 mt-2 form-label" for="inputEmail">E-mail</label>
+            <input 
+                type="text" 
+                class="form-control"  
+                name="email" 
+                [(ngModel)]="form.email" 
+                required minlength="3"
+                maxlength="20" 
+                #email="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                placeholder=""
+            >
+            <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+                <div *ngIf="email.errors['required']">Veuillez entrer un email</div>
+                <div *ngIf="email.errors['minlength']">
+                    Ce nom est trop court.
+                </div>
+                <div *ngIf="email.errors['maxlength']">
+                    Ce nom est trop long.
+                </div>
+            </div>
+            <label class="mb-2 mt-2 form-label" for="inputEmail">Code postal</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                name="postal_code" 
+                [(ngModel)]="form.postal_code" 
+                required minlength="5"
+                maxlength="5" 
+                #postal_code="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                placeholder=""
+            >
+            <div class="invalid-feedback" *ngIf="postal_code.errors && f.submitted">
+                <div *ngIf="postal_code.errors['required']">Veuillez entrer un code postal</div>
+                <div *ngIf="postal_code.errors['minlength']">
+                    Ce code postal n'est pas valide.
+                </div>
+                <div *ngIf="postal_code.errors['maxlength']">
+                    Ce code postal n'est pas valide.
+                </div>
+            </div>
+            <label class="mb-2 mt-2 form-label" for="inputEmail">Nom de votre agence</label>
+            <input 
+                type="text" 
+                class="form-control"  
+                name="company" 
+                [(ngModel)]="form.company" 
+                required 
+                #company="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                placeholder=""
+            >
+            <div class="invalid-feedback" *ngIf="company.errors && f.submitted">
+                <div *ngIf="company.errors['required']">Veuillez entrer le nom de votre agence</div>
+
+            </div>
+            <label class="mb-2 mt-2 form-label" for="inputEmail">Date de naissance</label>
+            <input 
+                type="date" 
+                class="form-control"  
+                name="birthday_date" 
+                [(ngModel)]="form.birthday_date" 
+                #birthday_date="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                placeholder=""
+            >
+            <div class="invalid-feedback" *ngIf="birthday_date.errors && f.submitted">
+                <div *ngIf="birthday_date.errors['required']">Veuillez entrer votre date de naissance</div>
+            </div>
+            <label class="mb-2 mt-2 form-label" for="inputEmail">Numéro de téléphone</label>
+            <input 
+                type="text" 
+                class="form-control"  
+                name="phoneNumbers" 
+                [(ngModel)]="form.phone_numbers" 
+                required minlength="10"
+                maxlength="10" 
+                #phone_numbers="ngModel" 
+                [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                placeholder=""
+            >
+            <div class="invalid-feedback" *ngIf="phone_numbers.errors && f.submitted">
+                <div *ngIf="phone_numbers.errors['required']">Veuillez entrer un numéro de téléphone</div>
+                <div *ngIf="phone_numbers.errors['minlength']">
+                    Ce numéro n'est pas valide.
+                </div>
+                <div *ngIf="phone_numbers.errors['maxlength']">
+                    Ce numéro n'est pas valide.
+                </div>
+            </div>
+            <div class="text-center">
+                <button id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-3 btn">Modifier</button>
+            </div>
+            <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                {{ errorMessage }}
+            </div>
+            <div class="alert alert-success" *ngIf="isSuccessful">
+                Votre inscription s'est déroulé avec succès.
+            </div>
+        </form>
+    </div>
+</div>

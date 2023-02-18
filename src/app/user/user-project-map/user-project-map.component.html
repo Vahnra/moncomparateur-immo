@@ -1,13 +1,13 @@
 
-<nav class="navbar bg-light" style="height: 50px;">
+<nav class="navbar" style="height: 50px; background-color: #000A6A;">
      <div class="container-fluid">
-          <button class="navbar-toggler mx-auto" type="button" aria-controls="offcanvasNavbar" (click)="goToListe()">Listes
+          <button class="navbar-toggler mx-auto btn" type="button" aria-controls="offcanvasNavbar" (click)="goToListe()">Listes
                <i class="fa-solid fa-bars"></i>
           </button>
-          <button class="navbar-toggler mx-auto" type="button" (click)="refresh()">Carte
+          <button class="navbar-toggler mx-auto btn" type="button" (click)="refresh()">Carte
                <i class="fa-solid fa-map-location-dot"></i>
           </button>
-          <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+          <button class="navbar-toggler mx-auto btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                aria-controls="offcanvasNavbar">Filtres
                <i class="fa-solid fa-arrow-down-wide-short"></i>
           </button>
@@ -47,7 +47,11 @@
      </div>
 </nav>
 
-<div style="height: calc(100% - 100px);"
+<div class="row bg-light pb-2 pt-2">
+     <span class="text-center" (click)="goToNewProject()" style="cursor: pointer;"> + Creation d'une nouvelle fiche</span>
+</div>
+
+<div style="height: calc(100% - 140px);"
      leaflet 
      [leafletOptions]="options"
      [leafletLayersControl]="layersControl"

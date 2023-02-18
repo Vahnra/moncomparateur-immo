@@ -10,6 +10,8 @@ import { FavoritesService } from 'src/app/_services/favorites.service';
 import { ProjectService } from 'src/app/_services/project.service';
 import { ToastService } from 'src/app/_services/toast.service';
 import { ReplaySubject, takeUntil } from 'rxjs';
+import { StorageService } from 'src/app/_services/storage.service';
+import { UserService } from 'src/app/_services/user.service';
 
 
 
@@ -43,6 +45,17 @@ export class MapsViewComponent implements OnInit, OnDestroy {
   customOptions = {
     'minWidth': 300,
   }
+
+  userLat1: any;
+  userLng1: any;
+  userLat2: any;
+  userLng2: any;
+
+  userRole: any;
+  user: any;
+  userId: number;
+  isLoggedIn: boolean = false;
+  userPostCode: any;
 
   options = {
     layers: [
@@ -106,12 +119,50 @@ export class MapsViewComponent implements OnInit, OnDestroy {
     private favoritesService: FavoritesService, 
     private projectService: ProjectService,
     public toastService: ToastService,
+    private storageService: StorageService,
+    private userService: UserService,
     private zone: NgZone
-    ) { }
+    ) {
+
+    if (this.storageService.isLoggedIn) {
+      this.userService.getCurrentUser().subscribe(user => {
+
+        this.user = user;
+        this.userId = user.id;
+        this.isLoggedIn = true;
+        this.userRole = user.status;
+
+        if (user.status === "paid") {
+
+          if (this.userRole == "paid") {
+            this.mapsService.requestGeocodingDepartment(`${user.postal_code}, France`).subscribe({
+              next: data => {
+                let info = JSON.parse(JSON.stringify(data))
+                this.userLat1 = info["data"][0]["bbox_module"][0];
+                this.userLng1 = info["data"][0]["bbox_module"][1];
+                this.userLat2 = info["data"][0]["bbox_module"][2];
+                this.userLng2 = info["data"][0]["bbox_module"][3];
+                this.mapsService.refreshDpe(this.userLat1, this.userLng1, this.userLat2, this.userLng2,).pipe(takeUntil(this.destroy)).subscribe(data => {
+
+                  this.test = JSON.parse(JSON.stringify(data))
+
+                  this.test.results.forEach((item) => {
+
+                    this.addMarker(item);
+                  }) //End of foreach
+
+                }) // End of map service call
+              }
+            })
+          }
+        } 
+      });
+    }
+  }
 
 
   ngOnInit() {
-
+    
   }
 
   ngAfterViewInit(): void { }
@@ -134,27 +185,14 @@ export class MapsViewComponent implements OnInit, OnDestroy {
 
     // map.addLayer(this.pbe);
     // console.log(map.getCenter());
+    
+    
     navigator.geolocation.getCurrentPosition((position) => {
       // console.log(position);
       map.setView([position.coords.latitude, position.coords.longitude]);
 
-      this.mapsService.refreshDpe(map.getCenter().lat, map.getCenter().lng).pipe(takeUntil(this.destroy)).subscribe(data => {
-
-        this.test = JSON.parse(JSON.stringify(data))
-
-        this.test.results.forEach((item) => {
-
-          this.addMarker(item);
-
-        }) //End of foreach
-
-      }) // End of map service call
-
     })// End of get current position
 
-    const alicanteMarker = marker([38.34517, -0.48149]).on('click', event => {
-      console.log('Yay, my marker was clicked!', event);
-   });
    
   }
 
@@ -163,21 +201,22 @@ export class MapsViewComponent implements OnInit, OnDestroy {
     if (!this.enableCall) return;
     this.enableCall = false;
 
-    this.mapsService.refreshDpe($event.target.getCenter().lat, $event.target.getCenter().lng).pipe(takeUntil(this.destroy)).subscribe(data => {
+    // this.mapsService.refreshDpe($event.target.getCenter().lat, $event.target.getCenter().lng).pipe(takeUntil(this.destroy)).subscribe(data => {
       
-      this.test = JSON.parse(JSON.stringify(data))
+    //   this.test = JSON.parse(JSON.stringify(data))
       
-      this.test.results.forEach((item) => {
+    //   this.test.results.forEach((item) => {
 
-        this.addMarker(item);
+    //     this.addMarker(item);
 
-      }) //End of foreach
-      // this.markerClusterGroup.clearLayers()
-      this.markerClusterData = this.markerData;
-      this.markerClusterGroup.addLayers(this.markerClusterData)
+    //   }) //End of foreach
+    //   // this.markerClusterGroup.clearLayers()
+ 
       
-    }) // End of map service call
+    // }) // End of map service call
 
+    this.markerClusterData = this.markerData;
+    this.markerClusterGroup.addLayers(this.markerClusterData)
     // var popup = this.map.layer.getPopup();
     setTimeout(() => this.enableCall = true, 1000);
 
@@ -220,7 +259,9 @@ export class MapsViewComponent implements OnInit, OnDestroy {
                       <span class="col-6 text-end"><strong>Type de logement</strong></span><span class="col-6" id="building-type">${item['Type_bâtiment']}</span>
                       <!-- <span class="col-6 text-end">Année de construction</span><span class="col-6">${item['Année_construction']}</span> -->
                       <span class="col-6 text-end"><strong>Surface habitable</strong></span><span class="col-6" id="area-size">${item['Surface_habitable_logement']}</span> 
-                      <a class="text-center col-12 favorite-button" href="#" >Créer une fiche de prospection</a>
+                      <div class="col-6 text-center mx-auto mt-2">
+                        <button type="button" class="btn favorite-button">Créer une fiche</button>
+                      </div>
                     </div>
                   </div>
                 </div>

@@ -23,6 +23,7 @@ export class MapsService {
 
   // private dpeUrl = 'https://data.ademe.fr/data-fair/api/v1/datasets/dpe-france/lines?page=1&size=1000&select=%2A&q_mode=simple&geo_distance=';
   private dpeUrl = 'https://data.ademe.fr/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines?page=1&size=10000&select=N%C2%B0DPE%2CDate_%C3%A9tablissement_DPE%2CAdresse_(BAN)%2CAdresse_brute%2CNom__commune_(BAN)%2CCode_postal_(BAN)%2CEtiquette_DPE%2CSurface_habitable_logement%2CCompl%C3%A9ment_d\'adresse_logement%2CType_b%C3%A2timent%2C_geopoint%2CAnnée_construction&geo_distance=';
+  private dpeBoxUrl = 'https://data.ademe.fr/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines?page=1&size=10000&select=N%C2%B0DPE%2CDate_%C3%A9tablissement_DPE%2CAdresse_(BAN)%2CAdresse_brute%2CNom__commune_(BAN)%2CCode_postal_(BAN)%2CEtiquette_DPE%2CSurface_habitable_logement%2CCompl%C3%A9ment_d\'adresse_logement%2CType_b%C3%A2timent%2C_geopoint%2CAnnée_construction&bbox=';
   private dpeFicheUrl = 'https://data.ademe.fr/data-fair/api/v1/datasets/dpe-v2-logements-existants/lines?page=1&size=1&select=N%C2%B0DPE%2CDate_%C3%A9tablissement_DPE%2CAdresse_(BAN)%2CEtiquette_DPE%2CSurface_habitable_logement%2CCompl%C3%A9ment_d\'adresse_logement%2CType_b%C3%A2timent%2C_geopoint%2CAnnée_construction&geo_distance=';
   private dvfUrl = 'https://api.cquest.org/dvf?';
   private geocodingUrl = 'https://api.positionstack.com/v1/reverse?access_key=936b3bfe42efae87b5705d9df35b9933&query=';
@@ -33,8 +34,8 @@ export class MapsService {
 
   private dpe$: Subject<Dpe> = new Subject();
 
-  refreshDpe(latitude: number|undefined, longitude: number|undefined) {
-    return this.httpClient.get<Dpe[]>(`${this.dpeUrl}${longitude}:${latitude}:1000`);
+  refreshDpe(latitude: number|undefined|string, longitude: number|undefined|string, latitude2: number|undefined|string, longitude2: number|undefined|string) {
+    return this.httpClient.get<Dpe[]>(`${this.dpeBoxUrl}${latitude},+${longitude},+${latitude2},+${longitude2}`);
   }
 
   getDpeFiche(latitude: number|undefined, longitude: number|undefined) {
@@ -67,6 +68,10 @@ export class MapsService {
 
   requestGeocoding(adress: string, city: string) {
     return this.httpClient.get(`https://api.positionstack.com/v1/forward?access_key=936b3bfe42efae87b5705d9df35b9933&query=${adress} ${city}`)
+  }
+
+  requestGeocodingDepartment(adress: string) {
+    return this.httpClient.get(`https://api.positionstack.com/v1/forward?access_key=936b3bfe42efae87b5705d9df35b9933&query=${adress}&bbox_module=1`)
   }
  
 }

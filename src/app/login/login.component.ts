@@ -26,11 +26,18 @@ export class LoginComponent {
 
     this.authService.login(username, password).subscribe({
       next: data => {
-        this.storageService.saveUser(data);
-        
+        this.storageService.saveUser(data);    
       },
       error: err => {
-        this.toastService.show('Problème de connexion', 'Vos identifiants ne sont pas corrects.', { classname: 'bg-danger text-light', delay: 3000 })
+        console.log(err.error.message);
+        if (err.error.message == 'Invalid credentials.') {
+          this.toastService.show('Problème de connexion', 'Mot de passe ou identifiant incorrect', { classname: 'bg-danger text-light', delay: 3000 })
+        }
+
+        if (err.error.message == 'Merci de vérifier votre mail avant de vous connecter') {
+          this.toastService.show('Problème de connexion', 'Merci de vérifier votre mail avant de vous connecter.', { classname: 'bg-danger text-light', delay: 3000 })
+        }
+        
       },
       complete: () => {
         this.toastService.show('Connexion réussi', 'Vous êtes maintenant connecté', { delay: 3000});

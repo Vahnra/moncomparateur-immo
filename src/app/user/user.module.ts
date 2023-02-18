@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { UserCalendarComponent } from './user-calendar/user-calendar.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserChatGPTComponent } from './user-chat-gpt/user-chat-gpt.component';
 import { UserProjectComponent } from './user-project/user-project.component';
@@ -29,6 +29,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSortModule } from '@angular/material/sort';
 import { UserProjectUpdateComponent } from './user-project-update/user-project-update.component';
 import { MatButtonModule } from '@angular/material/button';
+import { UserContactsComponent } from './user-contacts/user-contacts.component';
+import { UserContactsAddComponent } from './user-contacts-add/user-contacts-add.component';
+import { UserPaymentComponent } from './user-payment/user-payment.component';
+import { UserProfilUpdateComponent } from './user-profil-update/user-profil-update.component';
+import { UserPasswordUpdateComponent } from './user-password-update/user-password-update.component';
+import { PasswordDirectiveModule } from '../shared/password-directive/password-directive.module';
+import { UserCompanyComponent } from './user-company/user-company.component';
+import { UserReceiptComponent } from './user-receipt/user-receipt.component';
+import { UserReceiptDetailsComponent } from './user-receipt-details/user-receipt-details.component';
 
 
 
@@ -47,6 +56,14 @@ import { MatButtonModule } from '@angular/material/button';
     UserProjectListComponent,
     UserSettingsComponent,
     UserProjectUpdateComponent,
+    UserContactsComponent,
+    UserContactsAddComponent,
+    UserPaymentComponent,
+    UserProfilUpdateComponent,
+    UserPasswordUpdateComponent,
+    UserCompanyComponent,
+    UserReceiptComponent,
+    UserReceiptDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -67,6 +84,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatSortModule,
     MatIconModule,
     MatButtonModule,
+    ReactiveFormsModule,
+    PasswordDirectiveModule
   ]
 })
 export class UserModule { }

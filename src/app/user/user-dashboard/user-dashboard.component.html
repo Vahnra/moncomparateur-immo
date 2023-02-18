@@ -8,7 +8,8 @@
             </div>
             <div class="col-7">
                 <h4 class="mt-2">{{ user.username }}</h4>
-                <div>Utilisateur gratuit</div>
+                <div *ngIf="roles == 'free'">Utilisateur gratuit</div>
+                <div *ngIf="roles == 'paid'">Utilisateur payant</div>
                 <div>{{ user.email }}</div>
             </div>
             <div class="col-2">
@@ -29,28 +30,33 @@
             </li>
         </ul>
     </div>
-    <div class="card-body ">
-        <ul class="list-group">
+    <div class="card-body">
+        <ul class="list-group" *ngIf="roles == 'paid';else other_content">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Prospection
-              <span class="badge bg-primary rounded-pill">{{ prospectionStats }}</span>
+                Prospection
+                <span class="badge bg-primary rounded-pill">{{ prospectionStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Estimation
-              <span class="badge bg-primary rounded-pill">{{ estimationsStats }}</span>
+                Estimation
+                <span class="badge bg-primary rounded-pill">{{ estimationsStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Mandat
-              <span class="badge bg-primary rounded-pill">{{ mandatsStats }}</span>
+                Mandat
+                <span class="badge bg-primary rounded-pill">{{ mandatsStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Visite
-              <span class="badge bg-primary rounded-pill">{{ visitesStats }}</span>
+                Visite
+                <span class="badge bg-primary rounded-pill">{{ visitesStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Contre Visite
-              <span class="badge bg-primary rounded-pill">{{ contreVisitesStats }}</span>
+                Contre Visite
+                <span class="badge bg-primary rounded-pill">{{ contreVisitesStats }}</span>
             </li>
-          </ul>
+        </ul>
+        <ng-template #other_content>
+            <ul class="list-group text-center mt-5">
+                Seulement pour les utilisateurs avec abonnement
+            </ul>
+        </ng-template>
     </div>
 </div>

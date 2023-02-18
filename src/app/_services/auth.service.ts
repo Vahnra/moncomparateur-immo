@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-const AUTH_API = 'http://localhost:8000/api/';
+const AUTH_API = 'https://orn-chanarong.fr/api/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 
@@ -21,7 +21,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) { }
 
   // Inscription
-  register(username: string, email: string, password: string, postalCode: string, birthdayDate: Date, company: string, phoneNumbers: string): Observable<any> {
+  register(username: string, email: string, password: string, postalCode: string, birthdayDate: Date, company: string, phoneNumbers: string, type: string, companyName: string, companyAdress: string, companyCity: string, companyPostalCode: string): Observable<any> {
     return this.http.post(
       AUTH_API + 'register',
       {
@@ -31,7 +31,12 @@ export class AuthService {
         postalCode,
         birthdayDate, 
         company, 
-        phoneNumbers
+        phoneNumbers, 
+        type, 
+        companyName, 
+        companyAdress, 
+        companyCity, 
+        companyPostalCode
       },
       httpOptions
     );
