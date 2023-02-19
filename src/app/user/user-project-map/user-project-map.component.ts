@@ -147,7 +147,8 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     // add geosearch
     const searchControl = GeoSearchControl({
       provider: this.provider,
-      style: "bar"
+      style: "bar",
+      searchLabel: 'Entrer une adresse'
     });
     map.addControl(searchControl);
 
