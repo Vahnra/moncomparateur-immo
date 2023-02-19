@@ -166,7 +166,7 @@ export class MapsViewComponent implements OnInit, OnDestroy {
     const searchControl = GeoSearchControl({
       provider: this.provider,
       style: "bar",
-      searchLabel: 'Entrée une adresse'
+      searchLabel: 'Entrer une adresse'
     });
     map.addControl(searchControl);
 

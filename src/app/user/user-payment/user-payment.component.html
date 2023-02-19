@@ -1,34 +1,7 @@
 <div class="card" *ngIf="user">
-    <div class="card-header">
-        <div class="row mb-3" style="height: 90px;">
-            <div class="col-3 ">
-                <div class="d-flex align-items-center justify-content-center" style="height: 90px;">
-                    <img src="assets/images/user-profile.png" alt="" style="width: 100%;">
-                </div>
-            </div>
-            <div class="col-7">
-                <h4 class="mt-2">{{ user.username }}</h4>
-                <div>Utilisateur gratuit</div>
-                <div>{{ user.email }}</div>
-            </div>
-            <div class="col-2">
-                <div class="d-flex align-items-end justify-content-center" style="height: 45px; cursor: pointer;" (click)="logOut()">
-                    <i class="fa-solid fa-right-from-bracket fa-2xl"></i>
-                </div>
-            </div>
-        </div>
-        <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-                <a class="nav-link" style="cursor: pointer" (click)="goToUserDashboard()">Statistiques</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="true" >Paramètres</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-        </ul>
-    </div>
+
+    <app-user-header></app-user-header>
+    
     <div class="card-body mb-5">
         <p>Votre abonnement</p>
         <div class="card rounded-4">
