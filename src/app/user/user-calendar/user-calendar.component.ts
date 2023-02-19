@@ -116,7 +116,7 @@ export class UserCalendarComponent implements OnInit {
                 let event: any = {};
                 event['title'] = element.title;
                 event['start'] = new Date(element.start);
-                event["all_day"] = element.all_day;
+                event["allDay"] = element.all_day;
                 this.events.push(event);
               });  
             }, error: err => {
