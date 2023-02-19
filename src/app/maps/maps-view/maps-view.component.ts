@@ -78,31 +78,23 @@ export class MapsViewComponent implements OnInit, OnDestroy {
       }),
       'Vue satellite': tileLayer('https://wxs.ign.fr/decouverte/geoportail/wmts?' +
         '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM' +
-        '&LAYER={ignLayer}&STYLE={style}&FORMAT={format}' +
+        '&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&FORMAT=image/jpeg' +
         '&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}', {
         maxZoom: 19,
-        ignLayer: 'ORTHOIMAGERY.ORTHOPHOTOS',
-        style: 'normal',
-        format: 'image/jpeg',
         service: 'WMTS'
       }),
       'Plan IGN': tileLayer('https://wxs.ign.fr/decouverte/geoportail/wmts?' +
         '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM' +
-        '&LAYER={ignLayer}&STYLE={style}&FORMAT={format}' +
+        '&LAYER=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&STYLE=normal&FORMAT=image/png' +
         '&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}', {
           maxZoom: 19,
-          ignLayer: 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
-          style: 'normal',
-          format: 'image/png',
           service: 'WMTS',
         }),
-      'Plan cadastre': tileLayer('https://wxs.ign.fr/choisirgeoportail/geoportail/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE={style}&TILEMATRIXSET=PM&FORMAT={format}&LAYER=CADASTRALPARCELS.PARCELLAIRE_EXPRESS&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
+      'Plan cadastre': tileLayer('https://wxs.ign.fr/choisirgeoportail/geoportail/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE=PCI vecteur&TILEMATRIXSET=PM&FORMAT=image/png&LAYER=CADASTRALPARCELS.PARCELLAIRE_EXPRESS&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
         attribution: '<a target="_blank" href="https://www.geoportail.gouv.fr/">Geoportail France</a>',
         bounds: [[-75, -180], [81, 180]],
         minZoom: 2,
         maxZoom: 19,
-        format: 'image/png',
-        style: 'PCI vecteur',
       }),
     },
     overlays: {
