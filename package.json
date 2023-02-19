@@ -28,6 +28,7 @@
     "@popperjs/core": "^2.11.6",
     "@types/leaflet.markercluster": "^1.5.1",
     "angular-calendar": "^0.31.0",
+    "angular-feather": "^6.5.0",
     "bootstrap": "^5.2.3",
     "date-fns": "^2.29.3",
     "leaflet": "^1.9.3",

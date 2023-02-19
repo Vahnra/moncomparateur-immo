@@ -59,27 +59,37 @@
                 <div class="row" *ngIf="roles === 'paid'">
 
                     <div class="col-12">
-                        <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Ajout d'un commentaire</h1>
+                        <h4 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Ajout d'un commentaire</h4>
                     </div>
 
                     <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
                         <label class="mb-2 mt-2 form-label" for="inputEmail">Titre</label>
-                        <input type="text" class="form-control" name="title" [(ngModel)]="form.title" required
-                            #title="ngModel" [ngClass]="{ 'is-invalid': f.submitted && title.errors }"
-                            placeholder="Ville">
+                        <input 
+                            type="text" 
+                            class="form-control" 
+                            name="title" 
+                            [(ngModel)]="form.title" 
+                            required
+                            #title="ngModel" 
+                            [ngClass]="{ 'is-invalid': f.submitted && title.errors }"
+                            placeholder="">
                         <div class="invalid-feedback" *ngIf="title.errors && f.submitted">
                             <div *ngIf="title.errors['required']">Veuillez entrer un titre</div>
                         </div>
                         <label class="mb-2 mt-2 form-label" for="inputEmail">Commentaire</label>
-                        <textarea rows="5" class="form-control" name="text" [(ngModel)]="form.text" #text="ngModel"
+                        <textarea 
+                            rows="5" 
+                            class="form-control" 
+                            name="text" 
+                            [(ngModel)]="form.text" 
+                            #text="ngModel"
                             [ngClass]="{ 'is-invalid': f.submitted && text.errors }"
-                            placeholder="Entrez votre commentaire"></textarea>
+                            placeholder=""></textarea>
                         <div class="invalid-feedback" *ngIf="text.errors && f.submitted">
                             <div *ngIf="text.errors['required']">Veuillez entrer une adresse</div>
                         </div>
                         <div class="text-center">
-                            <button id="submit" name="sign-in-button"
-                                class="btn btn-lg mb-3 px-5 no-border-radius signin mt-3 btn btn-primary">Ajouter</button>
+                            <button id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-3 btn btn-primary">Ajouter</button>
                         </div>
                         <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
                             {{ errorMessage }}

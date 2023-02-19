@@ -38,6 +38,7 @@ import { PasswordDirectiveModule } from '../shared/password-directive/password-d
 import { UserCompanyComponent } from './user-company/user-company.component';
 import { UserReceiptComponent } from './user-receipt/user-receipt.component';
 import { UserReceiptDetailsComponent } from './user-receipt-details/user-receipt-details.component';
+import { IconsModule } from '../shared/icons/icons.module';
 
 
 
@@ -85,7 +86,8 @@ import { UserReceiptDetailsComponent } from './user-receipt-details/user-receipt
     MatIconModule,
     MatButtonModule,
     ReactiveFormsModule,
-    PasswordDirectiveModule
+    PasswordDirectiveModule,
+    IconsModule
   ]
 })
 export class UserModule { }

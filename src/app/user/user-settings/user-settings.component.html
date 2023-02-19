@@ -16,7 +16,7 @@
             <p class="card-text">Souscrivez à notre abonnement pour accéder instantanément aux dernièrs DPE de votre secteur, ainsi qu'à un agenda pratique avec des notifications de rappel pour ne jamais manquer une opportunité. Obtenez également des statistiques détaillées pour mieux comprendre votre marché et améliorer vos performances, et laissez des commentaires sur vos fiches pour une gestion optimale de vos prospects.</p>
             <a (click)="goToPayments()" class="btn" style="cursor: pointer;">Commencer</a>
         </div>
-        <h4 class="mt-2">Vus d'ensemble du compte</h4>
+        <h4 class="mt-2 fw-bold">Vus d'ensemble du compte</h4>
         <h5 class="my-4">Profil</h5>
         <div class="row">
             <div class="col-6 pb-2 border-bottom border-1">Nom d'utilisateur</div>
@@ -31,7 +31,7 @@
         <a (click)="goToProfilUpdate()" class="btn mt-2" style="cursor: pointer;">Modifier le profil</a>
 
         <div *ngIf="roles == 'paid' && order">
-            <h4 class="mt-5 mb-4">Votre abonnement</h4>
+            <h4 class="mt-5 mb-4 fw-bold">Votre abonnement</h4>
             <div class="card">
                 <h5 class="card-header py-4">Premium Personnel</h5>
                 <div class="card-body">
@@ -42,13 +42,13 @@
             </div>
         
             <button type="submit" class="btn w-100 mt-3">Changer d'abonnement</button>
-            <button type="button" class="btn w-100 mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Annuler l'abonnement</button>
+            <button type="button" class="btn w-100 mt-3" data-bs-toggle="modal" data-bs-target="#annulationModal">Annuler l'abonnement</button>
         </div>
     </div>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="annulationModal" tabindex="-1" aria-labelledby="annulationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">

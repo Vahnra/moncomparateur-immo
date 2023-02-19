@@ -103,13 +103,13 @@
                <ng-container matColumnDef="actions">
                     <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
                     <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Actions">
-                         <button mat-icon-button (click)="goToDetails(row.id)">
+                         <button class="test" mat-icon-button (click)="goToDetails(row.id)">
                               <mat-icon>info</mat-icon>
                          </button>
-                         <button mat-icon-button (click)="clickUpdate(row.id)">
+                         <button class="test" mat-icon-button (click)="clickUpdate(row.id)">
                               <mat-icon>launch</mat-icon>
                          </button>
-                         <button mat-icon-button (click)="clickDelete(row.id)">
+                         <button class="test" mat-icon-button (click)="clickDelete(row.id)">
                               <mat-icon color="warn">delete</mat-icon>
                          </button>
                     </td>

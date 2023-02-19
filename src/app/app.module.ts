@@ -25,6 +25,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { MatchPasswordDirective } from './directives/match-password.directive';
 import { PasswordDirectiveModule } from './shared/password-directive/password-directive.module';
 import { ProspectionModule } from './prospection/prospection.module';
+import { IconsModule } from './shared/icons/icons.module';
 
 registerLocaleData(localeFr);
 
@@ -46,6 +47,7 @@ registerLocaleData(localeFr);
     UserModule,
     PasswordDirectiveModule,
     ProspectionModule,
+    IconsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

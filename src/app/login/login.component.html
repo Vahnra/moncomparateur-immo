@@ -1,12 +1,9 @@
-<div class="container-xl bg-white text-dark ">
-  <form method="post">
-    <div class="row ">
-      <div class="col-lg-6 mx-auto mt-4 my-auto">
-
+<div class="container bg-white text-dark">
+  
         <div class="row">
 
-          <div class="col-12">
-            <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Merci de vous connecter</h1>
+          <div class="col-12" style="margin-top: 15vh;">
+            <h1 class="text-start fw-bold mt-5 mb-4 text-center fw-normal">Merci de vous connecter</h1>
           </div>
 
           <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate id="sign-in">
@@ -52,14 +49,8 @@
         
         </div>
 
-      </div>
-
-    </div>
-
     <div class="row">
       <div class="col-12 text-center mb-4" style="margin-top: 1.2rem">Pas de compte ?<a (click)="goToRegister()" style="cursor: pointer; color: #000A6A;"> Inscrivez-vous</a></div>
     </div>
     
-  </form>
-  
 </div>

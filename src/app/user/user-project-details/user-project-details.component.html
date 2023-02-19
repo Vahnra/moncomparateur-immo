@@ -61,10 +61,20 @@
             </div>
             <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="true">Fiche</a>
+                    <a class="nav-link active" aria-current="true" style="font-size: 70%;">
+                        <div class="text-center">
+                            <i-feather class="small" name="file-text"></i-feather>
+                        </div>
+                        Fiche
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" (click)="goToComments()" style="cursor: pointer; color: #000A6A;">Commentaires</a>
+                    <a class="nav-link" (click)="goToComments()" style="font-size: 70%; cursor: pointer; color: #000A6A;">
+                        <div class="text-center">
+                            <i-feather class="small" name="activity"></i-feather>
+                        </div>
+                        Commentaires
+                    </a>
                 </li>
             </ul>
         </div>
@@ -73,7 +83,7 @@
             <p class="text-end mt-3 col-6 text-muted">{{project.updated_at | date}}</p>
         </div>
         <img src="assets/images/50819.jpg" class="card-img-top" alt="...">
-        <div class="card-body">
+        <div class="card-body mb-5">
             <h5 class="card-title text-center">{{project.city}}</h5>
             <p class="card-text text-center">{{project.adress}}</p>
             <p class="card-text text-center">{{project.complement_adress}}</p>
@@ -89,7 +99,7 @@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                         data-bs-parent="#accordionFlushExample">
-                        <div class="accordion-body row">
+                        <div class="accordion-body row" style="font-size: 80%;">
                             <div class="card-text col-6">Numéro DPE :</div>
                             <div class="col-6 text-end">{{etiquette?.["N°DPE"]}}</div>
                             <div class="card-text col-6">Etiquette DPE :</div>

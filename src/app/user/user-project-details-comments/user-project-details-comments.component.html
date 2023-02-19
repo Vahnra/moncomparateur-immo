@@ -64,10 +64,20 @@
         </div>
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a class="nav-link" (click)="goToDetails()" style="cursor: pointer; color: #000A6A;">Fiche</a>
+                <a class="nav-link" (click)="goToDetails()" style="font-size: 70%; cursor: pointer; color: #000A6A;">
+                    <div class="text-center">
+                        <i-feather class="small" name="file-text"></i-feather>
+                    </div>
+                    Fiche
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="true">Commentaires</a>
+                <a class="nav-link active" aria-current="true" style="font-size: 70%;">
+                    <div class="text-center">
+                        <i-feather class="small" name="activity"></i-feather>
+                    </div>
+                    Commentaires
+                </a>
             </li>
         </ul>
     </div>
@@ -81,7 +91,7 @@
                     <p class="card-text">{{ item.text }}</p>
                 </div>
                 <div class="card-footer text-muted">
-                    {{item.created_at | date}}
+                    {{item.created_at | date:'d/M/y'}}
                 </div>
             </div>
         </div>

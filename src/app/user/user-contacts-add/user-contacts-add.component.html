@@ -1,13 +1,12 @@
 
 <div class="container-xl bg-white text-dark mb-5">
-    <form method="post">
-      <div class="row ">
-        <div class="col-lg-6 mx-auto mt-4 my-auto" style="border-radius: 6px">
+
+        <div class="col-lg-6 mx-auto" style="border-radius: 6px">
   
           <div class="row">
   
-            <div class="col-12">
-              <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Ajouter un nouveau contact</h1>
+            <div class="col-12" style="margin-top: 20vh;">
+              <h4 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Ajouter un nouveau contact</h4>
             </div>
   
             <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
@@ -72,8 +71,5 @@
   
         </div>
   
-      </div>
-      
-    </form>
     
   </div>

@@ -9,3 +9,8 @@
 .btn:hover {
     color: white;
 }
+
+.small {
+    height: 16px;
+    width: 16px;
+}
