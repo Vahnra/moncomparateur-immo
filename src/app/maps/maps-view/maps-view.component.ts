@@ -76,34 +76,31 @@ export class MapsViewComponent implements OnInit, OnDestroy {
         maxZoom: 19, 
         attribution: '...' 
       }),
-      'Vue satellite': tileLayer('https://wxs.ign.fr/{ignApiKey}/geoportail/wmts?' +
+      'Vue satellite': tileLayer('https://wxs.ign.fr/decouverte/geoportail/wmts?' +
         '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM' +
         '&LAYER={ignLayer}&STYLE={style}&FORMAT={format}' +
         '&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}', {
         maxZoom: 19,
-        ignApiKey: 'decouverte',
         ignLayer: 'ORTHOIMAGERY.ORTHOPHOTOS',
         style: 'normal',
         format: 'image/jpeg',
         service: 'WMTS'
       }),
-      'Plan IGN': tileLayer('https://wxs.ign.fr/{ignApiKey}/geoportail/wmts?' +
+      'Plan IGN': tileLayer('https://wxs.ign.fr/decouverte/geoportail/wmts?' +
         '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM' +
         '&LAYER={ignLayer}&STYLE={style}&FORMAT={format}' +
         '&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}', {
           maxZoom: 19,
-          ignApiKey: 'decouverte',
           ignLayer: 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
           style: 'normal',
           format: 'image/png',
           service: 'WMTS',
         }),
-      'Plan cadastre': tileLayer('https://wxs.ign.fr/{apikey}/geoportail/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE={style}&TILEMATRIXSET=PM&FORMAT={format}&LAYER=CADASTRALPARCELS.PARCELLAIRE_EXPRESS&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
+      'Plan cadastre': tileLayer('https://wxs.ign.fr/choisirgeoportail/geoportail/wmts?REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&STYLE={style}&TILEMATRIXSET=PM&FORMAT={format}&LAYER=CADASTRALPARCELS.PARCELLAIRE_EXPRESS&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}', {
         attribution: '<a target="_blank" href="https://www.geoportail.gouv.fr/">Geoportail France</a>',
         bounds: [[-75, -180], [81, 180]],
         minZoom: 2,
         maxZoom: 19,
-        apikey: 'choisirgeoportail',
         format: 'image/png',
         style: 'PCI vecteur',
       }),

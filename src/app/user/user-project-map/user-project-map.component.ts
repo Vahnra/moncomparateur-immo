@@ -61,22 +61,20 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
   layersControl = {
     baseLayers: {
       'Plan': tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' }),
-      'Vue satellite': tileLayer('https://wxs.ign.fr/{ignApiKey}/geoportail/wmts?' +
+      'Vue satellite': tileLayer('https://wxs.ign.fr/decouverte/geoportail/wmts?' +
         '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM' +
         '&LAYER={ignLayer}&STYLE={style}&FORMAT={format}' +
         '&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}', {
-        ignApiKey: 'decouverte',
         ignLayer: 'ORTHOIMAGERY.ORTHOPHOTOS',
         style: 'normal',
         format: 'image/jpeg',
         service: 'WMTS'
       }),
-      'Plan IGN': tileLayer('https://wxs.ign.fr/{ignApiKey}/geoportail/wmts?' +
+      'Plan IGN': tileLayer('https://wxs.ign.fr/decouverte/geoportail/wmts?' +
         '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM' +
         '&LAYER={ignLayer}&STYLE={style}&FORMAT={format}' +
         '&TILECOL={x}&TILEROW={y}&TILEMATRIX={z}',
         {
-          ignApiKey: 'decouverte',
           ignLayer: 'GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2',
           style: 'normal',
           format: 'image/png',
