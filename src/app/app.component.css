@@ -8,3 +8,19 @@
     color: white; border-radius: 0px 0px 30px 30px;
 }
 
+#newProjectButton {
+    position: absolute;
+    bottom: 18px;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 10px;
+    cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 50px;
+    z-index: 1044;
+  
+    width: 62px;
+}
+

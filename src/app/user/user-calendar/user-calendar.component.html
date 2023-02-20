@@ -10,14 +10,14 @@
           [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()"
         >
-          Previous
+          Précédent
         </div>
         <div
           class="btn btn-outline-secondary"
           mwlCalendarToday
           [(viewDate)]="viewDate"
         >
-          Today
+          Aujourd'hui
         </div>
         <div
           class="btn"
@@ -26,12 +26,12 @@
           [(viewDate)]="viewDate"
           (viewDateChange)="closeOpenMonthViewDay()"
         >
-          Next
+          Suivant
         </div>
       </div>
     </div>
     <div class="col-md-4">
-      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'FR' }}</h3>
     </div>
     <div class="col-md-4">
       <div class="btn-group">
@@ -40,21 +40,21 @@
           (click)="setView(CalendarView.Month)"
           [class.active]="view === CalendarView.Month"
         >
-          Month
+          Mois
         </div>
         <div
           class="btn"
           (click)="setView(CalendarView.Week)"
           [class.active]="view === CalendarView.Week"
         >
-          Week
+          Semaine
         </div>
         <div
           class="btn"
           (click)="setView(CalendarView.Day)"
           [class.active]="view === CalendarView.Day"
         >
-          Day
+          Jour
         </div>
       </div>
     </div>
@@ -65,6 +65,7 @@
       *ngSwitchCase="CalendarView.Month"
       [viewDate]="viewDate"
       [events]="events"
+      [locale]="locale"
       [refresh]="refresh"
       [activeDayIsOpen]="activeDayIsOpen"
       (dayClicked)="dayClicked($event.day)"
@@ -76,6 +77,7 @@
       *ngSwitchCase="CalendarView.Week"
       [viewDate]="viewDate"
       [events]="events"
+      [locale]="locale"
       [refresh]="refresh"
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"
@@ -85,6 +87,7 @@
       *ngSwitchCase="CalendarView.Day"
       [viewDate]="viewDate"
       [events]="events"
+      [locale]="locale"
       [refresh]="refresh"
       (eventClicked)="handleEvent('Clicked', $event.event)"
       (eventTimesChanged)="eventTimesChanged($event)"

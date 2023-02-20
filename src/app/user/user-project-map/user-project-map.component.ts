@@ -1,5 +1,6 @@
 import { Component, HostListener, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/_services/project.service';
+import { Location } from '@angular/common'
 import * as Leaflet from 'leaflet';
 import { latLng, LayerGroup, tileLayer, Map, icon, Icon } from 'leaflet';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
@@ -8,7 +9,10 @@ import { MapsService } from 'src/app/maps/maps.service';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/_services/storage.service';
 import { UserService } from 'src/app/_services/user.service';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil } from 'rxjs';
+import { User } from 'src/app/models/user';
+import { Dpe } from 'src/app/models/dpe';
+import { ToastService } from 'src/app/_services/toast.service';
 
 @Component({
   selector: 'app-user-project-map',
@@ -17,8 +21,14 @@ import { Subscription } from 'rxjs';
 })
 export class UserProjectMapComponent implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event']) click(event:any) { 
-    if(event.target.classList.contains("fiche-button")){ this.onVoirFicheClick(); }
+    if(event.target.classList.contains("fiche-button")){ 
+      this.onVoirFicheClick(); 
+    }
+    if(event.target.classList.contains("favorite-button")){ 
+      this.onAjouterFavorisClick(); 
+    }
   }
+  
   
   map!: Leaflet.Map
   enableCall: boolean = true;
@@ -40,6 +50,17 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
   roles: any;
   apicallSub?:Subscription;
   apiMarkerSub?:Subscription;
+  user: User;
+
+  userLat1: any;
+  userLng1: any;
+  userLat2: any;
+  userLng2: any;
+
+  test: Dpe;
+
+  markerClusterDataDPE: Leaflet.Marker[] = [];
+  lookupDPE: any = [];
   
   customOptions = {
     'minWidth': 300,
@@ -84,7 +105,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
       }),
     },
     overlays: {
- 
+
     }
   }
 
@@ -94,13 +115,18 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     private zone: NgZone, 
     private router: Router, 
     private storageService: StorageService, 
-    private userService: UserService) 
+    private userService: UserService,
+    private location: Location,
+    private toastService: ToastService) 
   {
     this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
       data.forEach((element:any) => {
         this.addMarker(element);
+     
       });
+      // console.log(this.markerData);
     })
+
   }
 
   ngOnInit() {
@@ -111,6 +137,27 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
             this.userId = user.id;
             this.isLoggedIn = true;
             this.roles = user.status;
+            this.user = user;
+
+            this.mapService.requestGeocodingDepartment(`${user.postal_code}, France`).subscribe({
+              next: data => {
+                let info = JSON.parse(JSON.stringify(data))
+                this.userLat1 = info["data"][0]["bbox_module"][0];
+                this.userLng1 = info["data"][0]["bbox_module"][1];
+                this.userLat2 = info["data"][0]["bbox_module"][2];
+                this.userLng2 = info["data"][0]["bbox_module"][3];
+                this.mapService.refreshDpe(this.userLat1, this.userLng1, this.userLat2, this.userLng2,).subscribe(data => {
+      
+                  this.test = JSON.parse(JSON.stringify(data))
+      
+                  this.test.results.forEach((item) => {
+      
+                    this.addMarkerDPE(item);
+                  }) //End of foreach
+      
+                }) // End of map service call
+              }
+            })
           }
         }, error: err => {
 
@@ -118,6 +165,8 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
         }
       });
+
+      
     }
 
     // this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
@@ -147,8 +196,9 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     // add geosearch
     const searchControl = GeoSearchControl({
       provider: this.provider,
-      style: "bar",
-      searchLabel: 'Entrer une adresse'
+      style: "button",
+      searchLabel: 'Entrer une adresse',
+      position: 'bottomright'
     });
     map.addControl(searchControl);
 
@@ -156,14 +206,16 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
       map.setView([position.coords.latitude, position.coords.longitude])
     })// End of get current position
     
+    
   }
 
   getUserProjects($event: any) {
 
-    // if (!this.enableCall) return;
+    if (!this.enableCall) return;
 
     this.markerClusterData = this.markerData;
     this.markerClusterGroup.addLayers(this.markerClusterData);
+    
     
     // this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
     //   data.forEach((element:any) => {
@@ -177,12 +229,13 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     // this.enableCall = false;
     
     // var popup = this.map.layer.getPopup();
-    // setTimeout(() => this.enableCall = false, 4000);
+    setTimeout(() => this.enableCall = false, 1000);
 
   }
 
   markerClusterReady(group: Leaflet.MarkerClusterGroup) {
     this.markerClusterGroup = group;
+    this.pbe = this.markerClusterGroup
   }
 
   addMarker(item: any) {
@@ -211,7 +264,127 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
                 </div>
               </div>`
 
-        this.markerData.push(Leaflet.marker([test.data[0].latitude, test.data[0].longitude], {
+        if (item.status == 'prospecte') {
+          this.markerData.push(Leaflet.marker([test.data[0].latitude, test.data[0].longitude], {
+            icon: icon({
+              ...Icon.Default.prototype.options,
+              iconUrl: 'assets/icons/prospecte.png',
+              iconRetinaUrl: 'assets/prospecte.png',
+              shadowUrl: 'assets/marker-shadow.png',
+              iconSize: [115, 38],
+            })
+          }).on('click', () => {
+            this.zone.run(() => this.onMarkerClick(item))
+          }).bindPopup(customPopup, this.customOptions).openPopup());
+        }
+
+        if (item.status == 'opportunite') {
+          this.markerData.push(Leaflet.marker([test.data[0].latitude, test.data[0].longitude], {
+            icon: icon({
+              ...Icon.Default.prototype.options,
+              iconUrl: 'assets/icons/opportunite.png',
+              iconRetinaUrl: 'assets/opportunite.png',
+              shadowUrl: 'assets/marker-shadow.png',
+              iconSize: [115, 38],
+            })
+          }).on('click', () => {
+            this.zone.run(() => this.onMarkerClick(item))
+          }).bindPopup(customPopup, this.customOptions).openPopup());
+        }
+
+        if (item.status == 'absent') {
+          this.markerData.push(Leaflet.marker([test.data[0].latitude, test.data[0].longitude], {
+            icon: icon({
+              ...Icon.Default.prototype.options,
+              iconUrl: 'assets/icons/absent.png',
+              iconRetinaUrl: 'assets/absent.png',
+              shadowUrl: 'assets/marker-shadow.png',
+              iconSize: [115, 38],
+            })
+          }).on('click', () => {
+            this.zone.run(() => this.onMarkerClick(item))
+          }).bindPopup(customPopup, this.customOptions).openPopup());
+        }
+
+        if (item.status == 'a-relancer') {
+          this.markerData.push(Leaflet.marker([test.data[0].latitude, test.data[0].longitude], {
+            icon: icon({
+              ...Icon.Default.prototype.options,
+              iconUrl: 'assets/icons/a-relancer.png',
+              iconRetinaUrl: 'assets/a-relancer.png',
+              shadowUrl: 'assets/marker-shadow.png',
+              iconSize: [115, 38],
+            })
+          }).on('click', () => {
+            this.zone.run(() => this.onMarkerClick(item))
+          }).bindPopup(customPopup, this.customOptions).openPopup());
+        }
+
+        if (item.status == 'estimation') {
+          this.markerData.push(Leaflet.marker([test.data[0].latitude, test.data[0].longitude], {
+            icon: icon({
+              ...Icon.Default.prototype.options,
+              iconUrl: 'assets/icons/estimation.png',
+              iconRetinaUrl: 'assets/estimation.png',
+              shadowUrl: 'assets/marker-shadow.png',
+              iconSize: [115, 38],
+            })
+          }).on('click', () => {
+            this.zone.run(() => this.onMarkerClick(item))
+          }).bindPopup(customPopup, this.customOptions).openPopup());
+        }
+
+        if (item.status == 'en-vente') {
+          this.markerData.push(Leaflet.marker([test.data[0].latitude, test.data[0].longitude], {
+            icon: icon({
+              ...Icon.Default.prototype.options,
+              iconUrl: 'assets/icons/en-vente.png',
+              iconRetinaUrl: 'assets/en-vente.png',
+              shadowUrl: 'assets/marker-shadow.png',
+              iconSize: [125, 38],
+            })
+          }).on('click', () => {
+            this.zone.run(() => this.onMarkerClick(item))
+          }).bindPopup(customPopup, this.customOptions).openPopup());
+        }
+        
+      
+      }
+    });
+
+  }
+
+  addMarkerDPE(item: any) {
+    let names: string = item['_geopoint'];
+    let nameArr = names.split(',');
+
+    if (this.isLocationFreeDPE(nameArr) == true) {
+
+      if (item['Date_établissement_DPE'] > '2022-11-01') {
+
+        this.lookup.push([nameArr[0], nameArr[1]]);
+        let customPopup = `
+              <div class="row" style="margin-bottom: 0;>
+                <div class="col-12" style="margin-bottom: 0;">
+                  <div class="card border-0" style="margin-bottom: 0;">
+                    <div class="row" >
+                      <span class="col-6 text-end"><strong>N°DPE</strong></span><span class="col-6" id="dpe-number">${item['N°DPE']}</span>
+                      <span class="col-6 text-end"><strong>Date DPE</strong></span><span class="col-6" id="dpe-date">${item['Date_établissement_DPE']}</span>
+                      <span class="col-6 text-end"><strong>Etiquette DPE</strong></span><span class="col-6" id="dpe-class">${item['Etiquette_DPE']}</span>
+                      <span class="col-6 text-end"><strong>Adresse</strong></span><span class="col-6" id="adress">${item['Adresse_(BAN)']}</span>
+                      <!-- <span class="col-6 text-end">Complément d'adresse</span><span class="col-6">${item['Complément_d\'adresse_logement']}</span> -->
+                      <span class="col-6 text-end"><strong>Type de logement</strong></span><span class="col-6" id="building-type">${item['Type_bâtiment']}</span>
+                      <!-- <span class="col-6 text-end">Année de construction</span><span class="col-6">${item['Année_construction']}</span> -->
+                      <span class="col-6 text-end"><strong>Surface habitable</strong></span><span class="col-6" id="area-size">${item['Surface_habitable_logement']}</span> 
+                      <div class="col-6 text-center mx-auto mt-2">
+                        <button type="button" class="btn favorite-button">Créer une fiche</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+
+        this.markerClusterDataDPE.push(Leaflet.marker([+nameArr[0], +nameArr[1]], {
           icon: icon({
             ...Icon.Default.prototype.options,
             iconUrl: 'assets/marker-icon.png',
@@ -223,14 +396,48 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
         }).bindPopup(customPopup, this.customOptions).openPopup());
       
       }
-    });
+    }
+  }
 
+  onFilterChangeType(event: any) {
+    this.projectService.getUserProjectsFiltered(event.target.value).subscribe({
+      next: data => {
+        this.markerClusterGroup.clearLayers();
+        this.markerClusterData = [];
+        this.markerData = [];
+        this.lookup = [];
+        
+        data.forEach((element:any) => {
+          this.addMarker(element);
+        });
+        
+      }, 
+      error: err => {
+
+      },
+      complete: () => {
+        
+        this.markerClusterData = this.markerData;
+        this.markerClusterGroup.addLayers(this.markerClusterData);
+           
+      }
+    })
+    
   }
   
   //check if marker is already put at the exact same coordinate
   isLocationFree(search: any) {
     for (var i = 0, l = this.lookup.length; i < l; i++) {
       if (this.lookup[i][0] === search[0] && this.lookup[i][1] === search[1]) {
+        return false
+      }
+    }
+    return true
+  }
+
+  isLocationFreeDPE(search: any) {
+    for (var i = 0, l = this.lookupDPE.length; i < l; i++) {
+      if (this.lookupDPE[i][0] === search[0] && this.lookupDPE[i][1] === search[1]) {
         return false
       }
     }
@@ -246,6 +453,35 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     this.router.navigate([`/user/project/${markerData.id}`])
   }
 
+  onAjouterFavorisClick() {
+    // var dpeNumber = document.getElementById("dpe-number")?.innerHTML;
+    // var dpeDate = document.getElementById("dpe-date")?.innerHTML;
+    // var dpeClass = document.getElementById("dpe-class")?.innerHTML;
+    // var adress = document.getElementById("adress")?.innerHTML;
+    // var buildingType = document.getElementById("building-type")?.innerHTML;
+    // var areaSize = document.getElementById("area-size")?.innerHTML;
+    console.log("test");
+    
+    let markerData = JSON.parse(JSON.stringify(this.currentMarker));
+
+    let names: string = markerData['_geopoint'];
+    let nameArr = names.split(',');
+    
+    // this.favoritesService.addFavorite(markerData['N°DPE'], markerData['Date_établissement_DPE'], markerData['Etiquette_DPE'], markerData['Adresse_(BAN)'], markerData['Type_bâtiment'], markerData['Surface_habitable_logement'], nameArr[0], nameArr[1]).subscribe({
+    //   next: data => {
+    //     console.log(data); 
+    //   },
+    //   error: error => console.log(error)
+    // })
+    this.projectService
+      .addProjectFromMarker(markerData['Type_bâtiment'], markerData['Nom__commune_(BAN)'], markerData['Adresse_brute'], markerData['Complément_d\'adresse_logement']).subscribe({next: response => {     
+        this.toastService.showFromDpe('La fiche a bien été créé', markerData['Adresse_(BAN)'], response, { delay: 5000 });
+      }, error: err => {
+        this.toastService.show('Une erreur s\'est produite', 'La fiche existe déjà.', { classname: 'bg-danger text-light', delay: 5000 })
+      },
+      })
+  }
+
   goToListe() {
     this.router.navigate([`/user/${this.userId}/project-list`])
   }
@@ -256,5 +492,19 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   refresh() {
     window.location.reload();
+  }
+
+  changeToDpeMarker() {
+    this.markerClusterGroup.clearLayers();
+    this.markerClusterGroup.addLayers(this.markerClusterDataDPE);
+  }
+
+  changeToProjectMarker() {
+    this.markerClusterGroup.clearLayers();
+    this.markerClusterGroup.addLayers(this.markerClusterData);
+  }
+
+  goBack() {
+    this.location.back()
   }
 }

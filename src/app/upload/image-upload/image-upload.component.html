@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-8">
+        <label class=" p-0">
+            <input type="file" accept="image/*" (change)="selectFile($event)" />
+        </label>
+    </div>
+</div>
+
+<div>
+    <img [src]="preview" class="preview w-100">
+</div>
+
+<div *ngIf="currentFile && progress" class="progress my-3">
+    <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ progress }}" aria-valuemin="0"
+        aria-valuemax="100" [ngStyle]="{ width: progress + '%' }">
+        {{ progress }}%
+    </div>
+</div>
+
+<div *ngIf="message" class="alert alert-secondary" role="alert">
+    {{ message }}
+</div>

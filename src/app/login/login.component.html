@@ -7,21 +7,21 @@
           </div>
 
           <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate id="sign-in">
-            <label class="mb-2 form-label" for="inputEmail">E-mail</label>
+            <label class="mb-1 mt-2 form-label" for="inputEmail">E-mail</label>
               <input 
-                type="text" 
+                type="email" 
                 class="form-control" 
                 name="username" 
                 [(ngModel)]="form.username" 
                 required 
                 #username="ngModel"
                 [ngClass]="{ 'is-invalid': f.submitted && username.errors }" 
-                placeholder="example@mail.fr" 
+                placeholder="" 
               >
               <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
-                Mettez votre nom!
+                Entrez votre email
               </div>
-              <label class="mb-2 mt-2 form-label" for="inputEmail">Mot de passe</label>
+              <label class="mb-1 mt-3 form-label" for="inputEmail">Mot de passe</label>
               <input 
                 type="password"
                 class="form-control"
@@ -31,16 +31,17 @@
                 minlength="4"
                 #password="ngModel"
                 [ngClass]="{ 'is-invalid': f.submitted && password.errors }" 
-                placeholder="Mot de passe" 
+                placeholder="" 
               >
               <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
-                <div *ngIf="password.errors['required']">Le mot de passe!</div>
+                <div *ngIf="password.errors['required']">Entrez un mot de passe</div>
                 <div *ngIf="password.errors['minlength']">
                   Le mot de passe a au moins 4 caractères
                 </div>
               </div>
               <div class="text-center">
-                <button id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-5 btn">Se connecter</button>
+                <button *ngIf="f.form.valid" id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-5 btn">Se connecter</button>
+                <button *ngIf="!f.form.valid" id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-5 btn" disabled>Se connecter</button>
               </div>
               <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger mt-3" role="alert">
                 {{ errorMessage }}

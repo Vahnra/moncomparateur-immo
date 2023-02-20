@@ -30,7 +30,8 @@ export class ProjectService {
     calendarTitle: String,
     calendarStart: Date,
     contact: boolean, 
-    name: string
+    name: string,
+    typeFiche: string
     ): Observable<any> {
     return this.http.post(
       PROJECT_API + '/add',
@@ -45,7 +46,8 @@ export class ProjectService {
         calendarTitle, 
         calendarStart,
         contact,
-        name
+        name,
+        typeFiche
       },
       httpOptions
     )
@@ -79,6 +81,8 @@ export class ProjectService {
     phone_numbers: String,
     status: String,
     complement_adress: string,
+    name: string,
+    email: String,
     projectId: number
     ): Observable<any> {
     return this.http.put(
@@ -88,8 +92,10 @@ export class ProjectService {
         city,
         adress,
         phone_numbers,
-        status,
-        complement_adress
+        status,      
+        complement_adress,
+        name,
+        email
       },
       httpOptions
     )
@@ -106,6 +112,13 @@ export class ProjectService {
   getUserProjects(): Observable<any> {
     return this.http.get(
       PROJECT_API + '/user-projects', httpOptions
+    );
+  }
+
+  // get all user projects filtered
+  getUserProjectsFiltered(filter: any): Observable<any> {
+    return this.http.get(
+      PROJECT_API + `/user-projects/filtered?filter=${filter}`, httpOptions
     );
   }
 

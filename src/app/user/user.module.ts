@@ -39,6 +39,7 @@ import { UserCompanyComponent } from './user-company/user-company.component';
 import { UserReceiptComponent } from './user-receipt/user-receipt.component';
 import { UserReceiptDetailsComponent } from './user-receipt-details/user-receipt-details.component';
 import { IconsModule } from '../shared/icons/icons.module';
+import { UploadModule } from '../upload/upload.module';
 
 
 
@@ -87,7 +88,8 @@ import { IconsModule } from '../shared/icons/icons.module';
     MatButtonModule,
     ReactiveFormsModule,
     PasswordDirectiveModule,
-    IconsModule
+    IconsModule,
+    UploadModule
   ]
 })
 export class UserModule { }

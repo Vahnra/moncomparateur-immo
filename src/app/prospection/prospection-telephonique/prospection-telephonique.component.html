@@ -1,4 +1,4 @@
-<div *ngIf="user && roles == 'paid'"  class="card text-center border-bottom-0 mb-5">
+<div *ngIf="user && roles == 'paid'"  class="card border-bottom-0 mb-5">
     <div class="card-header fixed-top" style="background-color: #000A6A; border-radius: 0;">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
@@ -11,6 +11,14 @@
     </div>
     <div class="card-body border-bottom-0 mt-5 ">
 
+        <p>Règles de base</p>
+
+        <ul>
+            <li>Personnaliser le discours en fonction du bien.</li>
+            <li>Créer un lien avec l’interlocuteur des que possible.</li>
+            <li>Innovez/Proposez des conditions particulières.</li>
+        </ul>
+
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
@@ -22,12 +30,12 @@
                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <strong>This is the first item's accordion body.</strong> It is shown by default, until the
-                        collapse plugin adds the appropriate classes that we use to style each element. These classes
-                        control the overall appearance, as well as the showing and hiding via CSS transitions. You can
-                        modify any of this with custom CSS or overriding our default variables. It's also worth noting
-                        that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                        does limit overflow.
+                        Bonjour je vous appelle au sujet de l'annonce que vous avez déposé sur (site). <br>
+                        L'appartement est toujours disponible ? <br>
+                        Parfait, je me présente, je suis … de l’agence “MCI BOOST”  et j’ai des clients qui recherchent un appartement comme le votre, avec notamment (Ex : une cuisine équipée) vous me confirmez que c'est bien le cas de votre appartement ? <br>
+                        Seriez-vous disponible demain ou après demain pour que je vienne voir votre appartement et m'assurer qui puisse leur convenir ? (si besoin : rassurez-vous, dons un premier temps je viens sans mandat. le but est juste voir le bien, de prendre des photos et voir avec mes clients si cela pourrait leur convenir). Vous préférez 10h ou 14h ? <br>
+                        A quelle adresse se situe le bien ? <br>
+                        Je vous remercie pour votre accueil je vous souhaite une agréable journée. 
                     </div>
                 </div>
             </div>
@@ -41,12 +49,8 @@
                 <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <strong>This is the second item's accordion body.</strong> It is hidden by default, until the
-                        collapse plugin adds the appropriate classes that we use to style each element. These classes
-                        control the overall appearance, as well as the showing and hiding via CSS transitions. You can
-                        modify any of this with custom CSS or overriding our default variables. It's also worth noting
-                        that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                        does limit overflow.
+                        Bonjour, votre annonce est toujours disponible ? J’aimerais avoir de précision sur (Ex : les derniers travaux réalisés/la cuisine équipée/l’environnement…), vous pouvez m’en dire plus (faire parler le vendeur un maximum)? Votre bien m’intéresse beaucoup afin de le proposer à des clients qui ont ce type de recherche. Pourrais-je passer le voir demain ou après demain ? Pourrais-je avoir l’adresse exacte ? <br>
+                        Je vous remercie pour votre accueil je vous souhaite une agréable journée.
                     </div>
                 </div>
             </div>
@@ -60,12 +64,63 @@
                 <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
-                        <strong>This is the third item's accordion body.</strong> It is hidden by default, until the
-                        collapse plugin adds the appropriate classes that we use to style each element. These classes
-                        control the overall appearance, as well as the showing and hiding via CSS transitions. You can
-                        modify any of this with custom CSS or overriding our default variables. It's also worth noting
-                        that just about any HTML can go within the <code>.accordion-body</code>, though the transition
-                        does limit overflow.
+                        "Bonjour, je suis [nom] de [agence immobilière]. J'ai vu que votre propriété était sur le marché depuis un certain temps et je me demandais si je pourrais vous aider à la vendre plus rapidement ?"
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Scénario 4
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        “Bonjour, je suis [nom] et je travaille pour [agence immobilière]. J’ai vendu un bien dans votre quartier (adresse, dimension, délai… a personnaliser), je recherche donc un bien similaire afin de les proposer à mes acquéreurs. Vous seriez disponible vendredi ou samedi afin de passer le voir une dizaine de minute ?
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#headingFive" aria-expanded="false" aria-controls="headingFive">
+                        Scénario 5
+                    </button>
+                </h2>
+                <div id="headingFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        “Bonjour, je suis [nom] et je travaille pour [agence immobilière]. J’ai vendu un bien dans votre quartier (adresse, dimension, délai… a personnaliser), je recherche donc un bien similaire afin de les proposer à mes acquéreurs. Vous seriez disponible vendredi ou samedi afin de passer le voir une dizaine de minute ?
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#headingSix" aria-expanded="false" aria-controls="headingSix">
+                        Scénario 6
+                    </button>
+                </h2>
+                <div id="headingSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        “Bonjour, je suis [nom] et je travaille pour [agence immobilière]. J’ai vendu un bien dans votre quartier (adresse, dimension, délai… a personnaliser), je recherche donc un bien similaire afin de les proposer à mes acquéreurs. Vous seriez disponible vendredi ou samedi afin de passer le voir une dizaine de minute ?
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#headingSeven" aria-expanded="false" aria-controls="headingSeven">
+                        Scénario 7
+                    </button>
+                </h2>
+                <div id="headingSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        "Bonjour, je suis [nom] de [agence immobilière]. J'ai remarqué que vous avez mis votre propriété en vente et je me demandais si je pourrais vous aider à la vendre plus rapidement en vous proposant mes services ?”
                     </div>
                 </div>
             </div>

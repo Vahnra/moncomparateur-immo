@@ -50,8 +50,7 @@
 </div>
 
 <div class="container-xl bg-white text-dark mb-5">
-    <form method="post">
-      <div class="row ">
+  
         <div class="col-lg-6 mx-auto mt-4 my-auto">
   
           <div class="row">
@@ -71,11 +70,14 @@
                     [ngClass]="{ 'is-invalid': f.submitted && status.errors }"
                 >
                     <option selected disabled>--Selectionner une option--</option>
-                    <option value="prospection">Prospection</option>
+                    <option value="opportunite">Opportunité</option>
+                    <option value="prospecte">Prospecté</option>
+                    <option value="absent">Absent</option>
+                    <option value="a-relancer">A relancer</option>
                     <option value="estimation">Estimation</option>
-                    <option value="mandat">Mandat</option>
-                    <option value="visite">Visite</option>
-                    <option value="contre-visite">Contre visite</option>
+                    <option value="en-vente">En vente</option>
+                    <option value="pas-opportunite">Pas d'opportunité</option>
+                    <option value="archiver">Archivé</option>
                 </select>
                 <div class="invalid-feedback" *ngIf="status.errors && f.submitted">
                     <div *ngIf="status.errors['required']">Veuillez choisir un type de bien</div>
@@ -101,7 +103,60 @@
                 <div class="invalid-feedback" *ngIf="type.errors && f.submitted">
                     <div *ngIf="type.errors['required']">Veuillez choisir un type de bien</div>
                 </div>
-                <label class="mb-2 mt-2 form-label" for="inputEmail">Ville</label>
+
+                <h5 class="mt-4 text-center">Informations personelles</h5>
+
+                <label class="mb-2 mt-2 form-label" for="inputEmail">Nom et prénom</label>
+                <input 
+                    type="text" 
+                    class="form-control"  
+                    name="name" 
+                    [(ngModel)]="form.name" 
+                    #name="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && name.errors }"
+                    placeholder=""
+                >
+                <div class="invalid-feedback" *ngIf="name.errors && f.submitted">
+                    <div *ngIf="name.errors['required']">Veuillez entrer un nom.</div>
+                </div>
+
+                <label class="mb-1 mt-3 form-label" for="inputEmail">Email</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    name="email" 
+                    [(ngModel)]="form.email" 
+                    #email="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                    placeholder="Email"
+                >
+                <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+                </div>
+
+                <label class="mb-1 mt-3 form-label" for="inputEmail">Numéro de téléphone</label>
+                <input 
+                    type="text" 
+                    class="form-control" 
+                    name="phone_numbers" 
+                    [(ngModel)]="form.phone_numbers" 
+                    minlength="10"
+                    maxlength="10"
+                    #phone_numbers="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && phone_numbers.errors }"
+                    placeholder="Téléphone"
+                >
+                <div class="invalid-feedback" *ngIf="phone_numbers.errors && f.submitted">
+                    <div *ngIf="phone_numbers.errors['minlength']">
+                        Ce numéro n'est pas valide.
+                    </div>
+                    <div *ngIf="phone_numbers.errors['maxlength']">
+                        Ce numéro n'est pas valide.
+                    </div>
+                </div>
+
+                <h5 class="mt-4 text-center">Coordonnées</h5>
+
+                <label class="mb-1 mt-3 form-label" for="inputEmail">Ville</label>
                 <input 
                     type="text" 
                     class="form-control"  
@@ -115,7 +170,7 @@
                 <div class="invalid-feedback" *ngIf="city.errors && f.submitted">
                     <div *ngIf="city.errors['required']">Veuillez entrer une ville</div>
                 </div>
-                <label class="mb-2 mt-2 form-label" for="inputEmail">Adresse</label>
+                <label class="mb-1 mt-3 form-label" for="inputEmail">Adresse</label>
                 <input 
                     type="text" 
                     class="form-control" 
@@ -136,7 +191,7 @@
                         Cette adresse n'est pas valide.
                     </div>
                 </div>
-                <label class="mb-2 mt-2 form-label" for="inputEmail">Complément d'adresse</label>
+                <label class="mb-1 mt-3 form-label" for="inputEmail">Complément d'adresse</label>
                 <input 
                     type="text" 
                     class="form-control"  
@@ -148,26 +203,24 @@
                 >
                 <div class="invalid-feedback" *ngIf="complement_adress.errors && f.submitted">
                 </div>
-                <label class="mb-2 mt-2 form-label" for="inputEmail">Numéro de téléphone</label>
-                <input 
-                    type="text" 
-                    class="form-control" 
-                    name="phone_numbers" 
-                    [(ngModel)]="form.phone_numbers" 
-                    minlength="10"
-                    maxlength="10"
-                    #phone_numbers="ngModel" 
-                    [ngClass]="{ 'is-invalid': f.submitted && phone_numbers.errors }"
-                    placeholder="Téléphone"
-                >
-                <div class="invalid-feedback" *ngIf="phone_numbers.errors && f.submitted">
-                    <div *ngIf="phone_numbers.errors['minlength']">
-                        Ce numéro n'est pas valide.
-                    </div>
-                    <div *ngIf="phone_numbers.errors['maxlength']">
-                        Ce numéro n'est pas valide.
+
+                <h5 class="mt-4 mb-3 text-center">Photo</h5>
+                
+                <div class="col-12">
+                        <input class="form-control" type="file" accept="image/*" (change)="selectFile($event)" />
+                </div>
+             
+                <div class="mt-3">
+                    <img [src]="preview" class="preview w-100">
+                </div>
+                
+                <div *ngIf="currentFile && progress" class="progress my-3">
+                    <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ progress }}" aria-valuemin="0"
+                        aria-valuemax="100" [ngStyle]="{ width: progress + '%' }">
+                        {{ progress }}%
                     </div>
                 </div>
+               
                 <div class="text-center">
                     <button id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-3 btn btn-primary">Modifier</button>
                 </div>
@@ -182,9 +235,5 @@
           </div>
   
         </div>
-  
-      </div>
-      
-    </form>
     
   </div>

@@ -1,4 +1,4 @@
-
+<!-- 
 
 <nav class="navbar sticky-top" style="height: 50px; background-color: #000A6A;">
     <div class="container-fluid">
@@ -47,9 +47,9 @@
     </div>
 </nav>
 
-<div class="row bg-light pb-2 pt-2" style="padding-top: 50px;">
-    <span class="text-center" (click)="goToNewProject()" style="cursor: pointer;"> + Creation d'une nouvelle fiche</span>
-</div>
+<div class="row bg-light">
+    <span class="text-center pb-2" (click)="goToNewProject()" style="cursor: pointer; background-color: #000A6A; color: white;"> + Creation d'une nouvelle fiche</span>
+</div> -->
 
 <div class="container-fluid" style="height: calc(100% - 147px);">
     <div class="card border border-0 mb-5" *ngIf="project">
@@ -79,12 +79,16 @@
             </ul>
         </div>
         <div class="row">
-            <p class="text-start ms-3 mt-3 col-5"><b>Type :</b> {{project.type}}</p>
-            <p class="text-end mt-3 col-6 text-muted">{{project.updated_at | date}}</p>
+            <p class="text-start ms-3 mt-3 col-6"><b>Type :</b> {{project.type}}</p>
+            <p class="text-end mt-3 col-5 text-muted">{{project.updated_at | date}}</p>
         </div>
-        <img src="assets/images/50819.jpg" class="card-img-top" alt="...">
+        <img *ngIf="image" [src]="image" class="card-img-top">
+        <img *ngIf="!image" src="assets/images/50819.jpg" class="card-img-top" alt="...">
         <div class="card-body mb-5">
-            <h5 class="card-title text-center">{{project.city}}</h5>
+            <h5 class="card-title text-center">{{project.name}}</h5>
+            <p class="card-title text-center">{{project.phone_numbers}}</p>
+            <p class="card-title text-center">{{project.email}}</p>
+            <p class="card-title text-center">{{project.city}}</p>
             <p class="card-text text-center">{{project.adress}}</p>
             <p class="card-text text-center">{{project.complement_adress}}</p>
             <p class="card-text text-center">{{project.phone_numbers}}</p>

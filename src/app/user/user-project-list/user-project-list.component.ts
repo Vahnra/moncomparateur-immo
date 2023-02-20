@@ -80,6 +80,26 @@ export class UserProjectListComponent implements OnInit {
     })
   }
 
+  onFilterChangeType(event: any) {
+    this.projectService.getUserProjectsFiltered(event.target.value).subscribe({
+      next: data => {
+       
+        this.dataSource = new MatTableDataSource(data);   
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort; 
+        
+      }, 
+      error: err => {
+
+      },
+      complete: () => {
+        
+           
+      }
+    })
+    
+  }
+
   goToDetails(id: any) {
     this.router.navigate([`/user/project/${id}`])
   }

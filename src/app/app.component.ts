@@ -132,5 +132,9 @@ export class AppComponent {
   goBack(): void {
     this.location.back()
   }
+
+  goToNewProject() {
+    this.router.navigate([`/user/${this.userId}/project`])
+  }
 }
 

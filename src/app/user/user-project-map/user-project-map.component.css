@@ -9,3 +9,69 @@
 .btn:hover {
     color: white;
 }
+
+#dpeButton {
+    position: absolute;
+    top: 160px;
+    right: 0px;
+    padding: 10px;
+    z-index: 400;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#projectButton {
+    position: absolute;
+    bottom: 180px;
+    right: 8px;
+    padding: 0px;
+    z-index: 400;
+}
+
+#menuIcon {
+    position: absolute;
+    top: 9px;
+    right: 13px;
+    padding: 0px;
+    z-index: 400;
+    cursor: pointer;
+}
+
+#backButton {
+    position: absolute;
+    top: 9px;
+    left: 13px;
+    padding: 0px;
+    z-index: 400;
+    cursor: pointer;
+}
+
+.big {
+    height: 35px;
+    width: 35px;
+}
+
+.btn {
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: white;
+    color: #000A6A;
+}
+
+#newProjectButton {
+    position: absolute;
+    bottom: 20px;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 10px;
+    cursor: pointer;
+    background-color: #ffffff;
+    border-radius: 50px;
+    z-index: 1044;
+    border: 1px solid #000A6A;
+    width: 62px;
+}

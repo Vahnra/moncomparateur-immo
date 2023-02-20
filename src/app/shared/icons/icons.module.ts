@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeatherModule } from 'angular-feather';
-import { Home, Menu, Calendar, FileText, ArrowLeft, LogOut, User, Folder, LogIn, UserPlus, Map, MessageSquare, Users, Clipboard, Sliders, Settings, TrendingUp, Mail, Lock, Unlock, Activity } from 'angular-feather/icons';
+import { Home, Menu, Calendar, FileText, ArrowLeft, LogOut, User, Folder, LogIn, UserPlus, Map, MessageSquare, Users, Clipboard, Sliders, Settings, TrendingUp, Mail, Lock, Unlock, Activity, Layers, MoreHorizontal, MoreVertical, Plus } from 'angular-feather/icons';
 
 const icons = {
   Calendar,
@@ -24,7 +24,11 @@ const icons = {
   Mail,
   Lock,
   Unlock,
-  Activity
+  Activity,
+  Layers,
+  MoreHorizontal,
+  MoreVertical,
+  Plus
 };
 
 @NgModule({

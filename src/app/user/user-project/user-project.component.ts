@@ -1,7 +1,11 @@
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { FileUploadService } from 'src/app/_services/file-upload.service';
 import { ProjectService } from 'src/app/_services/project.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { ToastService } from 'src/app/_services/toast.service';
 import { UserService } from 'src/app/_services/user.service';
 
 @Component({
@@ -22,7 +26,8 @@ export class UserProjectComponent implements OnInit {
     calendarTitle: null,
     calendarStart: null,
     contact: null,
-    name: null
+    name: null,
+    typeFiche: null
   }
   
   isSuccessful = false;
@@ -32,7 +37,24 @@ export class UserProjectComponent implements OnInit {
   userId: number;
   isLoggedIn: boolean = false;
 
-  constructor(private projectServices: ProjectService, private router: Router, private storageService: StorageService, private userService: UserService) {}
+  // image upload properties
+  selectedFiles?: FileList;
+  currentFile?: File;
+  progress = 0;
+  message = '';
+  preview = '';
+  res = '';
+
+  imageInfos?: Observable<any>;
+  
+  constructor(
+    private projectServices: ProjectService, 
+    private router: Router, 
+    private storageService: StorageService, 
+    private userService: UserService, 
+    private uploadService: FileUploadService,
+    private toastService: ToastService
+    ) {}
 
   ngOnInit(): void {
     if (this.storageService.isLoggedIn == true) {
@@ -46,23 +68,91 @@ export class UserProjectComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const {type, city, adress, complementAdress, comments, phone_numbers, email, calendarTitle, contact, name} = this.form;
+    const {type, city, adress, complementAdress, comments, phone_numbers, email, calendarTitle, contact, name, typeFiche} = this.form;
     const calendarStart = new Date(this.form.calendarStart)
     
-    this.projectServices.addProject(type, city, adress, complementAdress, comments, phone_numbers, email, calendarTitle, calendarStart, contact, name)
+    
+    this.projectServices.addProject(type, city, adress, complementAdress, comments, phone_numbers, email, calendarTitle, calendarStart, contact, name, typeFiche)
       .subscribe({
         next: data => {
           console.log(data);
-          
+
+          // Image upload after creation and getting the id
+          if (this.selectedFiles) {
+            const file: File | null = this.selectedFiles.item(0);
+        
+            if (file) {
+              this.currentFile = file;
+              this.uploadService.upload(this.currentFile, data.id).subscribe({
+                next: (event: any) => {
+                  // if (event.type === HttpEventType.UploadProgress) {
+                  //   this.progress = Math.round((100 * event.loaded) / event.total);
+                  // } else if (event instanceof HttpResponse) {
+                  //   this.message = event.body.message;
+                  //   this.imageInfos = this.uploadService.getFiles();
+                  // }
+                  // console.log(event);
+                  // this.res = event.body.file
+                },
+                error: (err: any) => {
+                  console.log(err);
+                  this.progress = 0;
+        
+                  if (err.error && err.error.message) {
+                    this.message = err.error.message;
+                  } else {
+                    this.message = 'Could not upload the image!';
+                  }
+        
+                  this.currentFile = undefined;
+                },
+                complete: () => {
+
+                }
+              });
+            }
+        
+            this.selectedFiles = undefined;
+          } // end of image upload
+
         },
         error: error => {
           console.log(error);
           
+        },
+        complete: () => {
+          this.toastService.show('La fiche a bien été créé.', `Vous pouvez la retrouver sur la carte ou la liste.`, {  delay: 3000 })   
         }
       })
 
   }
 
+  // Image upload function
+  selectFile(event: any): void {
+    this.message = '';
+    this.preview = '';
+    this.progress = 0;
+    this.selectedFiles = event.target.files;
+  
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+  
+      if (file) {
+        this.preview = '';
+        this.currentFile = file;
+  
+        const reader = new FileReader();
+  
+        reader.onload = (e: any) => {
+          this.preview = e.target.result;
+        };
+  
+        reader.readAsDataURL(this.currentFile);
+      }
+    }
+  }
+
+  
   goToNewProject() {
     this.router.navigate([`/user/${this.userId}/project`])
   }

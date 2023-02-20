@@ -1,4 +1,4 @@
-<nav class="navbar" style="height: 50px; background-color: #000A6A;">
+<!-- <nav class="navbar sticky-top" style="height: 50px; background-color: #000A6A;">
      <div class="container-fluid">
           <button class="navbar-toggler mx-auto btn" type="button" aria-controls="offcanvasNavbar">Listes
                <i class="fa-solid fa-bars"></i>
@@ -10,7 +10,7 @@
                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">Filtres
                <i class="fa-solid fa-arrow-down-wide-short"></i>
           </button>
-          <div class="offcanvas offcanvas-end btn" tabindex="-1" id="offcanvasNavbar"
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
                aria-labelledby="offcanvasNavbarLabel">
                <div class="offcanvas-header">
                     <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
@@ -20,20 +20,18 @@
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                          <li class="nav-item">
                               <div class="form-floating">
-                                   <select class="form-select" id="floatingSelect"
-                                        aria-label="Floating label select example">
+                                   <select class="form-select" id="floatingSelect" aria-label="Floating label select example" (change)="onFilterChangeType($event)">
                                         <option selected>Choisissez</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        <option data-bs-dismiss="offcanvas" value="maison">Maison</option>
+                                        <option data-bs-dismiss="offcanvas" value="appartement">Appartement</option>
+                                        <option data-bs-dismiss="offcanvas" value="immeuble">Immeuble</option>
                                    </select>
                                    <label for="floatingSelect">Type de bien</label>
                               </div>
                          </li>
                          <li class="nav-item mt-3">
                               <div class="form-floating">
-                                   <select class="form-select" id="floatingSelect"
-                                        aria-label="Floating label select example">
+                                   <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                                         <option selected>Choisissez</option>
                                         <option value="1">One</option>
                                         <option value="2">Two</option>
@@ -48,10 +46,10 @@
      </div>
 </nav>
 
-<!-- <h3 class="text-center mt-3 mb-3">Liste de vos fiches</h3> -->
-<div class="row bg-light pb-2 pt-2">
-     <span class="text-center" (click)="goToNewProject()" style="cursor: pointer;"> + Creation d'une nouvelle fiche</span>
-</div>
+<div class="row bg-light">
+     <span class="text-center pb-2" (click)="goToNewProject()" style="cursor: pointer; background-color: #000A6A; color: white;"> + Creation d'une nouvelle fiche</span>
+</div> -->
+
 <div class="container mt-3" style="margin-bottom: 75px;">
      <mat-form-field style="width: 100%;">
           <mat-label>Rechercher</mat-label>
