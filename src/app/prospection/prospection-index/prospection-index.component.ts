@@ -25,7 +25,7 @@ export class ProspectionIndexComponent implements OnInit {
           if (user) {
             this.user = user;
             this.isLoggedIn = true;
-            this.roles = user.status;
+            this.roles = user.status;        
           }
         }, error: err => {
 
