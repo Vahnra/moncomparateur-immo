@@ -88,6 +88,7 @@
                     name="birthdayDate" 
                     [(ngModel)]="form.birthdayDate" 
                     #birthdayDate="ngModel" 
+                    required
                     [ngClass]="{ 'is-invalid': f.submitted && birthdayDate.errors }"
                     placeholder=""
                 >
