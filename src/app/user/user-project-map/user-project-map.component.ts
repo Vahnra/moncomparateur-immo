@@ -269,7 +269,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
             icon: icon({
               ...Icon.Default.prototype.options,
               iconUrl: 'assets/icons/prospecte.png',
-              iconRetinaUrl: 'assets/prospecte.png',
+              iconRetinaUrl: 'assets/icons/prospecte.png',
               shadowUrl: 'assets/marker-shadow.png',
               iconSize: [115, 38],
             })
@@ -283,7 +283,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
             icon: icon({
               ...Icon.Default.prototype.options,
               iconUrl: 'assets/icons/opportunite.png',
-              iconRetinaUrl: 'assets/opportunite.png',
+              iconRetinaUrl: 'assets/icons/opportunite.png',
               shadowUrl: 'assets/marker-shadow.png',
               iconSize: [115, 38],
             })
@@ -297,7 +297,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
             icon: icon({
               ...Icon.Default.prototype.options,
               iconUrl: 'assets/icons/absent.png',
-              iconRetinaUrl: 'assets/absent.png',
+              iconRetinaUrl: 'assets/icons/absent.png',
               shadowUrl: 'assets/marker-shadow.png',
               iconSize: [115, 38],
             })
@@ -311,7 +311,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
             icon: icon({
               ...Icon.Default.prototype.options,
               iconUrl: 'assets/icons/a-relancer.png',
-              iconRetinaUrl: 'assets/a-relancer.png',
+              iconRetinaUrl: 'assets/icons/a-relancer.png',
               shadowUrl: 'assets/marker-shadow.png',
               iconSize: [115, 38],
             })
@@ -325,7 +325,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
             icon: icon({
               ...Icon.Default.prototype.options,
               iconUrl: 'assets/icons/estimation.png',
-              iconRetinaUrl: 'assets/estimation.png',
+              iconRetinaUrl: 'assets/icons/estimation.png',
               shadowUrl: 'assets/marker-shadow.png',
               iconSize: [115, 38],
             })
@@ -339,7 +339,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
             icon: icon({
               ...Icon.Default.prototype.options,
               iconUrl: 'assets/icons/en-vente.png',
-              iconRetinaUrl: 'assets/en-vente.png',
+              iconRetinaUrl: 'assets/icons/en-vente.png',
               shadowUrl: 'assets/marker-shadow.png',
               iconSize: [125, 38],
             })
