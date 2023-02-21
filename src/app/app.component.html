@@ -133,6 +133,14 @@
                             Liste Fiche
                         </div>
                     </div> -->
+                    <div class="col-4 mx-auto" (click)="goToProjectList()" style="cursor: pointer;"  data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
+                            <i-feather name="file-text"></i-feather>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh; ">
+                            Liste Prospection
+                        </div>
+                    </div>  
                     <div class="col-4 mx-auto" (click)="goToProjectMap()" style="cursor: pointer;"  data-bs-dismiss="modal">
                         <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
                             <i-feather name="map"></i-feather>
@@ -140,7 +148,7 @@
                         <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh; ">
                             Carte Prospection
                         </div>
-                    </div>    
+                    </div>
                     <div class="col-4 mx-auto" (click)="goToDvf()" style="cursor: pointer;"  data-bs-dismiss="modal">
                         <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
                             <i-feather name="map"></i-feather>
@@ -149,25 +157,18 @@
                             Carte DVF
                         </div>
                     </div>   
-                    <div class="col-4 mx-auto" (click)="goToDpe()" style="cursor: pointer;"  data-bs-dismiss="modal">
+                    <!-- <div class="col-4 mx-auto" (click)="goToDpe()" style="cursor: pointer;"  data-bs-dismiss="modal">
                         <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
                             <i-feather name="map"></i-feather>
                         </div>
                         <div class="d-flex align-items-start justify-content-center">
                             Carte DPE
                         </div>
-                    </div>
+                    </div> -->
                            
                 </div>
                 <div class="row mt-3">
-                    <div class="col-4 mx-auto" (click)="goToProjectList()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i-feather name="file-text"></i-feather>
-                        </div>
-                        <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh; ">
-                            Liste Prospection
-                        </div>
-                    </div>   
+                     
                        
                     <div class="col-4 mx-auto" (click)="goToChatGPT()" style="cursor: pointer;"  data-bs-dismiss="modal">
                         <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">

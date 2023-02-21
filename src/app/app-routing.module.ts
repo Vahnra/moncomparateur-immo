@@ -31,7 +31,7 @@ import { UserReceiptComponent } from './user/user-receipt/user-receipt.component
 import { UserSettingsComponent } from './user/user-settings/user-settings.component';
 
 const routes: Routes = [
-  { path: '', component: MapsViewComponent },
+  { path: '', component: UserProjectMapComponent },
   { path: 'dvf', component: DvfMapsComponent },
   { path: 'sitadel', component: SitadelMapsComponent },
   { path: 'register', component: RegisterComponent },

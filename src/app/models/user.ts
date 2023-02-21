@@ -6,5 +6,6 @@ export interface User {
     postal_code: string,
     birthdayDate: string,
     company: string,
-    phoneNumbers: number
+    phoneNumbers: number,
+    subscription_options: []
 }

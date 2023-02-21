@@ -119,18 +119,13 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     private location: Location,
     private toastService: ToastService) 
   {
-    this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
-      data.forEach((element:any) => {
-        this.addMarker(element);
-     
-      });
-      // console.log(this.markerData);
-    })
+    
 
   }
 
   ngOnInit() {
-    if (this.storageService.isLoggedIn == true) {
+
+    if (this.storageService.isLoggedIn) {
       this.userService.getCurrentUser().subscribe({
         next: user => {
           if (user) {
@@ -139,25 +134,86 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
             this.roles = user.status;
             this.user = user;
 
-            this.mapService.requestGeocodingDepartment(`${user.postal_code}, France`).subscribe({
-              next: data => {
-                let info = JSON.parse(JSON.stringify(data))
-                this.userLat1 = info["data"][0]["bbox_module"][0];
-                this.userLng1 = info["data"][0]["bbox_module"][1];
-                this.userLat2 = info["data"][0]["bbox_module"][2];
-                this.userLng2 = info["data"][0]["bbox_module"][3];
-                this.mapService.refreshDpe(this.userLat1, this.userLng1, this.userLat2, this.userLng2,).subscribe(data => {
-      
-                  this.test = JSON.parse(JSON.stringify(data))
-      
-                  this.test.results.forEach((item) => {
-      
-                    this.addMarkerDPE(item);
-                  }) //End of foreach
-      
-                }) // End of map service call
+            this.apicallSub = this.projectService.getUserProjects().subscribe({
+              next: data => {  
+                data.forEach((element:any) => {
+                  this.addMarker(element);
+                });
+                // console.log(this.markerData);
               }
             })
+
+            if (this.roles == "paid") {
+              this.mapService.requestGeocodingDepartment(`${user.postal_code}, France`).subscribe({
+                next: data => {
+                  let info = JSON.parse(JSON.stringify(data))
+                  this.userLat1 = info["data"][0]["bbox_module"][0];
+                  this.userLng1 = info["data"][0]["bbox_module"][1];
+                  this.userLat2 = info["data"][0]["bbox_module"][2];
+                  this.userLng2 = info["data"][0]["bbox_module"][3];
+                  this.mapService.refreshDpe(this.userLat1, this.userLng1, this.userLat2, this.userLng2,).subscribe(data => {
+        
+                    this.test = JSON.parse(JSON.stringify(data))
+        
+                    this.test.results.forEach((item) => {
+        
+                      this.addMarkerDPE(item);
+                    }) //End of foreach
+        
+                  }) // End of map service call
+                }
+              }) // End of geocoding call         
+  
+              if (user.subscription_options != null) {
+                
+                user.subscription_options.forEach((element:any) => {
+       
+                  this.mapService.requestGeocodingDepartment(`${element}, France`).subscribe({
+                    next: data => {
+                      
+                      let info = JSON.parse(JSON.stringify(data))
+                      this.userLat1 = info["data"][0]["bbox_module"][0];
+                      this.userLng1 = info["data"][0]["bbox_module"][1];
+                      this.userLat2 = info["data"][0]["bbox_module"][2];
+                      this.userLng2 = info["data"][0]["bbox_module"][3];
+                      this.mapService.refreshDpe(this.userLat1, this.userLng1, this.userLat2, this.userLng2,).subscribe(data => {
+            
+                        this.test = JSON.parse(JSON.stringify(data))
+            
+                        this.test.results.forEach((item) => {
+            
+                          this.addMarkerDPE(item);
+                        }) //End of foreach
+            
+                      }) // End of map service call
+                    }
+                  }) // End of geocoding call
+                });
+              }
+
+            } else {
+
+              this.mapService.requestGeocodingDepartment(`${user.postal_code}, France`).subscribe({
+                next: data => {
+                  let info = JSON.parse(JSON.stringify(data))
+                  this.userLat1 = info["data"][0]["bbox_module"][0];
+                  this.userLng1 = info["data"][0]["bbox_module"][1];
+                  this.userLat2 = info["data"][0]["bbox_module"][2];
+                  this.userLng2 = info["data"][0]["bbox_module"][3];
+                  this.mapService.refreshDpe(this.userLat1, this.userLng1, this.userLat2, this.userLng2,).subscribe(data => {
+        
+                    this.test = JSON.parse(JSON.stringify(data))
+        
+                    this.test.results.forEach((item) => {
+        
+                      this.addFreeMarkerDPE(item);
+                    }) //End of foreach
+        
+                  }) // End of map service call
+                }
+              }) // End of geocoding call   
+            }
+            
           }
         }, error: err => {
 
@@ -165,9 +221,8 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
         }
       });
-
       
-    }
+    } 
 
     // this.apicallSub = this.projectService.getUserProjects().subscribe(data => {  
     //   data.forEach((element:any) => {
@@ -360,7 +415,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
     if (this.isLocationFreeDPE(nameArr) == true) {
 
-      if (item['Date_établissement_DPE'] > '2022-11-01') {
+      if (item['Date_établissement_DPE'] > '2022-12-01') {
 
         this.lookup.push([nameArr[0], nameArr[1]]);
         let customPopup = `
@@ -378,6 +433,51 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
                       <span class="col-6 text-end"><strong>Surface habitable</strong></span><span class="col-6" id="area-size">${item['Surface_habitable_logement']}</span> 
                       <div class="col-6 text-center mx-auto mt-2">
                         <button type="button" class="btn favorite-button">Créer une fiche</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+
+        this.markerClusterDataDPE.push(Leaflet.marker([+nameArr[0], +nameArr[1]], {
+          icon: icon({
+            ...Icon.Default.prototype.options,
+            iconUrl: 'assets/marker-icon.png',
+            iconRetinaUrl: 'assets/marker-icon-2x.png',
+            shadowUrl: 'assets/marker-shadow.png'
+          })
+        }).on('click', () => {
+          this.zone.run(() => this.onMarkerClick(item))
+        }).bindPopup(customPopup, this.customOptions).openPopup());
+      
+      }
+    }
+  }
+
+  addFreeMarkerDPE(item: any) {
+    let names: string = item['_geopoint'];
+    let nameArr = names.split(',');
+
+    if (this.isLocationFreeDPE(nameArr) == true) {
+
+      if (item['Date_établissement_DPE'] > '2022-12-01') {
+
+        this.lookup.push([nameArr[0], nameArr[1]]);
+        let customPopup = `
+              <div class="row" style="margin-bottom: 0;>
+                <div class="col-12" style="margin-bottom: 0;">
+                  <div class="card border-0" style="margin-bottom: 0;">
+                    <div class="row" >
+                      <span class="col-6 text-end"><strong>N°DPE</strong></span><span class="col-6" id="dpe-number">${item['N°DPE']}</span>
+                      <span class="col-6 text-end"><strong>Date DPE</strong></span><span class="col-6" id="dpe-date">${item['Date_établissement_DPE']}</span>
+                      <span class="col-6 text-end"><strong>Etiquette DPE</strong></span><span class="col-6" id="dpe-class">${item['Etiquette_DPE']}</span>
+                      <span class="col-6 text-end"><strong>Adresse</strong></span><span class="col-6" id="adress">Disponible aux abonnés</span>
+                      <!-- <span class="col-6 text-end">Complément d'adresse</span><span class="col-6">${item['Complément_d\'adresse_logement']}</span> -->
+                      <span class="col-6 text-end"><strong>Type de logement</strong></span><span class="col-6" id="building-type">${item['Type_bâtiment']}</span>
+                      <!-- <span class="col-6 text-end">Année de construction</span><span class="col-6">${item['Année_construction']}</span> -->
+                      <span class="col-6 text-end"><strong>Surface habitable</strong></span><span class="col-6" id="area-size">${item['Surface_habitable_logement']}</span> 
+                      <div class="col-6 text-center mx-auto mt-2">
+                        <button disabled type="button" class="btn">Créer une fiche</button>
                       </div>
                     </div>
                   </div>
