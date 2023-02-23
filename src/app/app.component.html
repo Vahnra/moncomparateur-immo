@@ -1,326 +1,277 @@
-<nav class="navbar navbar-expand-lg bg-white navbar-light pb-0 pt-0 fixed-top">
+<nav class="navbar navbar-expand-lg bg-white navbar-light pb-0 pt-0 fixed-top" style="height: 50px;">
     <div class="container-fluid">
-        <a class="navbar-brand" (click)="goToHome()" style="cursor: pointer;"><img src="assets/icons/logo.webp" alt="" style="height: 30px;"></a>
-        <div *ngIf="isLoggedIn == false" (click)="goToLogIn()" class="col-2 ms-auto text-end" style="cursor: pointer;">
-            <a class="nav-link" ><i-feather name="log-in"></i-feather></a>
-         
+        <a class="navbar-brand" (click)="goToHome()" style="cursor: pointer;"><img src="assets/icons/logo.webp" alt=""
+                style="height: 30px;"></a>
+        <div *ngIf="!isLoggedIn" (click)="goToLogIn()" class="col-2 ms-auto text-center"
+            style="cursor: pointer;">
+            <a class="nav-link"><i-feather name="log-in"></i-feather></a>
+            <div class="text-center" style="font-size: 60%;">Connexion</div>
         </div>
-        <div *ngIf="isLoggedIn == false" (click)="goToRegister()" class="col-2 text-end" style="cursor: pointer;">
-            <a class="nav-link" ><i-feather name="user-plus"></i-feather></a>
-    
+        <div *ngIf="!isLoggedIn" (click)="goToRegister()" class="col-2 text-center" style="cursor: pointer;">
+            <a class="nav-link"><i-feather name="user-plus"></i-feather></a>
+            <div class="text-center" style="font-size: 60%;">Inscription</div>
         </div>
-        <div *ngIf="isLoggedIn" class="col-2 ms-auto text-end" style="cursor: pointer;" (click)="goToUserDashboard()">
+        <div *ngIf="isLoggedIn" class="col-2 ms-auto text-center" style="cursor: pointer;"
+            (click)="goToUserDashboard()">
             <a class="nav-link"><i-feather name="user"></i-feather></a>
-            <!-- <span>Compte</span> -->
+            <div class="text-center" style="font-size: 60%;">Profile</div>
         </div>
-        <div *ngIf="isLoggedIn" class="col-2 text-end" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <div *ngIf="isLoggedIn" class="col-2 text-center" style="cursor: pointer;"
+            (click)="goToProjectMap()">
+            <a class="nav-link"><i-feather name="map"></i-feather></a>
+            <div class="text-center" style="font-size: 60%;">Carte</div>
+        </div>
+        <div *ngIf="isLoggedIn" class="col-2 text-center" style="cursor: pointer;" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
             <a class="nav-link"><i-feather name="menu"></i-feather></a>
-            <!-- <span>Compte</span> -->
+            <div class="text-center" style="font-size: 60%;">Menu</div>
         </div>
     </div>
-    
+
 </nav>
 
-  
+
 <router-outlet></router-outlet>
 
-<!-- <nav class="navbar fixed-bottom border-2 border-top border-white pb-5" style="height: 65px; background-color: #000A6A; color: white;">
-    <div class="container-fluid">
-
-        <div class="row col-12 mx-auto">
-          <div class="col-2 mx-auto text-center" (click)="goBack()" style="cursor: pointer;">          
-                <a class="nav-link active" aria-current="page"><i-feather name="arrow-left"></i-feather></a>
-         
-            </div>    
-            <div class="col-2 mx-auto text-center" (click)="goToHome()" style="cursor: pointer;">          
-                <a class="nav-link active" aria-current="page"><i-feather name="home"></i-feather></a>
-
+<!-- Modal logout confirmation -->
+<div class="modal fade" id="logOutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <div *ngIf="isLoggedIn" (click)="goToProject()" class="col-2 mx-auto text-center" style="cursor: pointer;">
-                <i-feather name="map"></i-feather>
-          
+            <div class="modal-body">
+                Etes vous sur de vouloir vous déconnecter ?
             </div>
-
-            <div *ngIf="isLoggedIn" class="col-2 mx-auto text-center" style="cursor: pointer;">
-    
-            </div>
-
-            <div *ngIf="isLoggedIn" (click)="goToProjectList()" class="col-2 mx-auto text-center" style="cursor: pointer;">
-                <a class="nav-link"><i-feather name="file-text"></i-feather></a>
-       
-            </div>
-            
-            
-            
-            <div *ngIf="isLoggedIn == false" (click)="goToLogIn()" class="col-2 mx-auto text-center" style="cursor: pointer;">
-                <a class="nav-link" ><i-feather name="log-in"></i-feather></a>
-             
-            </div>
-            <div *ngIf="isLoggedIn == false" (click)="goToRegister()" class="col-2 mx-auto text-center" style="cursor: pointer;">
-                <a class="nav-link" ><i-feather name="user-plus"></i-feather></a>
-        
-            </div>
-        </div>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="d-flex mt-3" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
-    
-</nav> 
+</div>
 
-<!-- <div *ngIf="isLoggedIn" id="newProjectButton" class="text-dark" (click)="goToNewProject()" >
-    + Ajouter une fiche
-</div> -->
-
-<!-- Modal -->
+<!-- Modal menu -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen-md-down">
-        <div class="modal-content nav-modal" >
+        <div class="modal-content nav-modal">
             <!-- <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> -->
             <div class="modal-body pt-0 ps-0 pe-0">
-     
-                    <div class="card-header mt-0 ps-1 pe-1 text-dark bg-light" *ngIf="user" style="height: 28vh;">
-                        <div class="row border-1 border-bottom" style="height: 100px; margin: 0;">
-                            <div class="col-3 ">
-                                <div class="d-flex align-items-center justify-content-center" style="height: 90px;">
-                                    <img src="assets/images/user-profile.png" alt="" style="width: 100%;">
-                                </div>
-                            </div>
-                            <div class="col-7" style="font-size: 70%;">
-                                <h4 class="mt-2">{{ user.username }}</h4>
-                                <div *ngIf="roles == 'free'">
-                                    <i-feather class="extra-small" name="lock"></i-feather> Utilisateur gratuit
-                                </div>
-                                <div *ngIf="roles == 'paid'">
-                                    <i-feather class="extra-small" name="unlock"></i-feather> Utilisateur payant
-                                </div>
-                                <div>
-                                    <i-feather class="extra-small" name="mail"></i-feather> {{ user.email }}
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="d-flex align-items-end justify-content-center" style="height: 45px; cursor: pointer;" (click)="logOut()">
-                                    <i-feather name="log-out"></i-feather>
-                                </div>
+
+                <div class="card-header mt-0 text-dark bg-light" style="height: 220px;">
+                    <div *ngIf="user" class="row border-1 border-bottom" style="height: 100px; margin: 0; background-color: #000A6A; color: lightgrey;">
+                        <div class="col-3 ">
+                            <div class="d-flex align-items-center justify-content-center" style="height: 90px;">
+                                <img class="border border-1 border-white" src="assets/images/user-profile.png" alt="" style="width: 100%; border-radius: 100%;">
                             </div>
                         </div>
-                        <div class="row" style="margin: 0;">
-
-                            <div class="col-3 mt-2" >
-                                <div class="card mx-auto" style="border-radius: 15px;">
-                                    <div class="card-body p-1" style="font-size: 60%;">                   
-                                        <div class="text-muted">Opportunité</div>
-                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
-                                    </div>
-                                </div>
+                        <div class="col-7" style="font-size: 70%;">
+                            <h4 class="mt-2">{{ user.username }}</h4>
+                            <div *ngIf="roles == 'free'">
+                                <i-feather class="extra-small" name="lock"></i-feather> Utilisateur gratuit
                             </div>
-
-                            <div class="col-3 mt-2" >
-                                <div class="card mx-auto" style="border-radius: 15px;">
-                                    <div class="card-body p-1" style="font-size: 60%;">                   
-                                        <div class="text-muted">Prospecté</div>
-                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
-                                    </div>
-                                </div>
+                            <div *ngIf="roles == 'paid'">
+                                <i-feather class="extra-small" name="unlock"></i-feather> Utilisateur payant
                             </div>
-
-                            <div class="col-3 mt-2" >
-                                <div class="card mx-auto" style="border-radius: 15px;">
-                                    <div class="card-body p-1" style="font-size: 60%;">                   
-                                        <div class="text-muted">Absent</div>
-                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
-                                    </div>
-                                </div>
+                            <div>
+                                <i-feather class="extra-small" name="mail"></i-feather> {{ user.email }}
                             </div>
-               
-
-                            <div class="col-3 mt-2" >
-                                <div class="card mx-auto" style="border-radius: 15px;">
-                                    <div class="card-body p-1" style="font-size: 60%;">                   
-                                        <div class="text-muted">A relancer</div>
-                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-3 mt-2" >
-                                <div class="card mx-auto" style="border-radius: 15px;">
-                                    <div class="card-body p-1" style="font-size: 60%;">                   
-                                        <div class="text-muted">Estimation</div>
-                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-3 mt-2" >
-                                <div class="card mx-auto" style="border-radius: 15px;">
-                                    <div class="card-body p-1" style="font-size: 60%;">                   
-                                        <div class="text-muted">En vente</div>
-                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-3 mt-2" >
-                                <div class="card mx-auto" style="border-radius: 15px;">
-                                    <div class="card-body p-1" style="font-size: 60%;">                   
-                                        <div class="text-muted">Pas optunité</div>
-                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-3 mt-2" >
-                                <div class="card mx-auto" style="border-radius: 15px;">
-                                    <div class="card-body p-1" style="font-size: 60%;">                   
-                                        <div class="text-muted">Archivé</div>
-                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
-                                    </div>
-                                </div>
-                            </div>
-
-
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="d-flex align-items-end justify-content-center border-0" style=" color: lightgrey; height: 45px; cursor: pointer; background-color: #000A6A" data-bs-toggle="modal" data-bs-target="#logOutModal">
+                                <i-feather name="log-out"></i-feather>
+                            </button>
                         </div>
                     </div>
-                    
+                    <div *ngIf="!user" class="row border-1 border-bottom" style="height: 100px; margin: 0;">
+                        <div class="col-3 ">
+                            <div class="d-flex align-items-center justify-content-center" style="height: 90px;">
+                                <img src="assets/images/user-profile.png" alt="" style="width: 100%;">
+                            </div>
+                        </div>
+                        <div class="col-7" style="font-size: 70%;">
+                            <h4 class="mt-2">Utilisateur</h4>
+                            <div *ngIf="roles == 'free'">
+                                <i-feather class="extra-small" name="lock"></i-feather> Utilisateur gratuit
+                            </div>
+                            <div *ngIf="roles == 'paid'">
+                                <i-feather class="extra-small" name="unlock"></i-feather> Utilisateur payant
+                            </div>
+                            <div>
+                                <i-feather class="extra-small" name="mail"></i-feather>example@email.com
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="d-flex align-items-end justify-content-center"
+                                style="height: 45px; cursor: pointer;" (click)="logOut()">
+                                <i-feather name="log-out"></i-feather>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin: 0;">
+
+                        <div class="col-3 mt-2 statsBubble">
+                            <div class="card mx-auto" style="border-radius: 15px;">
+                                <div class="card-body p-1" style="font-size: 60%;">
+                                    <div class="text-muted">Opportunité</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 mt-2 statsBubble">
+                            <div class="card mx-auto" style="border-radius: 15px;">
+                                <div class="card-body p-1" style="font-size: 60%;">
+                                    <div class="text-muted">Prospecté</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 mt-2 statsBubble">
+                            <div class="card mx-auto" style="border-radius: 15px;">
+                                <div class="card-body p-1" style="font-size: 60%;">
+                                    <div class="text-muted">Absent</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-3 mt-2 statsBubble">
+                            <div class="card mx-auto" style="border-radius: 15px;">
+                                <div class="card-body p-1" style="font-size: 60%;">
+                                    <div class="text-muted">A relancer</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 mt-2 statsBubble">
+                            <div class="card mx-auto" style="border-radius: 15px;">
+                                <div class="card-body p-1" style="font-size: 60%;">
+                                    <div class="text-muted">Estimation</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 mt-2 statsBubble">
+                            <div class="card mx-auto statsBubble" style="border-radius: 15px;">
+                                <div class="card-body p-1" style="font-size: 60%;">
+                                    <div class="text-muted">En vente</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 mt-2 statsBubble">
+                            <div class="card mx-auto" style="border-radius: 15px;">
+                                <div class="card-body p-1" style="font-size: 60%;">
+                                    <div class="text-muted">Pas optunité</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-3 mt-2 statsBubble">
+                            <div class="card mx-auto" style="border-radius: 15px;">
+                                <div class="card-body p-1" style="font-size: 60%;">
+                                    <div class="text-muted">Archivé</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="row" style="margin: 0;">
-                    <div class="col-4 mx-auto" style="cursor: pointer;"  data-bs-dismiss="modal" (click)="goToUserDashboard()">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh; ">
-                            <i-feather name="user"></i-feather>
+                    <div class="col-4 mx-auto" style="cursor: pointer;" data-bs-dismiss="modal"
+                        (click)="goToUserDashboard()">
+                        <div class="d-flex align-items-end justify-content-center mt-3" style="height: 5vh;">
+                            <div style="background-color: rgb(57, 56, 56); border-radius: 50%; padding: 7px;">
+                                <i-feather name="user" ></i-feather>
+                            </div>
                         </div>
                         <div class="d-flex align-items-start justify-content-center" style="height: 5vh;">
                             Profil
                         </div>
                     </div>
-                    <div class="col-4 mx-auto" style="cursor: pointer;"  data-bs-dismiss="modal" (click)="goToContacts()">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh; ">
-                            <i-feather name="folder"></i-feather>
+                    <div class="col-4 mx-auto" style="cursor: pointer;" data-bs-dismiss="modal"
+                        (click)="goToContacts()">
+                        <div class="d-flex align-items-end justify-content-center mt-3" style="height: 5vh; ">
+                            <div style="background-color: #F18A7E; border-radius: 50%; padding: 7px;">
+                                <i-feather name="folder"></i-feather>
+                            </div>
                         </div>
                         <div class="d-flex align-items-start justify-content-center" style="height: 5vh;">
                             Contacts
                         </div>
                     </div>
-                    <div class="col-4 mx-auto" (click)="goToCalendar()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i-feather name="calendar"></i-feather>
+                    <div class="col-4 mx-auto" (click)="goToCalendar()" style="cursor: pointer;"
+                        data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mt-3" style="height: 5vh;">
+                            <div style="background-color: #3b816c; border-radius: 50%; padding: 7px;">
+                                <i-feather name="calendar"></i-feather>
+                            </div>
                         </div>
                         <div class="d-flex align-items-start justify-content-center" style="height: 5vh;">
                             Agenda
                         </div>
-                    </div>            
+                    </div>
                 </div>
                 <div class="row" style="margin: 0;">
-                    <!-- <div class="col-4 mx-auto" (click)="goToProjectList()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i class="fa-solid fa-bars fa-2xl"></i>
-                        </div>
-                        <div class="d-flex align-items-start justify-content-center" style="height: 5vh; ">
-                            Liste Fiche
-                        </div>
-                    </div> -->
-                    <div class="col-4 mx-auto" (click)="goToProjectList()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i-feather name="file-text"></i-feather>
+                    <div class="col-4 mx-auto" (click)="goToProjectList()" style="cursor: pointer;"
+                        data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mt-3" style="height: 5vh;">
+                            <div style="background-color: #363980; border-radius: 50%; padding: 7px;">
+                                <i-feather name="file-text"></i-feather>
+                            </div>
                         </div>
                         <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh; ">
                             Liste
                         </div>
-                    </div>  
-                    <div class="col-4 mx-auto" (click)="goToProjectMap()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i-feather name="map"></i-feather>
+                    </div>
+                    <div class="col-4 mx-auto" (click)="goToProjectMap()" style="cursor: pointer;"
+                        data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mt-3" style="height: 5vh;">
+                            <div style="background-color: #181a5c; border-radius: 50%; padding: 7px;">
+                                <i-feather name="map"></i-feather>
+                            </div>
                         </div>
                         <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh; ">
                             Carte
                         </div>
                     </div>
-                    <div class="col-4 mx-auto" (click)="goToProspection()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i-feather name="clipboard"></i-feather>
+                    <div class="col-4 mx-auto" (click)="goToProspection()" style="cursor: pointer;"
+                        data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mt-3" style="height: 5vh;">
+                            <div style="background-color: #65AA72; border-radius: 50%; padding: 7px;">
+                                <i-feather name="clipboard"></i-feather>
+                            </div>
                         </div>
                         <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh;">
                             Outils
                         </div>
                     </div>
-                    <!-- <div class="col-4 mx-auto" (click)="goToDvf()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i-feather name="map"></i-feather>
-                        </div>
-                        <div class="d-flex align-items-start justify-content-center">
-                            Carte DVF
-                        </div>
-                    </div>    -->
-                    <!-- <div class="col-4 mx-auto" (click)="goToDpe()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i-feather name="map"></i-feather>
-                        </div>
-                        <div class="d-flex align-items-start justify-content-center">
-                            Carte DPE
-                        </div>
-                    </div> -->
-                           
+
                 </div>
                 <div class="row" style="margin: 0;">
-                     
-                       
-                    <div class="col-4 mx-auto" (click)="goToChatGPT()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i-feather name="message-square"></i-feather>
+
+                    <div class="col-4 mx-auto" (click)="goToChatGPT()" style="cursor: pointer;" data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mt-3" style="height: 5vh;">
+                            <div style="background-color: #4b4b4b; border-radius: 50%; padding: 7px;">
+                                <i-feather name="message-square"></i-feather>
+                            </div>
                         </div>
                         <div class="d-flex align-items-start justify-content-center" style="height: 5vh;">
                             Bot
                         </div>
                     </div>
 
-                    
-                    <!-- <div class="col-4 mx-auto" (click)="goToProspection()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i-feather name="users"></i-feather>
-                        </div>
-                        <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh;">
-                            Agence
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>

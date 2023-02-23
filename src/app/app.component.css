@@ -28,3 +28,17 @@
     transform: translate3d(0, 25vh, 0);
 }
 
+.statsBubble {
+    padding-left: 8px; 
+    padding-right: 8px;
+}
+
+.small {
+    height: 16px;
+    width: 16px;
+}
+
+.extra-small {
+    height: 12px;
+    width: 12px;
+}

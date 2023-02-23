@@ -1,64 +1,13 @@
-<!-- <nav class="navbar fixed-top" style="height: 50px; background-color: #000A6A;">
-    <div class="container-fluid">
-        <button class="navbar-toggler mx-auto btn" type="button" aria-controls="offcanvasNavbar" (click)="goToList()">Listes
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <button class="navbar-toggler mx-auto btn" type="button" (click)="goToMap()">Carte
-            <i class="fa-solid fa-map-location-dot"></i>
-        </button>
-        <button class="navbar-toggler mx-auto btn" type="button" data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">Filtres
-            <i class="fa-solid fa-arrow-down-wide-short"></i>
-        </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <div class="form-floating">
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option selected>Choisissez</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                            <label for="floatingSelect">Type de bien</label>
-                        </div>
-                    </li>
-                    <li class="nav-item mt-3">
-                        <div class="form-floating">
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                                <option selected>Choisissez</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                            <label for="floatingSelect">Ville</label>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
-
-<div class="row bg-light pb-2 pt-2" style="padding-top: 50px;">
-    <span class="text-center" (click)="goToNewProject()" style="cursor: pointer;"> + Creation d'une nouvelle fiche</span>
-</div> -->
-
-<nav class="fixed-top" style="margin-top: 40.15px;">
-    <div class="container-fluid p-0 border-bottom" style="background-color: #4E60F6;">
-         <div class="container-fluid row py-2" style="background-color: #4E60F6;">
+<nav class="fixed-top" style="margin-top: 50px;">
+    <div class="container-fluid p-0 border-bottom" style="background-color: #000A6A;">
+         <div class="container-fluid row py-3" style="background-color: #000A6A;">
              <!-- <div *ngIf="ficheNumber" class="col-5 me-auto text-end text-white" style="font-size: 70%;">
                  {{ficheNumber}} fiches
              </div> -->
-             <div  class="col-5 me-auto text-end text-white" style="font-size: 70%;">
+             <div  class="col-5 me-auto text-end text-white" style="font-size: 80%; height: 19.2px;">
                  0 fiches
              </div>
-             <div class="col-5 ms-auto text-white" style="font-size: 70%; cursor: pointer;" (click)="goToNewProject()">
+             <div class="col-5 ms-auto text-white" style="font-size: 80%; height: 19.2px; cursor: pointer;" (click)="goToNewProject()">
                  + Ajouter une fiche
              </div>
          </div>
@@ -122,7 +71,7 @@
                     <div *ngIf="type.errors['required']">Veuillez choisir un type de bien</div>
                 </div>
 
-                <div class="border border-2 mt-4 ps-2 pe-2 pb-3" style="border-radius: 25px; border-color: #B0B8FD;">
+                <div class="border mt-4 ps-2 pe-2 pb-3" style="border-radius: 25px; background-color: #B0B8FD;">
 
                     <h5 class="mt-2 text-center">Informations personelles</h5>
 

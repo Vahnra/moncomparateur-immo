@@ -1,9 +1,9 @@
-<div class="card" *ngIf="user">
+<div class="card border-0" *ngIf="user">
 
     <app-user-header></app-user-header>
 
     <div class="container">
-        <select class="form-select mt-3" aria-label="Default select example" (change)="goToSelected($event.target)">
+        <select class="form-select mt-3" aria-label="Default select example" (change)="goToSelected($event.target)" style="border-radius: 20px;">
             <option selected>Vue d'ensemble du compte</option>
             <option value="profile-update">Modifier le profile</option>
             <option value="password-update">Mot de passe</option>
@@ -11,7 +11,7 @@
         </select>
     </div>
     <div class="card-body mb-5">
-        <div *ngIf="roles == 'free'" class="p-3" style="background-color: #FFCDD2;">
+        <div *ngIf="roles == 'free'" class="p-3" style="background-color: #FFCDD2; border-radius: 20px;">
             <h5 class="card-title">Abonnement à partir de 18,99€ par mois</h5>
             <p class="card-text">Souscrivez à notre abonnement pour accéder instantanément aux dernièrs DPE de votre secteur, ainsi qu'à un agenda pratique avec des notifications de rappel pour ne jamais manquer une opportunité. Obtenez également des statistiques détaillées pour mieux comprendre votre marché et améliorer vos performances, et laissez des commentaires sur vos fiches pour une gestion optimale de vos prospects.</p>
             <a (click)="goToPayments()" class="btn" style="cursor: pointer;">Commencer</a>

@@ -1,8 +1,8 @@
-<div class="card-header" *ngIf="user" style="margin-top: 41.5px;">
+<div class="card-header" *ngIf="user" style="margin-top: 50px; border-radius: 0px; background-color: #000A6A; color: lightgrey;">
     <div class="row mb-3" style="height: 90px;">
         <div class="col-3 ">
             <div class="d-flex align-items-center justify-content-center" style="height: 90px;">
-                <img src="assets/images/user-profile.png" alt="" style="width: 100%;">
+                <img class="border border-1 border-white" src="assets/images/user-profile.png" alt="" style="width: 100%; border-radius: 100%;">
             </div>
         </div>
         <div class="col-7" style="font-size: 70%;">
@@ -25,7 +25,7 @@
     </div>
     <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
-            <a class="nav-link" style="font-size: 70%; cursor: pointer" (click)="goToUserDashboard()">
+            <a class="nav-link" style="font-size: 70%; cursor: pointer; color: lightgrey;  border-radius: 0px 0px 25px 0px;" (click)="goToUserDashboard()">
                 <div class="text-center">
                     <i-feather class="small" name="trending-up"></i-feather>
                 </div>
@@ -33,7 +33,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" aria-current="true" style="font-size: 70%;">
+            <a class="nav-link active" aria-current="true" style="font-size: 70%; border-radius: 20px 20px 0px 0px;">
                 <div class="text-center">
                     <i-feather class="small" name="settings"></i-feather>
                 </div>

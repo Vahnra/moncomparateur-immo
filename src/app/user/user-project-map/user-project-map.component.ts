@@ -62,6 +62,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
   test: Dpe;
 
   markerClusterDataDPE: Leaflet.Marker[] = [];
+  circleClusterDataDpe: Leaflet.Circle[] = [];
   lookupDPE: any = [];
   
   customOptions = {
@@ -267,7 +268,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     // add geosearch
     const searchControl = GeoSearchControl({
       provider: this.provider,
-      style: "bar",
+      style: "icon",
       searchLabel: 'Entrer une adresse',
 
     });
@@ -428,7 +429,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
   addMarkerDPE(item: any) {
     let names: string = item['_geopoint'];
     let nameArr = names.split(',');
-
+ 
     if (this.isLocationFreeDPE(item['N°DPE']) == true) {
 
       if (item['Date_établissement_DPE'] > this.date) {
@@ -524,7 +525,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     const date = new Date;
     date.setMonth(date.getMonth() - 3);
     let desiredDate = date.toLocaleDateString('fr-FR');
-
+    
     if (this.isLocationFreeDPE(item['N°DPE']) == true) {
 
       if (item['Date_établissement_DPE'] > this.date) {
@@ -551,13 +552,10 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
                 </div>
               </div>`
 
-        this.markerClusterDataDPE.push(Leaflet.marker([+nameArr[0], +nameArr[1]], {
-          icon: icon({
-            ...Icon.Default.prototype.options,
-            iconUrl: 'assets/marker-icon.png',
-            iconRetinaUrl: 'assets/marker-icon-2x.png',
-            shadowUrl: 'assets/marker-shadow.png'
-          })
+        this.circleClusterDataDpe.push(Leaflet.circle([+nameArr[0], +nameArr[1]], 200, {
+          color: 'red',
+          fillColor: '#f03',
+          fillOpacity: 0.5
         }).on('click', () => {
           this.zone.run(() => this.onMarkerClick(item))
         }).bindPopup(customPopup, this.customOptions).openPopup());
@@ -605,7 +603,8 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   isLocationFreeDPE(search: any) {
     for (var i = 0, l = this.lookupDPE.length; i < l; i++) {
-      if (this.lookupDPE[i][0] === search) {
+      if (this.lookupDPE[i] === search) {
+        
         return false
       }
     }
@@ -664,7 +663,13 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   changeToDpeMarker() {
     this.markerClusterGroup.clearLayers();
+
+    if (this.roles == 'paid') {
     this.markerClusterGroup.addLayers(this.markerClusterDataDPE);
+    }
+    if (this.roles == 'free') {
+      this.markerClusterGroup.addLayers(this.circleClusterDataDpe);
+    }
   }
 
   changeToProjectMarker() {
@@ -781,6 +786,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
                     this.test.results.forEach((item) => {
         
                       this.addFreeMarkerDPE(item);
+
                     }) //End of foreach
         
                   }) // End of map service call

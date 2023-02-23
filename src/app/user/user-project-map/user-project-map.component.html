@@ -1,14 +1,14 @@
 
-<nav class="fixed-top" style="margin-top: 41.5px;">
+<nav class="fixed-top" style="margin-top: 50px;">
      <div class="container-fluid p-0 border-bottom" style="background-color: #000A6A;">
-          <div class="container-fluid row py-2" style="background-color: #000A6A;">
-              <div *ngIf="ficheNumber" class="col-5 me-auto text-end text-white" style="font-size: 70%;">
+          <div class="container-fluid row py-3" style="background-color: #000A6A;">
+              <div *ngIf="ficheNumber" class="col-5 me-auto text-end text-white" style="font-size: 80%;">
                   {{ficheNumber}} fiches
               </div>
-              <div *ngIf="!ficheNumber" class="col-5 me-auto text-end text-white" style="font-size: 70%;">
+              <div *ngIf="!ficheNumber" class="col-5 me-auto text-end text-white" style="font-size: 80%;">
                   0 fiches
               </div>
-              <div class="col-5 ms-auto text-white" style="font-size: 70%; cursor: pointer;" (click)="goToNewProject()">
+              <div class="col-5 ms-auto text-white" style="font-size: 80%; cursor: pointer;" (click)="goToNewProject()">
                   + Ajouter une fiche
               </div>
           </div>
@@ -33,7 +33,7 @@
 </div> -->
 
 
-<div class="fixed-top" style="height: calc(100% - 119.8px); margin-top: 119.8px;"
+<div class="fixed-top" style="height: calc(100% - 145.8px); margin-top: 145.8px;"
      leaflet 
      [leafletOptions]="options"
      [leafletLayersControl]="layersControl"
