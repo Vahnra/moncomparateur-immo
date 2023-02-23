@@ -31,7 +31,17 @@ export class ProjectService {
     calendarStart: Date,
     contact: boolean, 
     name: string,
-    typeFiche: string
+    typeFiche: string,
+    gender: string,
+    trackability_info: string,
+    area_size: string,
+    room_numbers: string,
+    floor: string,
+    terrain: string,
+    parking: string,
+    charge: string,
+    tax: string,
+    origin: string
     ): Observable<any> {
     return this.http.post(
       PROJECT_API + '/add',
@@ -47,7 +57,17 @@ export class ProjectService {
         calendarStart,
         contact,
         name,
-        typeFiche
+        typeFiche,
+        gender,
+        trackability_info,
+        area_size,
+        room_numbers,
+        floor,
+        terrain,
+        parking,
+        charge,
+        tax,
+        origin
       },
       httpOptions
     )
@@ -83,7 +103,18 @@ export class ProjectService {
     complement_adress: string,
     name: string,
     email: String,
-    projectId: number
+    projectId: number,
+    contact: number,
+    gender: string,
+    trackability_info: string,
+    area_size: string,
+    room_numbers: string,
+    floor: string,
+    terrain: string,
+    parking: string,
+    charge: string,
+    tax: string,
+    origin: string
     ): Observable<any> {
     return this.http.put(
       PROJECT_API  + `/${projectId}`,
@@ -95,7 +126,18 @@ export class ProjectService {
         status,      
         complement_adress,
         name,
-        email
+        email,
+        contact,
+        gender,
+        trackability_info,
+        area_size,
+        room_numbers,
+        floor,
+        terrain,
+        parking,
+        charge,
+        tax,
+        origin
       },
       httpOptions
     )
@@ -116,9 +158,9 @@ export class ProjectService {
   }
 
   // get all user projects filtered
-  getUserProjectsFiltered(filter: any): Observable<any> {
+  getUserProjectsFiltered(filter: any, date: any): Observable<any> {
     return this.http.get(
-      PROJECT_API + `/user-projects/filtered?filter=${filter}`, httpOptions
+      PROJECT_API + `/user-projects/filtered?filter=${filter}&date=${date}`, httpOptions
     );
   }
 

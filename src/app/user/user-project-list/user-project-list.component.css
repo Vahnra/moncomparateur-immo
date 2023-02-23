@@ -3,7 +3,7 @@ table {
 }
 
 
-@media screen and (max-width: 960px) {
+/* @media screen and (max-width: 960px) {
     .mat-table {
         border: 0;
         vertical-align: middle;
@@ -30,10 +30,7 @@ table {
         display: block;
     }
 
-    /*
-    .mat-table .mat-row:nth-child(even) {background: #CCC}
-    .mat-table .mat-row:nth-child(odd) {background: #FFF}
-    */
+
     .mat-table .mat-cell {
         border-bottom: 1px solid #ddd;
         display: block;
@@ -45,10 +42,7 @@ table {
     }
 
     .mat-table .mat-cell:before {
-        /*
-      * aria-label has no advantage, it won't be read inside a table
-      content: attr(aria-label);
-      */
+   
         content: attr(data-label);
         float: left;
         text-transform: uppercase;
@@ -64,7 +58,7 @@ table {
         margin-top: 4%;
     }
 
-}
+} */
 
 .row {
     margin: 0;

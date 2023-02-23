@@ -51,6 +51,8 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
   apicallSub?:Subscription;
   apiMarkerSub?:Subscription;
   user: User;
+  ficheNumber: number;
+  date: any;
 
   userLat1: any;
   userLng1: any;
@@ -68,7 +70,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   options = {
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' })
+      tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 19, subdomains:['mt0','mt1','mt2','mt3'], attribution: '...' })
     ],
     zoom: 15,
     center: latLng(48.8, 2.3),
@@ -81,9 +83,9 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   layersControl = {
     baseLayers: {
-      'Plan par défaut': tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+      'Plan par défaut': tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { 
         maxZoom: 19, 
-        attribution: '...' 
+        subdomains:['mt0','mt1','mt2','mt3']
       }),
       'Vue satellite': tileLayer('https://wxs.ign.fr/decouverte/geoportail/wmts?' +
         '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM' +
@@ -125,6 +127,10 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    const date = new Date;
+    date.setMonth(date.getMonth() - 3);
+    this.date = (date).toISOString().split('T')[0];
+
     if (this.storageService.isLoggedIn) {
       this.userService.getCurrentUser().subscribe({
         next: user => {
@@ -136,11 +142,21 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
             this.apicallSub = this.projectService.getUserProjects().subscribe({
               next: data => {  
+                this.ficheNumber = data.length
                 data.forEach((element:any) => {
                   this.addMarker(element);
                 });
                 // console.log(this.markerData);
+                
+              },
+              error: err => {
+
+              },
+              complete: () => {
+                this.markerClusterData = this.markerData;
+                this.markerClusterGroup.addLayers(this.markerClusterData);
               }
+              
             })
 
             if (this.roles == "paid") {
@@ -251,9 +267,9 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     // add geosearch
     const searchControl = GeoSearchControl({
       provider: this.provider,
-      style: "button",
+      style: "bar",
       searchLabel: 'Entrer une adresse',
-      position: 'bottomright'
+
     });
     map.addControl(searchControl);
 
@@ -413,11 +429,11 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     let names: string = item['_geopoint'];
     let nameArr = names.split(',');
 
-    if (this.isLocationFreeDPE(nameArr) == true) {
+    if (this.isLocationFreeDPE(item['N°DPE']) == true) {
 
-      if (item['Date_établissement_DPE'] > '2022-12-01') {
+      if (item['Date_établissement_DPE'] > this.date) {
 
-        this.lookup.push([nameArr[0], nameArr[1]]);
+        this.lookupDPE.push(item['N°DPE']);
         let customPopup = `
               <div class="row" style="margin-bottom: 0;>
                 <div class="col-12" style="margin-bottom: 0;">
@@ -439,30 +455,81 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
                 </div>
               </div>`
 
-        this.markerClusterDataDPE.push(Leaflet.marker([+nameArr[0], +nameArr[1]], {
-          icon: icon({
-            ...Icon.Default.prototype.options,
-            iconUrl: 'assets/marker-icon.png',
-            iconRetinaUrl: 'assets/marker-icon-2x.png',
-            shadowUrl: 'assets/marker-shadow.png'
-          })
-        }).on('click', () => {
-          this.zone.run(() => this.onMarkerClick(item))
-        }).bindPopup(customPopup, this.customOptions).openPopup());
+        // this.markerClusterDataDPE.push(Leaflet.marker([+nameArr[0], +nameArr[1]], {
+        //   icon: icon({
+        //     ...Icon.Default.prototype.options,
+        //     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        //     iconRetinaUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+        //     shadowUrl: 'assets/marker-shadow.png',
+        //     className: 'test'
+        //   })
+        // }).on('click', () => {
+        //   this.zone.run(() => this.onMarkerClick(item))
+        // }).bindPopup(customPopup, this.customOptions).openPopup());
+
+        switch (item['Etiquette_DPE']) {
+          case 'A':
+            this.dpeMarkerColor(nameArr, item, customPopup, 'assets/icons/marker-A.png');
+            break;
+        
+          case 'B':
+            this.dpeMarkerColor(nameArr, item, customPopup, 'assets/icons/marker-B.png');
+            break;
+        
+          case 'C':
+            this.dpeMarkerColor(nameArr, item, customPopup, 'assets/icons/marker-C.png');
+            break;
+        
+          case 'D':
+            this.dpeMarkerColor(nameArr, item, customPopup, 'assets/icons/marker-D.png');
+            break;
+        
+          case 'E':
+            this.dpeMarkerColor(nameArr, item, customPopup, 'assets/icons/marker-E.png');
+            break;
+        
+          case 'F':
+            this.dpeMarkerColor(nameArr, item, customPopup, 'assets/icons/marker-F.png');
+            break;
+
+          case 'G':
+            this.dpeMarkerColor(nameArr, item, customPopup, 'assets/icons/marker-G.png');
+            break;
+        
+          default:
+            break;
+        }
       
       }
     }
   }
 
+  // Marker dpe color slection
+  dpeMarkerColor(nameArr: any, item:any, customPopup: any, letter: any) {
+    this.markerClusterDataDPE.push(Leaflet.marker([+nameArr[0], +nameArr[1]], {
+      icon: icon({
+        ...Icon.Default.prototype.options,
+        iconUrl: letter,
+        iconRetinaUrl: 'assets/marker-icon-2x.png',
+        shadowUrl: 'assets/marker-shadow.png',
+      })
+    }).on('click', () => {
+      this.zone.run(() => this.onMarkerClick(item))
+    }).bindPopup(customPopup, this.customOptions).openPopup());
+  }
+
   addFreeMarkerDPE(item: any) {
     let names: string = item['_geopoint'];
     let nameArr = names.split(',');
+    const date = new Date;
+    date.setMonth(date.getMonth() - 3);
+    let desiredDate = date.toLocaleDateString('fr-FR');
 
-    if (this.isLocationFreeDPE(nameArr) == true) {
+    if (this.isLocationFreeDPE(item['N°DPE']) == true) {
 
-      if (item['Date_établissement_DPE'] > '2022-12-01') {
+      if (item['Date_établissement_DPE'] > this.date) {
 
-        this.lookup.push([nameArr[0], nameArr[1]]);
+        this.lookupDPE.push(item['N°DPE']);
         let customPopup = `
               <div class="row" style="margin-bottom: 0;>
                 <div class="col-12" style="margin-bottom: 0;">
@@ -500,7 +567,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
   }
 
   onFilterChangeType(event: any) {
-    this.projectService.getUserProjectsFiltered(event.target.value).subscribe({
+    this.projectService.getUserProjectsFiltered(event.target.value, this.date).subscribe({
       next: data => {
         this.markerClusterGroup.clearLayers();
         this.markerClusterData = [];
@@ -525,6 +592,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
     
   }
   
+  
   //check if marker is already put at the exact same coordinate
   isLocationFree(search: any) {
     for (var i = 0, l = this.lookup.length; i < l; i++) {
@@ -537,7 +605,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   isLocationFreeDPE(search: any) {
     for (var i = 0, l = this.lookupDPE.length; i < l; i++) {
-      if (this.lookupDPE[i][0] === search[0] && this.lookupDPE[i][1] === search[1]) {
+      if (this.lookupDPE[i][0] === search) {
         return false
       }
     }
@@ -606,5 +674,130 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   goBack() {
     this.location.back()
+  }
+
+  onDateChange(event: any) {
+    this.lookupDPE = [];
+    this.markerClusterDataDPE = [];
+
+    this.date = event.target.value
+
+    if (this.storageService.isLoggedIn) {
+      this.userService.getCurrentUser().subscribe({
+        next: user => {
+          if (user) {
+            this.userId = user.id;
+            this.isLoggedIn = true;
+            this.roles = user.status;
+            this.user = user;
+
+            this.apicallSub = this.projectService.getUserProjects().subscribe({
+              next: data => {  
+                this.ficheNumber = data.length
+                data.forEach((element:any) => {
+                  this.addMarker(element);
+                });
+                // console.log(this.markerData);
+                
+              },
+              error: err => {
+
+              },
+              complete: () => {
+                this.markerClusterData = this.markerData;
+                this.markerClusterGroup.addLayers(this.markerClusterData);
+              }
+              
+            })
+
+            if (this.roles == "paid") {
+              this.mapService.requestGeocodingDepartment(`${user.postal_code}, France`).subscribe({
+                next: data => {
+                  let info = JSON.parse(JSON.stringify(data))
+                  this.userLat1 = info["data"][0]["bbox_module"][0];
+                  this.userLng1 = info["data"][0]["bbox_module"][1];
+                  this.userLat2 = info["data"][0]["bbox_module"][2];
+                  this.userLng2 = info["data"][0]["bbox_module"][3];
+                  this.mapService.refreshDpe(this.userLat1, this.userLng1, this.userLat2, this.userLng2,).subscribe(data => {
+        
+                    this.test = JSON.parse(JSON.stringify(data))
+        
+                    this.test.results.forEach((item) => {
+        
+                      this.addMarkerDPE(item);
+                    }) //End of foreach
+        
+                  }) // End of map service call
+                }
+              }) // End of geocoding call         
+  
+              if (user.subscription_options != null) {
+                
+                user.subscription_options.forEach((element:any) => {
+       
+                  this.mapService.requestGeocodingDepartment(`${element}, France`).subscribe({
+                    next: data => {
+                      
+                      let info = JSON.parse(JSON.stringify(data))
+                      this.userLat1 = info["data"][0]["bbox_module"][0];
+                      this.userLng1 = info["data"][0]["bbox_module"][1];
+                      this.userLat2 = info["data"][0]["bbox_module"][2];
+                      this.userLng2 = info["data"][0]["bbox_module"][3];
+                      this.mapService.refreshDpe(this.userLat1, this.userLng1, this.userLat2, this.userLng2,).subscribe(data => {
+            
+                        this.test = JSON.parse(JSON.stringify(data))
+            
+                        this.test.results.forEach((item) => {
+            
+                          this.addMarkerDPE(item);
+                        }) //End of foreach
+            
+                      }) // End of map service call
+                    },
+                    error: err => {
+
+                    },
+                    complete: () => {
+                      this.markerClusterGroup.clearLayers();
+                      this.markerClusterGroup.addLayers(this.markerClusterDataDPE);
+                    }
+                  }) // End of geocoding call
+                });
+              }
+
+            } else {
+
+              this.mapService.requestGeocodingDepartment(`${user.postal_code}, France`).subscribe({
+                next: data => {
+                  let info = JSON.parse(JSON.stringify(data))
+                  this.userLat1 = info["data"][0]["bbox_module"][0];
+                  this.userLng1 = info["data"][0]["bbox_module"][1];
+                  this.userLat2 = info["data"][0]["bbox_module"][2];
+                  this.userLng2 = info["data"][0]["bbox_module"][3];
+                  this.mapService.refreshDpe(this.userLat1, this.userLng1, this.userLat2, this.userLng2,).subscribe(data => {
+        
+                    this.test = JSON.parse(JSON.stringify(data))
+        
+                    this.test.results.forEach((item) => {
+        
+                      this.addFreeMarkerDPE(item);
+                    }) //End of foreach
+        
+                  }) // End of map service call
+                }
+              }) // End of geocoding call   
+            }
+            
+          }
+        }, error: err => {
+
+        }, complete: () => {
+
+        }
+      });
+      
+    } 
+
+
   }
 }

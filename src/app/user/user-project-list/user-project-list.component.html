@@ -50,79 +50,99 @@
      <span class="text-center pb-2" (click)="goToNewProject()" style="cursor: pointer; background-color: #000A6A; color: white;"> + Creation d'une nouvelle fiche</span>
 </div> -->
 
-<div class="container mt-3" style="margin-bottom: 75px;">
-     <mat-form-field style="width: 100%;">
-          <mat-label>Rechercher</mat-label>
-          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input style="width: 100%;">
-     </mat-form-field>
+<nav class="fixed-top" style="margin-top: 41.5px;">
+     <div class="container-fluid p-0 border-bottom" style="background-color: #4E60F6;">
+          <div class="container-fluid row py-2" style="background-color: #4E60F6;">
+              <div class="col-5 me-auto text-end text-white" style="font-size: 70%;">
+                  {{ficheNumber}} fiches
+              </div>
+              <div class="col-5 ms-auto text-white" style="font-size: 70%; cursor: pointer;" (click)="goToNewProject()">
+                  + Ajouter une fiche
+              </div>
+          </div>
+          <div class="container-fluid py-2" style="background-color: #ffffff; border-radius: 15px 15px 0px 0px;">
+              <div class="row">
+                  <button class="navbar-toggler mx-auto col-3 py-1 btn text-dark text-white" type="button" style="border-radius: 25px; font-size: 100%;">Listes
+                      <i class="fa-solid fa-bars"></i>
+                  </button>
+                  <button class="navbar-toggler mx-auto col-3 py-1 btn text-dark border" type="button" style="border-radius: 25px; background-color: #ffffff; font-size: 100%;" (click)="goToMap()">Carte
+                      <i class="fa-solid fa-map-location-dot"></i>
+                  </button>
+                  <button class="navbar-toggler btn mx-auto col-3 py-1  text-dark border" type="button" style="border-radius: 25px; background-color: #ffffff; font-size: 100%;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">Filtres
+                  <i class="fa-solid fa-arrow-down-wide-short"></i>
+                  </button>
+              </div>
+          </div>
+      </div>
+</nav>
 
-     <div class="mat-elevation-z8 mb-5">
-          <table class="mat-table" mat-table [dataSource]="dataSource" matSort matSortActive="updated_at" matSortDisableClear matSortDirection="desc">
+<div class="container" style="margin-top: 134px;">
+     <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Rechercher</button>
+     </form>
+  
+</div>
 
-               <!-- ID Column -->
-               <ng-container matColumnDef="updated_at">
-                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Modifier le </th>
-                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Modifier le"> {{row.updated_at | date}} </td>
-               </ng-container>
+<div class="container mt-3" style="margin-bottom: 75px;" *ngIf="userProjects">
 
-               <!-- Progress Column -->
-               <ng-container matColumnDef="type">
-                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
-                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Type"> {{row.type | titlecase}} </td>
-               </ng-container>
-
-               <!-- Name Column -->
-               <ng-container matColumnDef="city">
-                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Ville </th>
-                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Ville"> {{row.city | titlecase}} </td>
-               </ng-container>
-
-               <!-- Fruit Column -->
-               <ng-container matColumnDef="adress">
-                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Adresse </th>
-                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Adresse">
-                         {{row.adress | titlecase}} </td>
-               </ng-container>
-
-               <!-- Fruit Column -->
-               <ng-container matColumnDef="status">
-                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Status"> {{row.status | titlecase}}
-                    </td>
-               </ng-container>
-
-               <!-- Fruit Column -->
-               <ng-container matColumnDef="phone_numbers">
-                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Téléphone </th>
-                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Téléphone">
-                         {{row.phone_numbers}} </td>
-               </ng-container>
-
-               <ng-container matColumnDef="actions">
-                    <th class="mat-header-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
-                    <td class="mat-cell" mat-cell *matCellDef="let row" data-label="Actions">
-                         <button class="test" mat-icon-button (click)="goToDetails(row.id)">
-                              <mat-icon>info</mat-icon>
-                         </button>
-                         <button class="test" mat-icon-button (click)="clickUpdate(row.id)">
-                              <mat-icon>launch</mat-icon>
-                         </button>
-                         <button class="test" mat-icon-button (click)="clickDelete(row.id)">
-                              <mat-icon color="warn">delete</mat-icon>
-                         </button>
-                    </td>
-               </ng-container>
-
-               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-               <!-- Row shown when there is no matching data. -->
-               <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="4">Aucun résultats pour le filtre "{{input.value}}"</td>
-               </tr>
-          </table>
-
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+     <div class="card mb-3" style="max-width: 540px; font-size: 80%;" *ngFor="let item of userProjects">
+          <div class="row g-0" (click)="goToDetails(item.id)" style="cursor: pointer;">
+               <div class="col-5">
+                    <img *ngIf="!item.image" src="assets/images/50819.jpg" class="rounded-start" alt="..." style="object-fit: cover; height: 145px; width: 100%;">
+                    <img *ngIf="item.image" [src]="item.image" class="rounded-start" alt="..." style="object-fit: cover; height: 145px; width: 100%;">
+               </div>
+               <div class="col-7">
+                    <div class="text-end me-2 mt-1"> Maj le : {{ item.updated_at | date:"d.M.y" }}</div>
+                    <div class="card-body pt-0 pb-0">
+                         <h5 class="card-title">{{ item.city }}</h5>
+                         <div class="card-text mb-1">
+                              {{ item.adress }}
+                         </div>
+                         <div *ngIf="item.comments.length < 2" class="card-text  mb-1">
+                              {{ item.comments.length }} commentaire
+                         </div>
+                         <div *ngIf="item.comments.length >= 2" class="card-text  mb-3">
+                              {{ item.comments.length }} commentaire
+                         </div>
+                         <div class="card-text  mb-1">
+                              <strong>Status :</strong> {{ item.status | titlecase }}
+                         </div>
+                    </div>
+               </div>
+          </div>
      </div>
+</div>
 
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+     <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+     </div>
+     <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+               <li class="nav-item">
+                    <div class="form-floating">
+                         <select class="form-select" id="floatingSelect" aria-label="Floating label select example"
+                              (change)="onFilterChangeType($event)">
+                              <option selected>Choisissez</option>
+                              <option data-bs-dismiss="offcanvas" value="maison">Maison</option>
+                              <option data-bs-dismiss="offcanvas" value="appartement">Appartement</option>
+                              <option data-bs-dismiss="offcanvas" value="immeuble">Immeuble</option>
+                              <option data-bs-dismiss="offcanvas" value="local">Local commercial</option>
+                              <option data-bs-dismiss="offcanvas" value="entrepot">Entrepot/Hangar</option>
+                              <option data-bs-dismiss="offcanvas" value="terrain">Terrain</option>
+                              <option data-bs-dismiss="offcanvas" value="other">Autre</option>
+                         </select>
+                         <label for="floatingSelect">Type de bien</label>
+                    </div>
+               </li>
+               <li class="nav-item mt-3">
+                    <div class="form-floating">
+                         <input type="date" id="floatingSelectDate" class="form-control" name="date" (ngModel)="date" #date="ngModel" (change)="onDateChange($event)">
+                         <label for="floatingSelectDate">A partir de</label>
+                    </div>
+               </li>
+          </ul>
+     </div>
 </div>

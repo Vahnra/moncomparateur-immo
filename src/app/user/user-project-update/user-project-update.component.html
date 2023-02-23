@@ -1,133 +1,504 @@
-<div class="container-xl bg-white text-dark pb-5">
-
-
-
-    <div class="row mb-5">
-
-        <div class="col-12">
-            <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Modifier la fiche</h1>
+<!-- <nav class="navbar fixed-top" style="height: 50px; background-color: #000A6A;">
+    <div class="container-fluid">
+        <button class="navbar-toggler mx-auto btn" type="button" aria-controls="offcanvasNavbar" (click)="goToList()">Listes
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <button class="navbar-toggler mx-auto btn" type="button" (click)="goToMap()">Carte
+            <i class="fa-solid fa-map-location-dot"></i>
+        </button>
+        <button class="navbar-toggler mx-auto btn" type="button" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">Filtres
+            <i class="fa-solid fa-arrow-down-wide-short"></i>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Filtres</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                <option selected>Choisissez</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                            <label for="floatingSelect">Type de bien</label>
+                        </div>
+                    </li>
+                    <li class="nav-item mt-3">
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                                <option selected>Choisissez</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                            <label for="floatingSelect">Ville</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-
-        <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
-            <label class="mb-2 mt-2 form-label" for="inputEmail">Status de la prospection</label>
-            <select class="form-select" name="status" [(ngModel)]="form.status" required #status="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && status.errors }">
-                <option selected disabled>--Selectionner une option--</option>
-                <option value="opportunite">Opportunité</option>
-                <option value="prospecte">Prospecté</option>
-                <option value="absent">Absent</option>
-                <option value="a-relancer">A relancer</option>
-                <option value="estimation">Estimation</option>
-                <option value="en-vente">En vente</option>
-                <option value="pas-opportunite">Pas d'opportunité</option>
-                <option value="archiver">Archivé</option>
-            </select>
-            <div class="invalid-feedback" *ngIf="status.errors && f.submitted">
-                <div *ngIf="status.errors['required']">Veuillez choisir un type de bien</div>
-            </div>
-            <label class="mb-2 mt-2 form-label" for="inputEmail">Type de bien</label>
-            <select class="form-select" name="type" [(ngModel)]="form.type" required #type="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && type.errors }">
-                <option selected disabled>--Selectionner une option--</option>
-                <option value="maison">Maison</option>
-                <option value="appartement">Appartement</option>
-                <option value="immeuble">Immeuble</option>
-                <option value="local">Local commercial</option>
-                <option value="entrepot">Entrepot/Hangar</option>
-                <option value="terrain">Terrain</option>
-                <option value="other">Autre</option>
-            </select>
-            <div class="invalid-feedback" *ngIf="type.errors && f.submitted">
-                <div *ngIf="type.errors['required']">Veuillez choisir un type de bien</div>
-            </div>
-
-            <h5 class="mt-4 text-center">Informations personelles</h5>
-
-            <label class="mb-2 mt-2 form-label" for="inputEmail">Nom et prénom</label>
-            <input type="text" class="form-control" name="name" [(ngModel)]="form.name" #name="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && name.errors }" placeholder="">
-            <div class="invalid-feedback" *ngIf="name.errors && f.submitted">
-                <div *ngIf="name.errors['required']">Veuillez entrer un nom.</div>
-            </div>
-
-            <label class="mb-1 mt-3 form-label" for="inputEmail">Email</label>
-            <input type="text" class="form-control" name="email" [(ngModel)]="form.email" #email="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && email.errors }" placeholder="Email">
-            <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
-            </div>
-
-            <label class="mb-1 mt-3 form-label" for="inputEmail">Numéro de téléphone</label>
-            <input type="text" class="form-control" name="phone_numbers" [(ngModel)]="form.phone_numbers" minlength="10"
-                maxlength="10" #phone_numbers="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && phone_numbers.errors }" placeholder="Téléphone">
-            <div class="invalid-feedback" *ngIf="phone_numbers.errors && f.submitted">
-                <div *ngIf="phone_numbers.errors['minlength']">
-                    Ce numéro n'est pas valide.
-                </div>
-                <div *ngIf="phone_numbers.errors['maxlength']">
-                    Ce numéro n'est pas valide.
-                </div>
-            </div>
-
-            <h5 class="mt-4 text-center">Coordonnées</h5>
-
-            <label class="mb-1 mt-3 form-label" for="inputEmail">Ville</label>
-            <input type="text" class="form-control" name="city" [(ngModel)]="form.city" required #city="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && city.errors }" placeholder="Ville">
-            <div class="invalid-feedback" *ngIf="city.errors && f.submitted">
-                <div *ngIf="city.errors['required']">Veuillez entrer une ville</div>
-            </div>
-            <label class="mb-1 mt-3 form-label" for="inputEmail">Adresse</label>
-            <input type="text" class="form-control" name="adress" [(ngModel)]="form.adress" required minlength="5"
-                #adress="ngModel" [ngClass]="{ 'is-invalid': f.submitted && adress.errors }"
-                placeholder="Adresse du bien">
-            <div class="invalid-feedback" *ngIf="adress.errors && f.submitted">
-                <div *ngIf="adress.errors['required']">Veuillez entrer une adresse</div>
-                <div *ngIf="adress.errors['minlength']">
-                    Cette adresse n'est pas valide.
-                </div>
-                <div *ngIf="adress.errors['maxlength']">
-                    Cette adresse n'est pas valide.
-                </div>
-            </div>
-            <label class="mb-1 mt-3 form-label" for="inputEmail">Complément d'adresse</label>
-            <input type="text" class="form-control" name="complement_adress" [(ngModel)]="form.complement_adress"
-                #complement_adress="ngModel" [ngClass]="{ 'is-invalid': f.submitted && complement_adress.errors }"
-                placeholder="Complément d'adresse">
-            <div class="invalid-feedback" *ngIf="complement_adress.errors && f.submitted">
-            </div>
-
-            <h5 class="mt-4 mb-3 text-center">Photo</h5>
-
-            <div class="col-12">
-                <input class="form-control" type="file" accept="image/*" (change)="selectFile($event)" />
-            </div>
-
-            <div class="mt-3">
-                <img [src]="preview" class="preview w-100">
-            </div>
-
-            <div *ngIf="currentFile && progress" class="progress my-3">
-                <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ progress }}"
-                    aria-valuemin="0" aria-valuemax="100" [ngStyle]="{ width: progress + '%' }">
-                    {{ progress }}%
-                </div>
-            </div>
-
-            <div class="text-center">
-                <button id="submit" name="sign-in-button"
-                    class="btn btn-lg mb-3 px-5 no-border-radius signin mt-3 btn btn-primary">Modifier</button>
-            </div>
-            <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-                {{ errorMessage }}
-            </div>
-            <div class="alert alert-success" *ngIf="isSuccessful">
-                La fiche a bien été ajouté.
-            </div>
-        </form>
-
     </div>
+</nav>
 
+<div class="row bg-light pb-2 pt-2" style="padding-top: 50px;">
+    <span class="text-center" (click)="goToNewProject()" style="cursor: pointer;"> + Creation d'une nouvelle fiche</span>
+</div> -->
 
+<nav class="fixed-top" style="margin-top: 40.15px;">
+    <div class="container-fluid p-0 border-bottom" style="background-color: #4E60F6;">
+         <div class="container-fluid row py-2" style="background-color: #4E60F6;">
+             <!-- <div *ngIf="ficheNumber" class="col-5 me-auto text-end text-white" style="font-size: 70%;">
+                 {{ficheNumber}} fiches
+             </div> -->
+             <div  class="col-5 me-auto text-end text-white" style="font-size: 70%;">
+                 0 fiches
+             </div>
+             <div class="col-5 ms-auto text-white" style="font-size: 70%; cursor: pointer;" (click)="goToNewProject()">
+                 + Ajouter une fiche
+             </div>
+         </div>
+         <div class="container-fluid py-2 text-center" style="background-color: #ffffff; border-radius: 15px 15px 0px 0px;">
+             <h4 *ngIf="project" class="mb-0">Modification de la fiche {{project.id}}</h4>
+         </div>
+     </div>
+</nav>
 
-</div>
+<div *ngIf="project" class="container-xl bg-white text-dark mb-5 mt-3">
+    <!-- <form method="post"> -->
+
+        <div class="col-lg-6 mx-auto" style="border-radius: 6px; margin-bottom: 100px; margin-top: 144px;">
+  
+          <div class="row">
+
+            <form class="mb-5" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+
+                <label class="mb-1 mt-3 form-label" for="inputEmail">Type de fiche <img src="/assets/ui-icons/icons8-briefcase.svg" style="width: 24px;"></label>
+                <select 
+                    class="form-select" 
+                    name="status" 
+                    [(ngModel)]="form.status" 
+                    required
+                    #status="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && status.errors }"
+                >
+                    <option selected disabled>--Selectionner une option--</option>
+                    <option value="opportunite">Opportunité</option>
+                    <option value="prospecte">Prospecté</option>
+                    <option value="absent">Absent</option>
+                    <option value="a-relancer">A relancer</option>
+                    <option value="estimation">Estimation</option>
+                    <option value="en-vente">En vente</option>
+                    <option value="pas-opportunite">Pas d'opportunitée</option>
+                    <option value="archiver">Archivé</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="status.errors && f.submitted">
+                    <div *ngIf="status.errors['required']">Veuillez choisir un type de fiche</div>
+                </div>
+
+                <label class="mb-1 mt-3 form-label" for="inputEmail">Type de bien <img src="/assets/ui-icons/icons8-home.svg" style="width: 24px;"></label>
+                <select 
+                    class="form-select" 
+                    name="type" 
+                    [(ngModel)]="form.type" 
+                    required
+                    #type="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && type.errors }"
+                >
+                    <option selected disabled>--Selectionner une option--</option>
+                    <option value="maison">Maison</option>
+                    <option value="appartement">Appartement</option>
+                    <option value="immeuble">Immeuble</option>
+                    <option value="local">Local commercial</option>
+                    <option value="entrepot">Entrepot/Hangar</option>
+                    <option value="terrain">Terrain</option>
+                    <option value="other">Autre</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="type.errors && f.submitted">
+                    <div *ngIf="type.errors['required']">Veuillez choisir un type de bien</div>
+                </div>
+
+                <div class="border border-2 mt-4 ps-2 pe-2 pb-3" style="border-radius: 25px; border-color: #B0B8FD;">
+
+                    <h5 class="mt-2 text-center">Informations personelles</h5>
+
+                    <label class="mb-1 mt-3 form-label" for="inputEmail">Mr/Mme/Mr et Mme (optionel)</label>
+                    <select 
+                        class="form-select" 
+                        name="gender" 
+                        [(ngModel)]="form.gender" 
+                        #gender="ngModel" 
+                    >
+                        <option selected disabled>--Selectionner une option--</option>
+                        <option value="mr">Mr</option>
+                        <option value="mme">Mme</option>
+                        <option value="mrMme">Mr et Mme</option>
+                    </select>
+                    <label class="mb-1 mt-3 form-label" for="inputEmail">Nom et prénom (optionel) <img src="/assets/ui-icons/icons8-team-skin-type-7.svg" style="width: 24px;"></label>
+                    <input 
+                        type="text" 
+                        class="form-control"  
+                        name="name" 
+                        [(ngModel)]="form.name" 
+                        #name="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && name.errors }"
+                        placeholder=""
+                    >
+                    <div class="invalid-feedback" *ngIf="name.errors && f.submitted">
+                        <div *ngIf="name.errors['required']">Veuillez entrer un nom.</div>
+                    </div>
+                    <label class="mb-1 mt-3 form-label" for="inputEmail">Email (optionel) <img src="/assets/ui-icons/icons8-mail.svg" style="width: 24px;"></label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="email" 
+                        [(ngModel)]="form.email" 
+                        #email="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+                        placeholder=""
+                    >
+                    <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+                    </div>
+                    <label class="mb-1 mt-3 form-label" for="inputEmail">Numéro de téléphone (optionel) <img src="/assets/ui-icons/icons8-smartphone.svg" style="width: 24px;"></label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="phone_numbers" 
+                        [(ngModel)]="form.phone_numbers" 
+                        minlength="10"
+                        maxlength="10"
+                        #phone_numbers="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && phone_numbers.errors }"
+                        placeholder=""
+                    >
+                    <div class="invalid-feedback" *ngIf="phone_numbers.errors && f.submitted">
+                        <div *ngIf="phone_numbers.errors['minlength']">
+                            Ce numéro de téléphone est trop court.
+                        </div>
+                        <div *ngIf="phone_numbers.errors['maxlength']">
+                            Ce numéro de téléphone est trop long.
+                        </div>
+                    </div>
+
+                    <div class="form-check mt-3" *ngIf="form.phone_numbers && form.name">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            name="contact" 
+                            value="1"
+                            [(ngModel)]="form.contact"
+                            #contact="ngModel"
+                            id="flexCheckDefault"
+                        >
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Ajouter en contact
+                        </label>
+                    </div>
+
+                    <div class="form-check mt-3" *ngIf="!form.phone_numbers || !form.name">
+                        <input 
+                            class="form-check-input" 
+                            type="checkbox" 
+                            name="contact" 
+                            disabled
+                            value="1"
+                            [(ngModel)]="form.contact"
+                            #contact="ngModel"
+                            id="flexCheckDefault"
+                        >
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Ajouter en contact
+                        </label>
+                    </div>
+
+                    <h5 class="mt-4 text-center">Coordonnées</h5>
+
+                    <label class="mb-1 mt-3 form-label" for="inputEmail">Ville <img src="/assets/ui-icons/icons8-city.svg" style="width: 24px;"></label>
+                    <input 
+                        type="text" 
+                        class="form-control"  
+                        name="city" 
+                        [(ngModel)]="form.city" 
+                        required
+                        #city="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && city.errors }"
+                        placeholder=""
+                    >
+                    <div class="invalid-feedback" *ngIf="city.errors && f.submitted">
+                        <div *ngIf="city.errors['required']">Veuillez entrer une ville</div>
+                    </div>
+                    <label class="mb-1 mt-3 form-label" for="inputEmail">Adresse <img src="/assets/ui-icons/icons8-address.svg" style="width: 24px;"></label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="adress" 
+                        [(ngModel)]="form.adress" 
+                        required 
+                        minlength="5"
+                        #adress="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && adress.errors }"
+                        placeholder=""
+                    >
+                    <div class="invalid-feedback" *ngIf="adress.errors && f.submitted">
+                        <div *ngIf="adress.errors['required']">Veuillez entrer une adresse </div>
+                        <div *ngIf="adress.errors['minlength']">
+                            Cette adresse n'est pas valide.
+                        </div>
+                        <div *ngIf="adress.errors['maxlength']">
+                            Cette adresse n'est pas valide.
+                        </div>
+                    </div>
+                    <label class="mb-1 mt-3 form-label" for="inputEmail">Complément d'adresse (optionel) <img src="/assets/ui-icons/icons8-access.svg" style="width: 24px;"></label>
+                    <input 
+                        type="text" 
+                        class="form-control"  
+                        name="complementAdress" 
+                        [(ngModel)]="form.complementAdress" 
+                        #complementAdress="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && complementAdress.errors }"
+                        placeholder=""
+                    >
+                    <div class="invalid-feedback" *ngIf="complementAdress.errors && f.submitted">
+                    </div>
+                    <label class="mb-1 mt-3 form-label" for="inputEmail">Informations traçabilité (optionel) <img src="/assets/ui-icons/icons8-track-order.svg" style="width: 24px;"></label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="trackability_info" 
+                        [(ngModel)]="form.trackability_info" 
+                        #trackability_info="ngModel" 
+                        [ngClass]="{ 'is-invalid': f.submitted && trackability_info.errors }"
+                        placeholder=""
+                    >
+                    <div class="invalid-feedback" *ngIf="trackability_info.errors && f.submitted">
+                        <div *ngIf="trackability_info.errors['minlength']">
+                            Ce numéro de téléphone est trop court.
+                        </div>
+                        <div *ngIf="trackability_info.errors['maxlength']">
+                            Ce numéro de téléphone est trop long.
+                        </div>
+                    </div>
+
+                    <label class="mb-1 mt-3 form-label" for="inputEmail">Origin <img src="/assets/ui-icons/icons8-home.svg" style="width: 24px;"></label>
+                <select 
+                    class="form-select" 
+                    name="origin" 
+                    [(ngModel)]="form.origin" 
+                    #origin="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && origin.errors }"
+                >
+                    <option selected disabled>--Selectionner une option--</option>
+                    <option value="porte-a-porte">Porte à porte</option>
+                    <option value="recommandation">Recommandation</option>
+                    <option value="info-client">Info client</option>
+                    <option value="annonce">Annonce</option>
+                    <option value="autre">Autre</option>
+                </select>
+
+                </div>
+
+                <label class="mb-1 mt-3 form-label" for="inputEmail">Commentaires (optionel) <img src="/assets/ui-icons/icons8-comments.svg" style="width: 24px;"></label>
+                <textarea
+                    rows="5"
+                    class="form-control"  
+                    name="comments" 
+                    [(ngModel)]="form.comments" 
+                    #comments="ngModel" 
+                    [ngClass]="{ 'is-invalid': f.submitted && comments.errors }"
+                    placeholder="Entrez votre commentaire"
+                ></textarea>
+                <div class="invalid-feedback" *ngIf="comments.errors && f.submitted">
+    
+                </div>
+
+                <h5 class="mt-4 mb-3 text-center">Photo (optionel) <img src="/assets/ui-icons/icons8-camera.svg" style="width: 24px;"></h5>
+                
+                <div class="col-12">
+                        <input class="form-control" type="file" accept="image/*" (change)="selectFile($event)" />
+                </div>
+             
+                <div class="mt-3">
+                    <img [src]="preview" class="preview w-100">
+                </div>
+                
+                <div *ngIf="currentFile && progress" class="progress my-3">
+                    <div class="progress-bar progress-bar-info" role="progressbar" attr.aria-valuenow="{{ progress }}" aria-valuemin="0"
+                        aria-valuemax="100" [ngStyle]="{ width: progress + '%' }">
+                        {{ progress }}%
+                    </div>
+                </div>
+                
+                <div *ngIf="message" class="alert alert-secondary" role="alert">
+                    {{ message }}
+                </div>
+
+                <div class="accordion" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                Relance
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <label class="mb-2 form-label" for="inputEmail">Titre</label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    name="calendarTitle" 
+                                    [(ngModel)]="form.calendarTitle" 
+                                    #calendarTitle="ngModel" 
+                                    [ngClass]="{ 'is-invalid': f.submitted && calendarTitle.errors }"
+                                    placeholder="Titre"
+                                >
+                                <label class="mb-2 mt-2 form-label" for="inputEmail">Date</label>
+                                <input
+                                    class="form-control"
+                                    type="date"
+                                    name="calendarStart"
+                                    [(ngModel)]="form.calendarStart"
+                                    #calendarStart="ngModel"
+                                    dateFormat="Y-m-dTH:i"
+                                    altFormat="F j, Y H:i"
+                                    placeholder="Not set"
+                                    [ngClass]="{ 'is-invalid': f.submitted && calendarStart.errors }"
+                                />
+                                <div class="invalid-feedback" *ngIf="email.errors && f.submitted">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion mt-4" id="accordionFlush">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="flush-heading">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapse" aria-expanded="false" aria-controls="flush-collapse">
+                                Informations supplémentaires
+                            </button>
+                        </h2>
+                        <div id="flush-collapse" class="accordion-collapse collapse" aria-labelledby="flush-heading"
+                            data-bs-parent="#accordionFlush">
+                            <div class="accordion-body">
+                                
+                                <label class="mb-1 mt-3 form-label" for="inputEmail">Superficie (optionel) <img src="/assets/ui-icons/icons8-page-size.svg" style="width: 24px;"></label>
+                                <input 
+                                    type="text" 
+                                    class="form-control"  
+                                    name="area_size" 
+                                    [(ngModel)]="form.area_size" 
+                                    #area_size="ngModel" 
+                                    [ngClass]="{ 'is-invalid': f.submitted && area_size.errors }"
+                                    placeholder=""
+                                >
+
+                                <label class="mb-1 mt-3 form-label" for="inputEmail">Nombre de pièces (optionel) <img src="/assets/ui-icons/icons8-room.svg" style="width: 24px;"></label>
+                                <input 
+                                    type="text" 
+                                    class="form-control"  
+                                    name="room_numbers" 
+                                    [(ngModel)]="form.room_numbers" 
+                                    #room_numbers="ngModel" 
+                                    [ngClass]="{ 'is-invalid': f.submitted && room_numbers.errors }"
+                                    placeholder=""
+                                >
+
+                                <label class="mb-1 mt-3 form-label" for="inputEmail">Etage (optionel) <img src="/assets/ui-icons/icons8-stairs-up.svg" style="width: 24px;"></label>
+                                <input 
+                                    type="text" 
+                                    class="form-control"  
+                                    name="floor" 
+                                    [(ngModel)]="form.floor" 
+                                    #floor="ngModel" 
+                                    [ngClass]="{ 'is-invalid': f.submitted && floor.errors }"
+                                    placeholder=""
+                                >
+
+                                <label class="mb-1 mt-3 form-label" for="inputEmail">Terrain (optionel) <img src="/assets/ui-icons/icons8-ground.svg" style="width: 24px;"></label>
+                                <input 
+                                    type="text" 
+                                    class="form-control"  
+                                    name="terrain" 
+                                    [(ngModel)]="form.terrain" 
+                                    #terrain="ngModel" 
+                                    [ngClass]="{ 'is-invalid': f.submitted && terrain.errors }"
+                                    placeholder=""
+                                >
+
+                                <label class="mb-1 mt-3 form-label" for="inputEmail">Balcon/terrasse (optionel) <img src="/assets/ui-icons/icons8-balcony.svg" style="width: 24px;"></label>
+                                <input 
+                                    type="text" 
+                                    class="form-control"  
+                                    name="terrain" 
+                                    [(ngModel)]="form.terrain" 
+                                    #terrain="ngModel" 
+                                    [ngClass]="{ 'is-invalid': f.submitted && terrain.errors }"
+                                    placeholder=""
+                                >
+
+                                <label class="mb-1 mt-3 form-label" for="inputEmail">Parking (optionel) <img src="/assets/ui-icons/icons8-parking.svg" style="width: 24px;"></label>
+                                <input 
+                                    type="text" 
+                                    class="form-control"  
+                                    name="parking" 
+                                    [(ngModel)]="form.parking" 
+                                    #parking="ngModel" 
+                                    [ngClass]="{ 'is-invalid': f.submitted && parking.errors }"
+                                    placeholder=""
+                                >
+
+                                <label class="mb-1 mt-3 form-label" for="inputEmail">Charge (optionel) <img src="/assets/ui-icons/icons8-baggage-weight.svg" style="width: 24px;"></label>
+                                <input 
+                                    type="text" 
+                                    class="form-control"  
+                                    name="charge" 
+                                    [(ngModel)]="form.charge" 
+                                    #charge="ngModel" 
+                                    [ngClass]="{ 'is-invalid': f.submitted && charge.errors }"
+                                    placeholder=""
+                                >
+
+                                <label class="mb-1 mt-3 form-label" for="inputEmail">Taxe foncière (optionel) <img src="/assets/ui-icons/icons8-tax.svg" style="width: 24px;"></label>
+                                <input 
+                                    type="text" 
+                                    class="form-control"  
+                                    name="tax" 
+                                    [(ngModel)]="form.tax" 
+                                    #tax="ngModel" 
+                                    [ngClass]="{ 'is-invalid': f.submitted && tax.errors }"
+                                    placeholder=""
+                                >
+                       
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-3 btn">Modifier</button>
+                </div>
+                <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                    {{ errorMessage }}
+                </div>
+                <div class="alert alert-success" *ngIf="isSuccessful">
+                    La fiche a bien été ajouté.
+                </div>
+
+            </form>
+          
+          </div>
+  
+        </div>
+ 
+      
+    <!-- </form> -->
+    
+  </div>

@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastService } from 'src/app/_services/toast.service';
+import { FileUploadService } from 'src/app/_services/file-upload.service';
 
 @Component({
   selector: 'app-user-project-list',
@@ -25,10 +26,24 @@ export class UserProjectListComponent implements OnInit {
   userId: number;
   isLoggedIn: boolean = false;
   userProjects: Project[];
+  ficheNumber: number;
+  date: any;
 
-  constructor (private router: Router, private storageService: StorageService, private userService: UserService, private projectService: ProjectService, private toastService: ToastService) {}
+  constructor (
+    private router: Router, 
+    private storageService: StorageService, 
+    private userService: UserService, 
+    private projectService: ProjectService, 
+    private toastService: ToastService,
+    private fileUploadService: FileUploadService
+    ) {}
 
   ngOnInit(): void {
+
+    const date = new Date;
+    date.setMonth(date.getMonth() - 3);
+    this.date = (date).toISOString().split('T')[0];
+    
     if (this.storageService.isLoggedIn == true) {
       this.userService.getCurrentUser().subscribe(userId => {
         if (userId) {
@@ -42,6 +57,27 @@ export class UserProjectListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(data);   
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort; 
+      this.userProjects = data;
+      this.ficheNumber = data.length;
+      
+      this.userProjects.forEach((element:any) => {
+        
+        if (element.image) {
+
+          this.fileUploadService.getFiles(element.id).subscribe({
+            next: response => {
+              element.image = response.file;
+            },
+            error: err => {
+      
+            },
+            complete: () => {}
+          })
+          
+        }
+
+        
+      });
     })
     
   }
@@ -81,12 +117,16 @@ export class UserProjectListComponent implements OnInit {
   }
 
   onFilterChangeType(event: any) {
-    this.projectService.getUserProjectsFiltered(event.target.value).subscribe({
+    console.log(this.date);
+    
+    this.projectService.getUserProjectsFiltered(event.target.value, this.date).subscribe({
       next: data => {
        
         this.dataSource = new MatTableDataSource(data);   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort; 
+        this.userProjects = data;
+        this.ficheNumber = data.length;
         
       }, 
       error: err => {
@@ -98,6 +138,10 @@ export class UserProjectListComponent implements OnInit {
       }
     })
     
+  }
+
+  onDateChange(event: any) {
+    this.date = event.target.value;
   }
 
   goToDetails(id: any) {

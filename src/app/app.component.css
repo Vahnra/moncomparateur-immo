@@ -4,13 +4,13 @@
 }
 
 .nav-modal {
-    background-color: #000A6A; 
+    background-color: #4E60F6; 
     color: white; border-radius: 0px 0px 30px 30px;
 }
 
 #newProjectButton {
     position: absolute;
-    bottom: 18px;
+    top: 62px;
     left: 0; 
     right: 0; 
     margin-left: auto; 
@@ -21,6 +21,6 @@
     border-radius: 50px;
     z-index: 1044;
   
-    width: 62px;
+    width: 175px;
 }
 

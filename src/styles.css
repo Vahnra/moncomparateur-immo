@@ -5,24 +5,34 @@
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+@font-face {
+    font-family: 'Savile-DemiBold';
+    src: url(/assets/fonts/urw-form-demi.ttf) format('embedded-opentype'), /* Internet Explorer */
+         url(/assets/fonts/urw-form-demi.ttf) format('woff2'),             /* Super Modern Browsers */
+         url(/assets/fonts/urw-form-demi.ttf) format('woff'),              /* Pretty Modern Browsers */
+         url(/assets/fonts/urw-form-demi.ttf) format('truetype'),          /* Safari, Android, iOS */
+         url(/assets/fonts/urw-form-demi.ttf) format('svg');               /* Legacy iOS */
+    font-display: swap;
+  }
+
 
 body {
     margin: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Savile-DemiBold', sans-serif;
     height: 100vh;
     max-height: 100vh;
     min-height: 100vh;
 }
 
 .btn {
-    background-color: #000A6A;
+    background-color: #4E60F6;
     color: white;
     border-radius: 30px 30px 30px 30px;
     border: 2px solid white;
 }
 
 .btn:hover {
-    border: 2px solid #000A6A;
-    color: #000A6A;
+    border: 2px solid #4E60F6;
+    color: #4E60F6;
 }
 

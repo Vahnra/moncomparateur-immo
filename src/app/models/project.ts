@@ -10,6 +10,7 @@ export interface Project {
     complement_adress: string,
     created_at: string,
     updated_at: string,
+    image: string,
     comments: [
         text: any,
         created_at: string,

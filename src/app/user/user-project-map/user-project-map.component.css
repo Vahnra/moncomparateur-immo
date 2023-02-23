@@ -22,24 +22,24 @@
 
 #projectButton {
     position: absolute;
-    bottom: 180px;
+    bottom: 90px;
     right: 8px;
     padding: 0px;
-    z-index: 400;
+    z-index: 1031;
 }
 
 #menuIcon {
     position: absolute;
-    top: 9px;
+    top: 65px;
     right: 13px;
     padding: 0px;
-    z-index: 400;
+    z-index: 401;
     cursor: pointer;
 }
 
 #backButton {
     position: absolute;
-    top: 9px;
+    top: 65px;
     left: 13px;
     padding: 0px;
     z-index: 400;
@@ -74,4 +74,11 @@
     z-index: 1044;
     border: 1px solid #000A6A;
     width: 62px;
+}
+.F {
+    filter: hue-rotate(80deg);
+}
+
+.E {
+    filter: hue-rotate(80deg);
 }

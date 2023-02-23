@@ -27,7 +27,17 @@ export class UserProjectComponent implements OnInit {
     calendarStart: null,
     contact: null,
     name: null,
-    typeFiche: null
+    typeFiche: null,
+    gender: null,
+    trackability_info: null,
+    area_size: null,
+    room_numbers: null,
+    floor: null,
+    terrain: null,
+    parking: null,
+    charge: null,
+    tax: null,
+    origin: null
   }
   
   isSuccessful = false;
@@ -68,11 +78,11 @@ export class UserProjectComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const {type, city, adress, complementAdress, comments, phone_numbers, email, calendarTitle, contact, name, typeFiche} = this.form;
+    const {type, city, adress, complementAdress, comments, phone_numbers, email, calendarTitle, contact, name, typeFiche, gender, trackability_info, area_size, room_numbers, floor, terrain, parking, charge, tax, origin} = this.form;
     const calendarStart = new Date(this.form.calendarStart)
     
     
-    this.projectServices.addProject(type, city, adress, complementAdress, comments, phone_numbers, email, calendarTitle, calendarStart, contact, name, typeFiche)
+    this.projectServices.addProject(type, city, adress, complementAdress, comments, phone_numbers, email, calendarTitle, calendarStart, contact, name, typeFiche, gender, trackability_info, area_size, room_numbers, floor, terrain, parking, charge, tax, origin)
       .subscribe({
         next: data => {
           console.log(data);

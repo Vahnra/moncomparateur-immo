@@ -1,22 +1,45 @@
+<nav class="navbar navbar-expand-lg bg-white navbar-light pb-0 pt-0 fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" (click)="goToHome()" style="cursor: pointer;"><img src="assets/icons/logo.webp" alt="" style="height: 30px;"></a>
+        <div *ngIf="isLoggedIn == false" (click)="goToLogIn()" class="col-2 ms-auto text-end" style="cursor: pointer;">
+            <a class="nav-link" ><i-feather name="log-in"></i-feather></a>
+         
+        </div>
+        <div *ngIf="isLoggedIn == false" (click)="goToRegister()" class="col-2 text-end" style="cursor: pointer;">
+            <a class="nav-link" ><i-feather name="user-plus"></i-feather></a>
+    
+        </div>
+        <div *ngIf="isLoggedIn" class="col-2 ms-auto text-end" style="cursor: pointer;" (click)="goToUserDashboard()">
+            <a class="nav-link"><i-feather name="user"></i-feather></a>
+            <!-- <span>Compte</span> -->
+        </div>
+        <div *ngIf="isLoggedIn" class="col-2 text-end" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <a class="nav-link"><i-feather name="menu"></i-feather></a>
+            <!-- <span>Compte</span> -->
+        </div>
+    </div>
+    
+</nav>
 
+  
 <router-outlet></router-outlet>
 
-<nav class="navbar fixed-bottom border-2 border-top border-white" style="height: 50px; background-color: #000A6A; color: white;">
+<!-- <nav class="navbar fixed-bottom border-2 border-top border-white pb-5" style="height: 65px; background-color: #000A6A; color: white;">
     <div class="container-fluid">
 
         <div class="row col-12 mx-auto">
-            <!-- <div class="col-2 mx-auto text-center" (click)="goBack()" style="cursor: pointer;">          
+          <div class="col-2 mx-auto text-center" (click)="goBack()" style="cursor: pointer;">          
                 <a class="nav-link active" aria-current="page"><i-feather name="arrow-left"></i-feather></a>
-                <span>Accueil</span>
-            </div>          -->
+         
+            </div>    
             <div class="col-2 mx-auto text-center" (click)="goToHome()" style="cursor: pointer;">          
                 <a class="nav-link active" aria-current="page"><i-feather name="home"></i-feather></a>
-                <!-- <span>Accueil</span> -->
+
             </div>
 
             <div *ngIf="isLoggedIn" (click)="goToProject()" class="col-2 mx-auto text-center" style="cursor: pointer;">
                 <i-feather name="map"></i-feather>
-                <!-- <span>Commentaire</span> -->
+          
             </div>
 
             <div *ngIf="isLoggedIn" class="col-2 mx-auto text-center" style="cursor: pointer;">
@@ -25,29 +48,26 @@
 
             <div *ngIf="isLoggedIn" (click)="goToProjectList()" class="col-2 mx-auto text-center" style="cursor: pointer;">
                 <a class="nav-link"><i-feather name="file-text"></i-feather></a>
-                <!-- <span>Agenda</span> -->
+       
             </div>
             
             
-            <div *ngIf="isLoggedIn" class="col-2 mx-auto text-center" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <a class="nav-link"><i-feather name="menu"></i-feather></a>
-                <!-- <span>Compte</span> -->
-            </div>
+            
             <div *ngIf="isLoggedIn == false" (click)="goToLogIn()" class="col-2 mx-auto text-center" style="cursor: pointer;">
                 <a class="nav-link" ><i-feather name="log-in"></i-feather></a>
-                <!-- <span>Connexion</span> -->
+             
             </div>
             <div *ngIf="isLoggedIn == false" (click)="goToRegister()" class="col-2 mx-auto text-center" style="cursor: pointer;">
                 <a class="nav-link" ><i-feather name="user-plus"></i-feather></a>
-                <!-- <span>Inscription</span> -->
+        
             </div>
         </div>
 
-        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
             aria-controls="offcanvasNavbar">
             <span class="navbar-toggler-icon"></span>
-        </button> -->
-        <!-- <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -81,14 +101,14 @@
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
-        </div> -->
+        </div>
     </div>
-    <div *ngIf="isLoggedIn" id="newProjectButton" class="text-dark" (click)="goToNewProject()" >
-        <i-feather name="plus" style="width: 40px; height: 40px;"></i-feather>
-    </div>
-</nav>
+    
+</nav> 
 
-
+<!-- <div *ngIf="isLoggedIn" id="newProjectButton" class="text-dark" (click)="goToNewProject()" >
+    + Ajouter une fiche
+</div> -->
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,7 +158,7 @@
                             <i-feather name="file-text"></i-feather>
                         </div>
                         <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh; ">
-                            Liste Prospection
+                            Liste
                         </div>
                     </div>  
                     <div class="col-4 mx-auto" (click)="goToProjectMap()" style="cursor: pointer;"  data-bs-dismiss="modal">
@@ -146,17 +166,25 @@
                             <i-feather name="map"></i-feather>
                         </div>
                         <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh; ">
-                            Carte Prospection
+                            Carte
                         </div>
                     </div>
-                    <div class="col-4 mx-auto" (click)="goToDvf()" style="cursor: pointer;"  data-bs-dismiss="modal">
+                    <div class="col-4 mx-auto" (click)="goToProspection()" style="cursor: pointer;"  data-bs-dismiss="modal">
+                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
+                            <i-feather name="clipboard"></i-feather>
+                        </div>
+                        <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh;">
+                            Outils
+                        </div>
+                    </div>
+                    <!-- <div class="col-4 mx-auto" (click)="goToDvf()" style="cursor: pointer;"  data-bs-dismiss="modal">
                         <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
                             <i-feather name="map"></i-feather>
                         </div>
                         <div class="d-flex align-items-start justify-content-center">
                             Carte DVF
                         </div>
-                    </div>   
+                    </div>    -->
                     <!-- <div class="col-4 mx-auto" (click)="goToDpe()" style="cursor: pointer;"  data-bs-dismiss="modal">
                         <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
                             <i-feather name="map"></i-feather>
@@ -179,14 +207,7 @@
                         </div>
                     </div>
 
-                    <div class="col-4 mx-auto" (click)="goToProspection()" style="cursor: pointer;"  data-bs-dismiss="modal">
-                        <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
-                            <i-feather name="clipboard"></i-feather>
-                        </div>
-                        <div class="d-flex align-items-start justify-content-center text-center" style="height: 5vh;">
-                            Scénario prospection
-                        </div>
-                    </div>
+                    
                     <!-- <div class="col-4 mx-auto" (click)="goToProspection()" style="cursor: pointer;"  data-bs-dismiss="modal">
                         <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
                             <i-feather name="users"></i-feather>

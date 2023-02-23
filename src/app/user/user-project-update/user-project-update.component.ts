@@ -16,6 +16,7 @@ export class UserProjectUpdateComponent implements OnInit {
 
   project: Project;
   form: any = {
+    id: null,
     type: null,
     city: null,
     adress: null,
@@ -24,7 +25,17 @@ export class UserProjectUpdateComponent implements OnInit {
     complement_adress: null,
     comments: null,
     email: null,
-    name: null
+    name: null,
+    gender: null,
+    trackability_info: null,
+    area_size: null,
+    room_numbers: null,
+    floor: null,
+    terrain: null,
+    parking: null,
+    charge: null,
+    tax: null,
+    origin: null
   }
   isSuccessful = false;
   isSignUpFailed = false;
@@ -65,6 +76,7 @@ export class UserProjectUpdateComponent implements OnInit {
     this.projectServices.getProject(this.projectId).subscribe({next: response => {
       this.project= response;
       this.form = response;
+      
     }, error: err => {
       console.log(err);     
     }, complete: () => {}
@@ -73,9 +85,9 @@ export class UserProjectUpdateComponent implements OnInit {
   }
   
   onSubmit(): void {
-    const {type, city, adress, phone_numbers, status, complement_adress, email, name} = this.form;
+    const {type, city, adress, phone_numbers, status, complement_adress, email, name,contact, gender, trackability_info, area_size, room_numbers, floor, terrain, parking, charge, tax, origin} = this.form;
     
-    this.projectServices.updateProject(type, city, adress, phone_numbers, status, complement_adress, name, email, this.projectId)
+    this.projectServices.updateProject(type, city, adress, phone_numbers, status, complement_adress, name, email, this.projectId, contact, gender, trackability_info, area_size, room_numbers, floor, terrain, parking, charge, tax, origin)
       .subscribe({
         next: data => {
 
