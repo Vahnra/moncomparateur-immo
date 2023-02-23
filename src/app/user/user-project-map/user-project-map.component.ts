@@ -70,7 +70,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   options = {
     layers: [
-      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' })
+      tileLayer('https://api.mapbox.com/styles/v1/vahnra/cldelssdd000601r1yvk6b5if/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoidmFobnJhIiwiYSI6ImNsZGVsbnF4bDBlc2IzeHFwOWNiaW1hZzgifQ.F5DxHvw1ddIUpzJutEvysg', { maxZoom: 19, attribution: '© Mapbox, © OpenStreetMap' })
     ],
     zoom: 15,
     center: latLng(48.8, 2.3),
@@ -510,7 +510,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
       icon: icon({
         ...Icon.Default.prototype.options,
         iconUrl: letter,
-        iconRetinaUrl: 'assets/marker-icon-2x.png',
+        iconRetinaUrl: letter,
         shadowUrl: 'assets/marker-shadow.png',
       })
     }).on('click', () => {

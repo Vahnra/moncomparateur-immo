@@ -117,14 +117,119 @@
             <!-- <div class="modal-header">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div> -->
-            <div class="modal-body pt-3">
-                <div class="row">
+            <div class="modal-body pt-0 ps-0 pe-0">
+     
+                    <div class="card-header mt-0 ps-1 pe-1 text-dark bg-light" *ngIf="user" style="height: 28vh;">
+                        <div class="row border-1 border-bottom" style="height: 100px; margin: 0;">
+                            <div class="col-3 ">
+                                <div class="d-flex align-items-center justify-content-center" style="height: 90px;">
+                                    <img src="assets/images/user-profile.png" alt="" style="width: 100%;">
+                                </div>
+                            </div>
+                            <div class="col-7" style="font-size: 70%;">
+                                <h4 class="mt-2">{{ user.username }}</h4>
+                                <div *ngIf="roles == 'free'">
+                                    <i-feather class="extra-small" name="lock"></i-feather> Utilisateur gratuit
+                                </div>
+                                <div *ngIf="roles == 'paid'">
+                                    <i-feather class="extra-small" name="unlock"></i-feather> Utilisateur payant
+                                </div>
+                                <div>
+                                    <i-feather class="extra-small" name="mail"></i-feather> {{ user.email }}
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="d-flex align-items-end justify-content-center" style="height: 45px; cursor: pointer;" (click)="logOut()">
+                                    <i-feather name="log-out"></i-feather>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 0;">
+
+                            <div class="col-3 mt-2" >
+                                <div class="card mx-auto" style="border-radius: 15px;">
+                                    <div class="card-body p-1" style="font-size: 60%;">                   
+                                        <div class="text-muted">Opportunité</div>
+                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3 mt-2" >
+                                <div class="card mx-auto" style="border-radius: 15px;">
+                                    <div class="card-body p-1" style="font-size: 60%;">                   
+                                        <div class="text-muted">Prospecté</div>
+                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3 mt-2" >
+                                <div class="card mx-auto" style="border-radius: 15px;">
+                                    <div class="card-body p-1" style="font-size: 60%;">                   
+                                        <div class="text-muted">Absent</div>
+                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
+                                    </div>
+                                </div>
+                            </div>
+               
+
+                            <div class="col-3 mt-2" >
+                                <div class="card mx-auto" style="border-radius: 15px;">
+                                    <div class="card-body p-1" style="font-size: 60%;">                   
+                                        <div class="text-muted">A relancer</div>
+                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3 mt-2" >
+                                <div class="card mx-auto" style="border-radius: 15px;">
+                                    <div class="card-body p-1" style="font-size: 60%;">                   
+                                        <div class="text-muted">Estimation</div>
+                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3 mt-2" >
+                                <div class="card mx-auto" style="border-radius: 15px;">
+                                    <div class="card-body p-1" style="font-size: 60%;">                   
+                                        <div class="text-muted">En vente</div>
+                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3 mt-2" >
+                                <div class="card mx-auto" style="border-radius: 15px;">
+                                    <div class="card-body p-1" style="font-size: 60%;">                   
+                                        <div class="text-muted">Pas optunité</div>
+                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-3 mt-2" >
+                                <div class="card mx-auto" style="border-radius: 15px;">
+                                    <div class="card-body p-1" style="font-size: 60%;">                   
+                                        <div class="text-muted">Archivé</div>
+                                        <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>                      
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    
+                <div class="row" style="margin: 0;">
                     <div class="col-4 mx-auto" style="cursor: pointer;"  data-bs-dismiss="modal" (click)="goToUserDashboard()">
                         <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh; ">
                             <i-feather name="user"></i-feather>
                         </div>
                         <div class="d-flex align-items-start justify-content-center" style="height: 5vh;">
-                            Profile
+                            Profil
                         </div>
                     </div>
                     <div class="col-4 mx-auto" style="cursor: pointer;"  data-bs-dismiss="modal" (click)="goToContacts()">
@@ -144,7 +249,7 @@
                         </div>
                     </div>            
                 </div>
-                <div class="row">
+                <div class="row" style="margin: 0;">
                     <!-- <div class="col-4 mx-auto" (click)="goToProjectList()" style="cursor: pointer;"  data-bs-dismiss="modal">
                         <div class="d-flex align-items-end justify-content-center mb-2" style="height: 5vh;">
                             <i class="fa-solid fa-bars fa-2xl"></i>
@@ -195,7 +300,7 @@
                     </div> -->
                            
                 </div>
-                <div class="row mt-3">
+                <div class="row" style="margin: 0;">
                      
                        
                     <div class="col-4 mx-auto" (click)="goToChatGPT()" style="cursor: pointer;"  data-bs-dismiss="modal">

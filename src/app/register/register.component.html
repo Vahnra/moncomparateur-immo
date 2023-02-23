@@ -1,12 +1,12 @@
 <div class="container-xl bg-white text-dark mb-5">
     <form method="post">
       <div class="row ">
-        <div class="col-lg-6 mx-auto mt-4 my-auto">
+        <div class="col-lg-6 mx-auto mt-4 my-auto ps-3 pe-3">
   
           <div class="row">
   
             <div class="col-12">
-              <h1 class="text-start fw-bold mt-3 mb-4 text-center fw-normal">Inscription</h1>
+              <h1 class="text-start fw-bold mt-5 mb-4 text-center fw-normal" style="color: #4E60F6">Inscription</h1>
             </div>
   
             <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" [appMatchPassword]="['password', 'confirmPassword']">
@@ -96,7 +96,7 @@
                     <div *ngIf="birthdayDate.errors['required']">Veuillez entrer votre date de naissance</div>
                 </div>
 
-                <h5 class="mt-4 text-center">Informations sur le compte</h5>
+                <h5 class="mt-5 text-center">Informations sur le compte</h5>
 
                 <label class="mb-1 mt-3 form-label" for="inputEmail">E-mail</label>
                 <input 

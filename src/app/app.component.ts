@@ -4,6 +4,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { catchError, Subscription } from 'rxjs';
 import { StorageService } from './_services/storage.service';
 import { UserService } from './_services/user.service';
+import { User } from './models/user';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,8 @@ export class AppComponent {
   title = 'moncomparateur-immo';
   isLoggedIn: boolean = false;
   userId: number;
+  user: User;
+  roles: any;
   
   routerSubscription: Subscription;
   queryParamsSubscription: Subscription;
@@ -37,10 +40,12 @@ export class AppComponent {
     // }
     
     if (this.storageService.isLoggedIn == true) {
-      this.userService.getCurrentUser().subscribe(userId => {
-        if (userId) {
-          this.userId = userId;
+      this.userService.getCurrentUser().subscribe(user => {
+        if (user.id) {
+          this.userId = user.id;
           this.isLoggedIn = true;
+          this.user = user;
+          this.roles = user.status;
         }
       });
     } else {
@@ -135,6 +140,10 @@ export class AppComponent {
 
   goToNewProject() {
     this.router.navigate([`/user/${this.userId}/project`])
+  }
+
+  logOut() {
+
   }
 }
 

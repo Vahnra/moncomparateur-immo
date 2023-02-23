@@ -1,11 +1,11 @@
 
 .modal-fullscreen-md-down {
-    height: 50%;
+    height: 75%;
 }
 
 .nav-modal {
-    background-color: #4E60F6; 
-    color: white; border-radius: 0px 0px 30px 30px;
+    background-color: #B0B8FD; 
+    color: white;
 }
 
 #newProjectButton {
@@ -22,5 +22,9 @@
     z-index: 1044;
   
     width: 175px;
+}
+
+.modal.fade .modal-dialog {
+    transform: translate3d(0, 25vh, 0);
 }
 

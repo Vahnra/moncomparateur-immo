@@ -9,3 +9,11 @@
 .btn:hover {
     color: white;
 }
+
+.form-control {
+    border-radius: 15px;
+}
+
+.form-select {
+    border-radius: 15px;
+}

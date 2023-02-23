@@ -2,37 +2,43 @@
   
         <div class="row">
 
-          <div class="col-12" style="margin-top: 10vh;">
-            <h1 class="text-start fw-bold mt-5 mb-4 text-center fw-normal">Merci de vous connecter</h1>
-          </div>
+          <!-- <div class="col-12" style="margin-top: 5vh; "> -->
+            <img class="mx-auto col-6" src="assets/images/connexion-logo.png" alt="" style="width: 200px; margin-top: 12vh;">
+          <!-- </div> -->
 
-          <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate id="sign-in">
-            <label class="mb-1 mt-2 form-label" for="inputEmail">E-mail</label>
-              <input 
+          <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate id="sign-in">         
+              
+              <div class="form-floating mb-3 border-bottom border-2">
+                <input 
+                class="form-control border-top-0 border-start-0 border-end-0 border-bottom-0 mt-5" 
+                id="floatingInput"
                 type="email" 
-                class="form-control" 
                 name="username" 
                 [(ngModel)]="form.username" 
                 required 
                 #username="ngModel"
                 [ngClass]="{ 'is-invalid': f.submitted && username.errors }" 
                 placeholder="" 
-              >
+                >
+                <label for="floatingInput">E-mail</label>
+              </div>
               <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
                 Entrez votre email
               </div>
-              <label class="mb-1 mt-3 form-label" for="inputEmail">Mot de passe</label>
-              <input 
-                type="password"
-                class="form-control"
-                name="password"
-                [(ngModel)]="form.password"
-                required
-                minlength="4"
-                #password="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && password.errors }" 
-                placeholder="" 
-              >
+              <div class="form-floating mb-3 border-bottom border-2" id="floatingInputPw">
+                <input 
+                  type="password"
+                  class="form-control border-top-0 border-start-0 border-end-0 border-bottom-0 mt-4" 
+                  name="password"
+                  [(ngModel)]="form.password"
+                  required
+                  minlength="4"
+                  #password="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && password.errors }" 
+                  placeholder="" 
+                >
+                <label for="floatingInputPw">Mot de passe</label>
+              </div>
               <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
                 <div *ngIf="password.errors['required']">Entrez un mot de passe</div>
                 <div *ngIf="password.errors['minlength']">
@@ -40,8 +46,8 @@
                 </div>
               </div>
               <div class="text-center">
-                <button *ngIf="f.form.valid" id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-5 btn">Se connecter</button>
-                <button *ngIf="!f.form.valid" id="submit" name="sign-in-button" class="btn btn-lg mb-3 px-5 no-border-radius signin mt-5 btn" disabled>Se connecter</button>
+                <button *ngIf="f.form.valid" id="submit" name="sign-in-button" class="btn btn-lg col-8 mb-3 px-5 no-border-radius signin mt-5 btn">connexion</button>
+                <button *ngIf="!f.form.valid" id="submit" name="sign-in-button" class="btn btn-lg col-8 mb-3 px-5 no-border-radius signin mt-5 btn" disabled>connexion</button>
               </div>
               <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger mt-3" role="alert">
                 {{ errorMessage }}
@@ -51,7 +57,12 @@
         </div>
 
     <div class="row">
-      <div class="col-12 text-center mb-4" style="margin-top: 1.2rem">Pas de compte ?<a (click)="goToRegister()" style="cursor: pointer; color: #000A6A;"> Inscrivez-vous</a></div>
+      <div class="col-12 text-center mb-2" style="margin-top: 1.2rem">Créer un compte ?
+        <!-- <a (click)="goToRegister()" style="cursor: pointer; color: #000A6A;"> Inscrivez-vous</a> -->
+        
+      </div>
+      <button (click)="goToRegister()" class="btn col-4 mx-auto btn-lg mb-3  no-border-radius signin mt-1 btn">créer</button>
+      
     </div>
     
 </div>
