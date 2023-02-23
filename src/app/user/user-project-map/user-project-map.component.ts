@@ -70,7 +70,7 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   options = {
     layers: [
-      tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { maxZoom: 19, subdomains:['mt0','mt1','mt2','mt3'], attribution: '...' })
+      tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '...' })
     ],
     zoom: 15,
     center: latLng(48.8, 2.3),
