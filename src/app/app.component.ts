@@ -86,6 +86,22 @@ export class AppComponent {
                   this.isLoggedIn = true;
                   this.user = user;
                 }
+                this.userService.getProjectStats().subscribe({
+                  next: data => {
+                    this.opportuniteStats = data["0"];
+                    this.prospecteStats = data["1"];
+                    this.absentStats = data["2"];
+                    this.aRelancerStats = data["3"];
+                    this.estimationStats = data["4"];
+                    this.enVenteStats = data["5"];
+                    this.pasOpportuniteStats = data["6"];
+                    this.archiverStats = data["7"];
+                    console.log(data);
+                    
+                  }, error: err => {
+                    console.log(err);
+                  }, complete: () => {}
+                })
               }, error: err => {
                 this.isLoggedIn = false;
                 this.storageService.clean();
