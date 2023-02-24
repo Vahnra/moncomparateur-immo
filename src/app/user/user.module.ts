@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { UserHeaderComponent } from './user-header/user-header.component';
 import { RouterModule } from '@angular/router';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { CalendarDateFormatter, CalendarModule, CalendarNativeDateFormatter, DateAdapter, DateFormatterParams } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { UserCalendarComponent } from './user-calendar/user-calendar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -40,8 +40,6 @@ import { UserReceiptComponent } from './user-receipt/user-receipt.component';
 import { UserReceiptDetailsComponent } from './user-receipt-details/user-receipt-details.component';
 import { IconsModule } from '../shared/icons/icons.module';
 import { UploadModule } from '../upload/upload.module';
-
-
 
 @NgModule({
   declarations: [
@@ -90,6 +88,7 @@ import { UploadModule } from '../upload/upload.module';
     PasswordDirectiveModule,
     IconsModule,
     UploadModule
-  ]
+  ],
+
 })
 export class UserModule { }

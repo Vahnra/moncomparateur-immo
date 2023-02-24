@@ -18,6 +18,7 @@ import {
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
+  CalendarDateFormatter,
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
@@ -28,6 +29,7 @@ import { CalendarService } from 'src/app/_services/calendar.service';
 import { UserService } from 'src/app/_services/user.service';
 import { User } from 'src/app/models/user';
 import { Router } from '@angular/router';
+import { CustomDateFormatter } from './custom-date-formatter.provider';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -49,7 +51,13 @@ const colors: Record<string, EventColor> = {
   selector: 'app-user-calendar',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './user-calendar.component.html',
-  styleUrls: ['./user-calendar.component.css']
+  styleUrls: ['./user-calendar.component.css'],
+  providers: [
+    {
+      provide: CalendarDateFormatter,
+      useClass: CustomDateFormatter,
+    },
+  ],
 })
 export class UserCalendarComponent implements OnInit {
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
