@@ -34,7 +34,7 @@
 <router-outlet></router-outlet>
 
 <!-- Modal logout confirmation -->
-<div class="modal fade" id="logOutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="logOutModal" tabindex="-1" aria-labelledby="logOutModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -42,7 +42,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Etes vous sur de vouloir vous déconnecter ?
+
+                <p>Etes vous sur de vouloir vous déconnecter ?</p>             
+                <div class="mx-auto col-12 text-center">
+                    <button (click)="logOut()" class="btn btn-lg btn-danger" style="background-color: #BB2D3B;">Se déconnecter</button>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -104,10 +108,9 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <div class="d-flex align-items-end justify-content-center"
-                                style="height: 45px; cursor: pointer;" (click)="logOut()">
+                            <button type="button" class="d-flex align-items-end justify-content-center border-0" style=" color: lightgrey; height: 45px; cursor: pointer; background-color: #000A6A" data-bs-toggle="modal" data-bs-target="#logOutModal">
                                 <i-feather name="log-out"></i-feather>
-                            </div>
+                            </button>
                         </div>
                     </div>
                     <div class="row" style="margin: 0;">
@@ -116,7 +119,7 @@
                             <div class="card mx-auto" style="border-radius: 15px;">
                                 <div class="card-body p-1" style="font-size: 60%;">
                                     <div class="text-muted">Opportunité</div>
-                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">{{opportuniteStats}}</div>
                                 </div>
                             </div>
                         </div>
@@ -125,7 +128,7 @@
                             <div class="card mx-auto" style="border-radius: 15px;">
                                 <div class="card-body p-1" style="font-size: 60%;">
                                     <div class="text-muted">Prospecté</div>
-                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">{{prospecteStats}}</div>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +137,7 @@
                             <div class="card mx-auto" style="border-radius: 15px;">
                                 <div class="card-body p-1" style="font-size: 60%;">
                                     <div class="text-muted">Absent</div>
-                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">{{absentStats}}</div>
                                 </div>
                             </div>
                         </div>
@@ -144,7 +147,7 @@
                             <div class="card mx-auto" style="border-radius: 15px;">
                                 <div class="card-body p-1" style="font-size: 60%;">
                                     <div class="text-muted">A relancer</div>
-                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">{{aRelancerStats}}</div>
                                 </div>
                             </div>
                         </div>
@@ -153,16 +156,16 @@
                             <div class="card mx-auto" style="border-radius: 15px;">
                                 <div class="card-body p-1" style="font-size: 60%;">
                                     <div class="text-muted">Estimation</div>
-                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">{{estimationStats}}</div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-3 mt-2 statsBubble">
-                            <div class="card mx-auto statsBubble" style="border-radius: 15px;">
+                            <div class="card mx-auto" style="border-radius: 15px;">
                                 <div class="card-body p-1" style="font-size: 60%;">
                                     <div class="text-muted">En vente</div>
-                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">{{enVenteStats}}</div>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +174,7 @@
                             <div class="card mx-auto" style="border-radius: 15px;">
                                 <div class="card-body p-1" style="font-size: 60%;">
                                     <div class="text-muted">Pas optunité</div>
-                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">{{pasOpportuniteStats}}</div>
                                 </div>
                             </div>
                         </div>
@@ -180,7 +183,7 @@
                             <div class="card mx-auto" style="border-radius: 15px;">
                                 <div class="card-body p-1" style="font-size: 60%;">
                                     <div class="text-muted">Archivé</div>
-                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">5</div>
+                                    <div class="text-primary text-end pe-2" style="font-size: 160%;">{{archiverStats}}</div>
                                 </div>
                             </div>
                         </div>

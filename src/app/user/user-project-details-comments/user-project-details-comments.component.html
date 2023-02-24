@@ -51,13 +51,13 @@
     <span class="text-center pb-2" (click)="goToNewProject()" style="cursor: pointer; background-color: #000A6A; color: white;"> + Creation d'une nouvelle fiche</span>
 </div> -->
 
-<nav class="fixed-top" style="margin-top: 41.5px;">
+<nav class="fixed-top" style="margin-top: 50px;">
     <div class="container-fluid p-0 border-bottom" style="background-color: #000A6A;">
-         <div class="container-fluid row py-2" style="background-color: #000A6A;">
-             <div class="col-5 me-auto text-end text-white" style="font-size: 70%;">
+         <div class="container-fluid row py-3" style="background-color: #000A6A;">
+             <div class="col-5 me-auto text-end text-white" style="font-size: 80%;">
                  55 fiches
              </div>
-             <div class="col-5 ms-auto text-white" style="font-size: 70%; cursor: pointer;" (click)="goToNewProject()">
+             <div class="col-5 ms-auto text-white" style="font-size: 80%; cursor: pointer;" (click)="goToNewProject()">
                  + Ajouter une fiche
              </div>
          </div>
@@ -77,7 +77,7 @@
      </div>
 </nav>
 
-<div class="card text-center border border-0" *ngIf="project">
+<div class="card text-center border border-0" *ngIf="project" style="margin-top: 145.8px;">
     <div class="card-header">
         <div class="mb-2">
             <select class="form-select" aria-label="Default select example">

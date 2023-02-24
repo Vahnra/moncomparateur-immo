@@ -41,10 +41,8 @@ export class LoginComponent {
       },
       complete: () => {
         this.toastService.show('Connexion réussi', 'Vous êtes maintenant connecté', { delay: 3000});
-        this.router.navigate([`/`])
-          // .then(() => {
-          //   window.location.reload();
-          // });
+        this.router.navigate([`/`]) 
+
       }
     });
   }

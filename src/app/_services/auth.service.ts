@@ -57,7 +57,8 @@ export class AuthService {
   doLogout() {
     let removeToken = sessionStorage.removeItem('token');
     if (removeToken == null) {
-      this.router.navigate(['login'])
+      this.router.navigate(['login']);
+      window.location.reload()
     }
   }
   

@@ -46,24 +46,36 @@
     <div class="card-body mb-5">
         <ul class="list-group" *ngIf="roles == 'paid';else other_content">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                Prospection
-                <span class="badge bg-primary rounded-pill">{{ prospectionStats }}</span>
+                Opportunité
+                <span class="badge bg-primary rounded-pill">{{ opportuniteStats }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Prospecté
+                <span class="badge bg-primary rounded-pill">{{ prospecteStats }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Absent
+                <span class="badge bg-primary rounded-pill">{{ absentStats }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                A relancer
+                <span class="badge bg-primary rounded-pill">{{ aRelancerStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 Estimation
-                <span class="badge bg-primary rounded-pill">{{ estimationsStats }}</span>
+                <span class="badge bg-primary rounded-pill">{{ estimationStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                Mandat
-                <span class="badge bg-primary rounded-pill">{{ mandatsStats }}</span>
+                En vente
+                <span class="badge bg-primary rounded-pill">{{ enVenteStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                Visite
-                <span class="badge bg-primary rounded-pill">{{ visitesStats }}</span>
+                Pas d'opportunitée
+                <span class="badge bg-primary rounded-pill">{{ pasOpportuniteStats }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                Contre Visite
-                <span class="badge bg-primary rounded-pill">{{ contreVisitesStats }}</span>
+                Archivé
+                <span class="badge bg-primary rounded-pill">{{ archiverStats }}</span>
             </li>
         </ul>
         <ng-template #other_content>

@@ -1,32 +1,35 @@
-<div *ngIf="user && roles == 'paid'" class="card text-center border-bottom-0 mb-5">
-    <div class="card-header fixed-top" style="background-color: #4E60F6; border-radius: 0;">
-        <ul class="nav nav-tabs card-header-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="true">Terrain</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white" (click)="goToTelephonique()" style="cursor: pointer;">Téléphonique</a>
-            </li>
-        </ul>
-    </div>
-    <div class="card-body border-bottom-0 mt-5 ">
 
-        <ol class="list-group list-group-numbered">
-            <li class="list-group-item">Ciblez au maximum le discours (la personnalisation est la clé)</li>
-            <li class="list-group-item">En cas d’absence, faire la demande aux voisinages/gardien (heure de présence dans le domicile)</li>
-            <li class="list-group-item">Faire un courrier personnalisé</li>
-            <li class="list-group-item">Mettre des flyers ciblés (type de bien recherché, superficie, budget…)</li>
-            <li class="list-group-item">Si déjà en exclusivité demander une collaboration à la fin</li>
-            <li class="list-group-item">Faire des flyers des biens similaires vendus</li>
-            <li class="list-group-item">Récupérer toute les coordonnées des personnes approchées pour effectuer des campagnes de parrainages</li>
-            <li class="list-group-item">Proposez des jeux concours contre des estimations ou mandats (taxe foncière remboursé, diagnostic offert, don à des associations…)</li>
-            <li class="list-group-item">Ciblez les maisons vendus il y a plus de 8 ans (DVF)</li>
-            <li class="list-group-item">Cassez les codes/démarquez vous en prospection (offrez des fleurs à la Saint Valentin, des chocolats à Pâques</li>
-            <li class="list-group-item">Prendre des infos auprès des acquéreurs (adresses des biens visités, meublés ou non…)</li>
-        </ol>
+<div style="margin-top: 50px;">
+    <div *ngIf="user && roles == 'paid'" class="card text-center border-bottom-0 mb-5" style="margin-top: 50px;">
+        <div class="card-header fixed-top" style="background-color: #4E60F6; border-radius: 0; margin-top: 50px">
+            <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="true">Terrain</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" (click)="goToTelephonique()" style="cursor: pointer;">Téléphonique</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body border-bottom-0 mt-5 ">
 
+            <ol class="list-group list-group-numbered">
+                <li class="list-group-item">Ciblez au maximum le discours (la personnalisation est la clé)</li>
+                <li class="list-group-item">En cas d’absence, faire la demande aux voisinages/gardien (heure de présence dans le domicile)</li>
+                <li class="list-group-item">Faire un courrier personnalisé</li>
+                <li class="list-group-item">Mettre des flyers ciblés (type de bien recherché, superficie, budget…)</li>
+                <li class="list-group-item">Si déjà en exclusivité demander une collaboration à la fin</li>
+                <li class="list-group-item">Faire des flyers des biens similaires vendus</li>
+                <li class="list-group-item">Récupérer toute les coordonnées des personnes approchées pour effectuer des campagnes de parrainages</li>
+                <li class="list-group-item">Proposez des jeux concours contre des estimations ou mandats (taxe foncière remboursé, diagnostic offert, don à des associations…)</li>
+                <li class="list-group-item">Ciblez les maisons vendus il y a plus de 8 ans (DVF)</li>
+                <li class="list-group-item">Cassez les codes/démarquez vous en prospection (offrez des fleurs à la Saint Valentin, des chocolats à Pâques</li>
+                <li class="list-group-item">Prendre des infos auprès des acquéreurs (adresses des biens visités, meublés ou non…)</li>
+            </ol>
+
+        </div>
     </div>
-</div>
-<div *ngIf="user && roles == 'free'" class="list-group text-center" style="margin-top: 30vh;">
-    Seulement pour les utilisateurs avec abonnement
+    <div *ngIf="user && roles == 'free'" class="list-group text-center" style="margin-top: 30vh;">
+        Seulement pour les utilisateurs avec abonnement
+    </div>
 </div>

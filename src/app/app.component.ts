@@ -5,6 +5,7 @@ import { catchError, Subscription } from 'rxjs';
 import { StorageService } from './_services/storage.service';
 import { UserService } from './_services/user.service';
 import { User } from './models/user';
+import { AuthService } from './_services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +18,15 @@ export class AppComponent {
   userId: number;
   user: User;
   roles: any;
+
+  opportuniteStats: number;
+  prospecteStats: number;
+  absentStats: number;
+  aRelancerStats: number;
+  estimationStats: number;
+  enVenteStats: number;
+  pasOpportuniteStats: number;
+  archiverStats: number;
   
   routerSubscription: Subscription;
   queryParamsSubscription: Subscription;
@@ -26,18 +36,12 @@ export class AppComponent {
     private router: Router, 
     private storageService: StorageService, 
     private route: ActivatedRoute,
+    private authService: AuthService,
     private location: Location
   ) { }
 
-  // private tokenExpired(token: string) {
-  //   const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
-  //   return (Math.floor((new Date).getTime() / 1000)) >= expiry;
-  // }
 
   ngOnInit(): void {
-    // if (this.tokenExpired(this.storageService.getToken())) {
-    //   this.storageService.clean()  
-    // }
     
     if (this.storageService.isLoggedIn == true) {
       this.userService.getCurrentUser().subscribe(user => {
@@ -47,6 +51,22 @@ export class AppComponent {
           this.user = user;
           this.roles = user.status;
         }
+        this.userService.getProjectStats().subscribe({
+          next: data => {
+            this.opportuniteStats = data["0"];
+            this.prospecteStats = data["1"];
+            this.absentStats = data["2"];
+            this.aRelancerStats = data["3"];
+            this.estimationStats = data["4"];
+            this.enVenteStats = data["5"];
+            this.pasOpportuniteStats = data["6"];
+            this.archiverStats = data["7"];
+            console.log(data);
+            
+          }, error: err => {
+            console.log(err);
+          }, complete: () => {}
+        })
       });
     } else {
       this.isLoggedIn = false;
@@ -56,10 +76,6 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
 
         this.queryParamsSubscription = this.route.queryParams.subscribe(params => {
-
-          // if (this.tokenExpired(this.storageService.getToken())) {
-          //   this.storageService.clean()  
-          // }
           
           if (this.storageService.isLoggedIn == true) {
             this.userService.getCurrentUser().subscribe({
@@ -68,6 +84,7 @@ export class AppComponent {
                   window.sessionStorage.setItem("role", user.roles);
                   this.userId = user.id;
                   this.isLoggedIn = true;
+                  this.user = user;
                 }
               }, error: err => {
                 this.isLoggedIn = false;
@@ -143,7 +160,7 @@ export class AppComponent {
   }
 
   logOut() {
-
+    this.authService.doLogout();
   }
 }
 

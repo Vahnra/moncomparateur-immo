@@ -84,9 +84,9 @@ export class UserProjectMapComponent implements OnInit, OnDestroy {
 
   layersControl = {
     baseLayers: {
-      'Plan par défaut': tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', { 
+      'Plan par défaut': tileLayer('https://api.mapbox.com/styles/v1/vahnra/cldelssdd000601r1yvk6b5if/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoidmFobnJhIiwiYSI6ImNsZGVsbnF4bDBlc2IzeHFwOWNiaW1hZzgifQ.F5DxHvw1ddIUpzJutEvysg', { 
         maxZoom: 19, 
-        subdomains:['mt0','mt1','mt2','mt3']
+        attribution: '© Mapbox, © OpenStreetMap'
       }),
       'Vue satellite': tileLayer('https://wxs.ign.fr/decouverte/geoportail/wmts?' +
         '&REQUEST=GetTile&SERVICE=WMTS&VERSION=1.0.0&TILEMATRIXSET=PM' +

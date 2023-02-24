@@ -14,11 +14,15 @@ export class UserDashboardComponent implements OnInit {
   userId: string|number;
   user: User;
   roles: string;
-  prospectionStats: number;
-  estimationsStats: number;
-  mandatsStats: number;
-  visitesStats: number;
-  contreVisitesStats: number;
+  
+  opportuniteStats: number;
+  prospecteStats: number;
+  absentStats: number;
+  aRelancerStats: number;
+  estimationStats: number;
+  enVenteStats: number;
+  pasOpportuniteStats: number;
+  archiverStats: number;
 
   constructor(
     private userService: UserService,
@@ -44,11 +48,16 @@ export class UserDashboardComponent implements OnInit {
     
     this.userService.getProjectStats().subscribe({
       next: data => {
-        this.prospectionStats = data["0"];
-        this.estimationsStats = data["1"];
-        this.mandatsStats = data["2"];
-        this.visitesStats = data["3"];
-        this.contreVisitesStats = data["4"];
+        this.opportuniteStats = data["0"];
+        this.prospecteStats = data["1"];
+        this.absentStats = data["2"];
+        this.aRelancerStats = data["3"];
+        this.estimationStats = data["4"];
+        this.enVenteStats = data["5"];
+        this.pasOpportuniteStats = data["6"];
+        this.archiverStats = data["7"];
+        console.log(data);
+        
       }, error: err => {
         console.log(err);
       }, complete: () => {}

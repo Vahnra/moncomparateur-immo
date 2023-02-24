@@ -11,18 +11,18 @@ export class StorageService {
   constructor(private router: Router) { }
 
   clean(): void {
-    window.sessionStorage.clear();
+    window.localStorage.removeItem(USER_KEY);
   }
 
   // Save user in local storage
   public saveUser(user: any): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, user.token);
+    window.localStorage.removeItem(USER_KEY);
+    window.localStorage.setItem(USER_KEY, user.token);
   }
 
    // Get user from local storage
    public getToken(): any {
-    const token = window.sessionStorage.getItem(USER_KEY);
+    const token = window.localStorage.getItem(USER_KEY);
     if (token) { 
       return token;
     }
@@ -30,12 +30,12 @@ export class StorageService {
   }
   
   get isLoggedIn(): boolean {
-    let authToken = sessionStorage.getItem(USER_KEY);
+    let authToken = localStorage.getItem(USER_KEY);
     return authToken !== null ? true : false;
   }
 
   doLogout() {
-    let removeToken = sessionStorage.removeItem(USER_KEY);
+    let removeToken = localStorage.removeItem(USER_KEY);
     if (removeToken == null) {
       this.router.navigate(['log-in']);
     }

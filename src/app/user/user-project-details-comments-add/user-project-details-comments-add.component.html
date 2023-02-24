@@ -51,7 +51,33 @@
     <span class="text-center pb-2" (click)="goToNewProject()" style="cursor: pointer; background-color: #000A6A; color: white;"> + Creation d'une nouvelle fiche</span>
 </div> -->
 
-<div class="container-xl bg-white text-dark ">
+<nav class="fixed-top" style="margin-top: 50px;">
+    <div class="container-fluid p-0 border-bottom" style="background-color: #000A6A;">
+         <div class="container-fluid row py-3" style="background-color: #000A6A;">
+             <div class="col-5 me-auto text-end text-white" style="font-size: 80%;">
+                 55 fiches
+             </div>
+             <div class="col-5 ms-auto text-white" style="font-size: 80%; cursor: pointer;" (click)="goToNewProject()">
+                 + Ajouter une fiche
+             </div>
+         </div>
+         <div class="container-fluid py-2" style="background-color: #ffffff; border-radius: 15px 15px 0px 0px;">
+             <div class="row">
+                 <button class="navbar-toggler mx-auto col-3 py-1 btn text-dark text-white" type="button" style="border-radius: 25px; font-size: 100%;">Listes
+                     <i class="fa-solid fa-bars"></i>
+                 </button>
+                 <button class="navbar-toggler mx-auto col-3 py-1 btn text-dark border" type="button" style="border-radius: 25px; background-color: #ffffff; font-size: 100%;" (click)="goToMap()">Carte
+                     <i class="fa-solid fa-map-location-dot"></i>
+                 </button>
+                 <button class="navbar-toggler btn mx-auto col-3 py-1  text-dark border" type="button" style="border-radius: 25px; background-color: #ffffff; font-size: 100%;">Filtres
+                 <i class="fa-solid fa-arrow-down-wide-short"></i>
+                 </button>
+             </div>
+         </div>
+     </div>
+</nav>
+
+<div class="container-xl bg-white text-dark " style="margin-top: 145.8px;">
     <form method="post">
         <div class="row ">
             <div class="col-lg-6 mx-auto border border-0 mt-4 my-auto" style="border-radius: 6px">
